@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sopp.gitee.io","root":"/blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="个人hexo博客，记录每一天的小东西~~~">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://sopp.gitee.io/blog/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="个人hexo博客，记录每一天的小东西~~~">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Sopp">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://sopp.gitee.io/blog/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hexo</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?dc070acb49c7e545823ecd293bfd2ce6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-menu"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/blog/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sopp.gitee.io/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">http协议理解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-17 22:54:11" itemprop="dateModified" datetime="2021-01-17T22:54:11+08:00">2021-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-meta-item leancloud_visitors" data-flag-title="http协议理解" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="一、Http协议介绍"><a href="#一、Http协议介绍" class="headerlink" title="一、Http协议介绍"></a>一、Http协议介绍</h1><h2 id="1-1-什么Http"><a href="#1-1-什么Http" class="headerlink" title="1.1 什么Http"></a>1.1 什么Http</h2><p>Http是<strong>超文本传输协议</strong>(Hyper Text Transfer Protocol)的缩写。<br>协议位于TCP/IP协议栈的应用层。<br><br></p>
+<p>Http是一个客户端和服务器端请求和应答的标准，主要用于www(万维网)服务器传输超文本到本地浏览器之间的请求数据和响应数据的协议。客户端通过使用网页浏览器或者其他工具发起一个Http请求到服务器指定的端口:默认端口80，服务器接收到请求过后，返回响应内容(文本、图片等)。<br></p>
+<p>Http协议是基于TCP协议来进行数据的传输的。</p>
+<h2 id="1-2-Http的版本"><a href="#1-2-Http的版本" class="headerlink" title="1.2 Http的版本"></a>1.2 Http的版本</h2><p>Http协议已经演化出了很多版本，他们中的大部分都是向下兼容的。客户端在请求的开始告诉服务器它采用的协议版本号，然后后者则在响应中采用相同或者更加早的协议版本，现在大多都是1.1的版本。</p>
+<ul>
+<li><p><strong>1.0 版本</strong>： Http协议非常老的标准，为了提高系统的效率，Http1.0规定浏览器与服务器只需要保持短暂的连接，浏览器每次请求都需要与服务器建立一个TCP连接，服务器完成请求处理后，立即断开TCP连接，服务器不跟踪每个客户端也不记录每一个的请求。正是因为这种特性造成了一些性能上的缺陷。</p>
+</li>
+<li><p><strong>1.1 版本</strong>：克服了Http1.0的缺陷，Http 1.1支持持久连接(Http 1.1的默认模式是使用带流水线的持久连接)，在一个TCP连接上可以传送多个Http请求和响应，减少了建立和关闭连接的消耗和延迟。同时还增加更多的请求头和响应头来改进和扩充Http1.0的功能(比如POST请求头字段等)。</p>
+</li>
+<li><p><strong>2.0 版本</strong>：2015年5月作为互联网标准正式发布。主要新增的特性如下：多路复用，二进制分帧，首部压缩，服务端推送。</p>
+</li>
+</ul>
+<h1 id="二、Http消息请求"><a href="#二、Http消息请求" class="headerlink" title="二、Http消息请求"></a>二、Http消息请求</h1><h2 id="2-1-URI、URL、URN"><a href="#2-1-URI、URL、URN" class="headerlink" title="2.1 URI、URL、URN"></a>2.1 URI、URL、URN</h2><p>通过Http或者HTTPS协议请求的资源由统一资源标识符(Uniform Resource Identifiers，URI)来标识。我们常用的是URL，对应的三者区别如下：</p>
+<blockquote>
+<p>URI = Uniform Resource Identifier   统一资源标识符<br><br>URL = Uniform Resource Locator      统一资源定位符<br><br>URN = Uniform Resource Name         统一资源名称</p>
+</blockquote>
+<p>三者关系如下：</p>
+<ol>
+<li>URI用唯一标识符来标识一个资源，是一个很通俗的概念，由URL和URN组成。</li>
+<li>URL用来描述资源的位置来标识资源。</li>
+<li>URN通过资源名字来标识资源，与其所在位置无关，这样即便资源的位置发生改变，URN也不会改变。</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sopp.gitee.io/blog/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/" class="post-title-link" itemprop="url">分布式id策略</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-17 22:53:59" itemprop="dateModified" datetime="2021-01-17T22:53:59+08:00">2021-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/blog/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/" class="post-meta-item leancloud_visitors" data-flag-title="分布式id策略" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="springboot中-全局ID的生成-分布式ID"><a href="#springboot中-全局ID的生成-分布式ID" class="headerlink" title="springboot中-全局ID的生成(分布式ID)"></a>springboot中-全局ID的生成(分布式ID)</h1><h3 id="一、背景知识"><a href="#一、背景知识" class="headerlink" title="一、背景知识"></a>一、背景知识</h3><p>在分布式系统中，经常需要对大量的数据，消息，http请求等进行唯一的标识。<br>常见的，就是在springcloud中，对请求路径进行记录，一般使用链路分析的时候，必须要对请求，使用唯一标识，这个时候如果直接使用数据库自增的id，不能满足实际情况，这个时候，只能使用生成唯一ID的系统，该系统必须满足以下的要求：<br></p>
+<ul>
+<li>全局唯一性：不能出现重复的ID。</li>
+<li>高可用：ID生成系统是基础系统，被许多关键系统调用，如果GG(宕机)，会很被锤。</li>
+</ul>
+<h4 id="经典方案："><a href="#经典方案：" class="headerlink" title="经典方案："></a>经典方案：</h4><ul>
+<li>使用UUID</li>
+<li>使用数据库自增ID</li>
+<li>使用redis的incr命令生成(本文不讲述)</li>
+<li>使用Twitter的snowflake(雪花)算法</li>
+<li>利用zookeeper生成唯一ID</li>
+<li>MongoDB的ObjectId<br>
+
+</li>
+</ul>
+<h4 id="经典方案实现"><a href="#经典方案实现" class="headerlink" title="经典方案实现"></a>经典方案实现</h4><h4 id="1-UUID"><a href="#1-UUID" class="headerlink" title="1. UUID"></a>1. UUID</h4><p><br>&emsp;UUID是在一定范围内唯一的机器生成的标识符，UUID一般是生成32位或者36位，唯一局别是是否存在对应-号。<br><br>&emsp;UUID生成规则为：网卡MAC地址+时间戳+名字空间+随机或者伪随机数+时序等元素，UUID的复杂性，保证了它的唯一性，意味着只能由计算机生成。<br><br></p>
+<h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h5><ul>
+<li>本地生成ID，不需要远程调用，延迟低，性能很高。<br>
+
+</li>
+</ul>
+<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h5><ul>
+<li>UUID过程，很多场景，例如数据库索引字段，很不适合。</li>
+<li>没有排序，没办法趋势的递增。</li>
+</ul>
+<h4 id="2-使用数据库自增ID"><a href="#2-使用数据库自增ID" class="headerlink" title="2. 使用数据库自增ID"></a>2. 使用数据库自增ID</h4><p><br>&emsp;例如：使用mysql的自增主键id。<br><br></p>
+<h5 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h5><ul>
+<li>充分借助了数据库的自增ID机制，可靠性高，生成有序的ID。</li>
+</ul>
+<br>
+##### 缺点：
+- ID生成性能依赖单台数据库读写性能
+- 依赖数据库，当数据库GG，全部都不可用。
+
+
+<h4 id="3-使用雪花算法生成"><a href="#3-使用雪花算法生成" class="headerlink" title="3. 使用雪花算法生成"></a>3. 使用雪花算法生成</h4><p><br>&emsp; 这种方案生成一个64bit的数字，这个数字被分成多个段，分别表示时间戳、机器编码、序号。<br><br><br><br><img src="http://www.dubby.cn/upload/1508161671799snowflake-64bit.jpg" alt="雪花算法" title="雪花算法"></p>
+<h5 id="ID为64bit-的long-数字，由三部分组成："><a href="#ID为64bit-的long-数字，由三部分组成：" class="headerlink" title="ID为64bit 的long 数字，由三部分组成："></a>ID为64bit 的long 数字，由三部分组成：</h5><ul>
+<li>41位的时间序列(精确到毫秒，41位的长度可以使用69年)。</li>
+<li>10位的机器标识(10位的长度最多支持部署1024个节点)。</li>
+<li>12位的计数顺序号(12位的计数顺序号支持每个节点每毫秒产生4096个ID序号)。</li>
+</ul>
+<br />
+##### 优点:
+- 时间戳在高位，自增序列在低位，整个ID是趋势递增的，按照时间有序。
+- 性能高，每秒可生成几百万ID。
+- 可以根据自身业务需求灵活调整bit位划分，满足不同需求。
+
+<h5 id="缺点：-1"><a href="#缺点：-1" class="headerlink" title="缺点："></a>缺点：</h5><ul>
+<li>依赖机器时钟，如果机器时钟回拨，会导致重复ID生成。</li>
+<li>在单机上是递增的，但是由于涉及到分布式环境，每台机器上的时钟不可能完全同步，有时候会出现不是全局递增的情况。</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sopp.gitee.io/blog/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" class="post-title-link" itemprop="url">红黑树</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-17 22:54:17" itemprop="dateModified" datetime="2021-01-17T22:54:17+08:00">2021-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/blog/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" class="post-meta-item leancloud_visitors" data-flag-title="红黑树" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="关于红黑树的那点事儿"><a href="#关于红黑树的那点事儿" class="headerlink" title="关于红黑树的那点事儿"></a>关于红黑树的那点事儿</h1><blockquote>
+<p>本文参考于<a target="_blank" rel="noopener" href="http://www.360doc.com/content/18/0904/19/25944647_783893127.shtml">http://www.360doc.com/content/18/0904/19/25944647_783893127.shtml</a></p>
+</blockquote>
+<p>&emsp;关于红黑树，我们可能是即熟悉又陌生，在大学的几年撸代码生涯中，老师或多或少会讲述关于红黑树的问题，<br>但是一般只有当我们面试的时候，或者校招的时候，才会花时间去了解和复习什么是红黑树。今天来记录一下，自己关于红黑树的复习与理解。</p>
+<p>  &emsp;在进入红黑树的学习之前，必须要了解一个东西，叫做-二叉查找树(BST)<br></p>
+<p>  &emsp;二叉查找树的特性如下：</p>
+<ul>
+<li><p>左子树上所有的节点的值均小于或等于他的根节点的值。</p>
+</li>
+<li><p>右子数上所有的节点的值均大于或等于他的根节点的值。</p>
+</li>
+<li><p>左右子树也一定分别为二叉排序树。</p>
+<p>以下为一颗二叉查找树：</p>
+<p><img src="/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91.png" alt="/二叉查找树"></p>
+</li>
+</ul>
+<p>&emsp;为什么一定要有这种结构呢？这种结构的好处在哪里呢？<br>接下来我们来查找一下值为10这个节点的数据，看一下具体的步骤是怎样的：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sopp.gitee.io/blog/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">TCP/IP的理解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-17 22:54:43" itemprop="dateModified" datetime="2021-01-17T22:54:43+08:00">2021-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/blog/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="TCP/IP的理解" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="对于TCP-IP的理解"><a href="#对于TCP-IP的理解" class="headerlink" title="对于TCP/IP的理解"></a>对于TCP/IP的理解</h1><p>&emsp;在很多人面试的时候，都遇见过招聘要求上要求这一项</p>
+<blockquote>
+<p>精通TCP/IP，熟练使用Socket进行网络编程。</p>
+</blockquote>
+<p>看到这句话，贼提莫熟悉，很多人都觉得这些东西，在我们实际的开发中遇不到，楼主在很早之前也是一样的想法，但是越工作，就越来越觉得这些知识很重要。<br>下面我们就来了解以下什么是TCP/IP。</p>
+<h2 id="一、什么是TCP-IP"><a href="#一、什么是TCP-IP" class="headerlink" title="一、什么是TCP/IP"></a>一、什么是TCP/IP</h2><p>tcp/ip是一类协议系统，它是用于网络通信的一套协议的集合。<br>传统的tcp/ip被认为是一个四层的协议系统。</p>
+<table>
+  <tr>
+    <th>OSI体系结构</th>
+    <th colspan="2">TCP/IP协议集合</th>
+  </tr>
+
+  <tr>
+    <td>应用层</td>
+    <td rowspan="3">应用层</td>
+    <td rowspan="3">TELNET、FTP、HTTP、SMTP、DNS等</td>
+  </tr>
+  <tr>
+    <td>表示层</td>
+  </tr>
+  <tr>
+    <td>会话层</td>
+  </tr>
+
+  <tr>
+    <td>传输层</td>
+    <td>传输层</td>
+    <td>TCP、UDP</td>
+  </tr>
+  <tr>
+    <td>网络层</td>
+    <td>网络层</td>
+    <td>IP、ICMP、ARP、RARP</td>
+  </tr>
+  <tr>
+    <td>数据链路层</td>
+    <td rowspan="2">网络层</td>
+    <td rowspan="2">各种物理通信网络接口</td>
+  </tr>
+  <tr>
+    <td>物理层</td>
+  </tr>
+</table>
+
+<p>对应体系结构解释：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sopp.gitee.io/blog/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">docker容器mysql时间不同步</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-17 22:54:26" itemprop="dateModified" datetime="2021-01-17T22:54:26+08:00">2021-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/docker%E5%AE%B9%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">docker容器</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/blog/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="docker容器mysql时间不同步" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="docker容器mysql时间不同步问题"><a href="#docker容器mysql时间不同步问题" class="headerlink" title="docker容器mysql时间不同步问题"></a>docker容器mysql时间不同步问题</h1><p>最近由于项目中需要进行时间同步，刚好项目中需要使用到docker，所以从docker方面入手进行时间同步。</p>
+<blockquote>
+<p>每日一点学习，加油~</p>
+</blockquote>
+<ol>
+<li>首先进行容器和主机的时间同步。<br>在docker-compose的配置文件中，使用/etc/localtime:/etc/localtime参数进行容器时间同步。具体的示例如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mysql:</span><br><span class="line">    build:</span><br><span class="line">      #dockerfile的路径</span><br><span class="line">      context: .&#x2F;mysql</span><br><span class="line">      #dockerfile的名称</span><br><span class="line">      dockerfile: Dockerfile</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;3307:3306&quot;</span><br><span class="line">    #相当于docker run命令中的-e</span><br><span class="line">    environment:</span><br><span class="line">      - &quot;MYSQL_ROOT_PASSWORD&#x3D;root&quot;</span><br><span class="line">      #初始化的数据库名称</span><br><span class="line">      - &quot;MYSQL_DATABASE&#x3D;test_compose&quot;</span><br><span class="line">      - &quot;MYSQL_ROOT_HOST&#x3D;%&quot;</span><br><span class="line">    #容器名称</span><br><span class="line">    container_name: mysql-compose</span><br><span class="line">    restart: always</span><br><span class="line">    #数据卷映射关系，也就是把本地的目录，和mysql容器中的目录，进行对应映射。</span><br><span class="line">    volumes:</span><br><span class="line">      - &quot;.&#x2F;mysql&#x2F;data&#x2F;:&#x2F;var&#x2F;lib&#x2F;mysql&quot;</span><br><span class="line">      - &quot;&#x2F;etc&#x2F;localtime:&#x2F;etc&#x2F;localtime&quot;</span><br></pre></td></tr></table></figure>
+说明：<br>这里最重要的即为 /etc/localtime:/etc/localtime，使用这个配置，对docker容器和外部主机的时间进行同步。</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sopp.gitee.io/blog/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">GET和POST请求的区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-17 22:54:32" itemprop="dateModified" datetime="2021-01-17T22:54:32+08:00">2021-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" itemprop="url" rel="index"><span itemprop="name">网络请求</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/blog/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-meta-item leancloud_visitors" data-flag-title="GET和POST请求的区别" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="关于http请求的get和post的区别"><a href="#关于http请求的get和post的区别" class="headerlink" title="关于http请求的get和post的区别"></a>关于http请求的get和post的区别</h1><p>在web开发的时候，我们一般都会使用ajax等技术直接访问后端的接口，这个时候，我们一般使用get或者post方法，今天来记录一下这两种方法的区别：</p>
+<table>
+<thead>
+<tr>
+<th align="center">区别类型</th>
+<th align="center">get</th>
+<th align="center">post</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">url可见性</td>
+<td align="center">url可见</td>
+<td align="center">url不可见</td>
+</tr>
+<tr>
+<td align="center">数据传输性</td>
+<td align="center">拼接url进行参数传递</td>
+<td align="center">通过body体进行数据传输</td>
+</tr>
+<tr>
+<td align="center">缓存性</td>
+<td align="center">get可以缓存</td>
+<td align="center">post不可缓存</td>
+</tr>
+<tr>
+<td align="center">页面后退</td>
+<td align="center">get不产生影响</td>
+<td align="center">post提交新的请求</td>
+</tr>
+<tr>
+<td align="center">传输数据大小</td>
+<td align="center">get一般不超过2k-4k(根据浏览器和Web服务器限制)</td>
+<td align="center">post方式理论上没有大小限制，取决于服务器</td>
+</tr>
+<tr>
+<td align="center">安全性</td>
+<td align="center">get数据直接暴露在请求地址上</td>
+<td align="center">post请求地址不可看，有其他方式查看</td>
+</tr>
+<tr>
+<td align="center">数据类型</td>
+<td align="center">get只可以发送ASCII字符</td>
+<td align="center">post可以发送更多</td>
+</tr>
+<tr>
+<td align="center">操作目的</td>
+<td align="center">get一般用于搜索和筛选之类的</td>
+<td align="center">post主要用于修改和写入数据</td>
+</tr>
+<tr>
+<td align="center">请求速度</td>
+<td align="center">get较快</td>
+<td align="center">post较慢：原因请查看下文</td>
+</tr>
+<tr>
+<td align="center">能否管道化传输</td>
+<td align="center">get可以</td>
+<td align="center">post不可</td>
+</tr>
+</tbody></table>
+<p>具体内容解释如下：</p>
+<ol>
+<li>请求速度：<br>get较快，因为post方式需要在请求的body包含部分数据，所以多了几个描述字段，如：Content-Type，但是，这不是最重要的，最重要的原因是：<strong>post请求在真正传送数据之前，会先将请求头发送到服务器进行确认</strong>，然后再发送数据。</li>
+</ol>
+<p>这样理解：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sopp.gitee.io/blog/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">kafka基本理解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-17 22:54:37" itemprop="dateModified" datetime="2021-01-17T22:54:37+08:00">2021-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">消息中间件</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/blog/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="kafka基本理解" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Kafka的基本属于理解"><a href="#Kafka的基本属于理解" class="headerlink" title="Kafka的基本属于理解"></a>Kafka的基本属于理解</h1><p>&emsp;最近在看kafka，对于kafka的使用，基本能够在官方的中文文档中得到一些基本的概念，但是对于kafka的一些基本术语的理解不够深刻，在百度上找寻了几篇文章，现在在这里留下自己关于kafka的理解。</p>
+<p>kafka的基本术语有以下几个：</p>
+<ul>
+<li>broker</li>
+<li>topic</li>
+<li>stream</li>
+<li>partition</li>
+<li>offset</li>
+<li>producer</li>
+<li>consumer</li>
+<li>consumer group</li>
+</ul>
+<p>稍后一个一个介绍上述术语，现在先来看一下kafka的工作流程：<br><br>&emsp;消息由producer进行产生，消息按照topic进行归类，并push(发送)到broker中，然后broker中保存了一个或者多个topic的消息，consumer通过订阅者模式，订阅一组topic消息，通过持续的pull进行消息的拉取，然后进行后续消息的处理。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blog/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sopp"
+      src="/blog/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Sopp</p>
+  <div class="site-description" itemprop="description">个人hexo博客，记录每一天的小东西~~~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZipperLi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZipperLi" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:893891491@qq.com" title="E-Mail → mailto:893891491@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/sopp" title="码云 → https:&#x2F;&#x2F;gitee.com&#x2F;sopp" rel="noopener" target="_blank"><i class="fa fa-fw fa-git-square"></i>码云</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Sopp_Li" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Sopp_Li" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sopp</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'HUylHrKFKGa4iAG5Rfr9L4dW-gzGzoHsz',
+      appKey     : 'aRED7zbzPeuPUExWFYI98IS6',
+      placeholder: "欢迎评论区留言交流~~~~",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"sopp.gitee.io","root":"/blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、Http协议介绍1.1 什么HttpHttp是超文本传输协议(Hyper Text Transfer Protocol)的缩写。协议位于TCP&#x2F;IP协议栈的应用层。 Http是一个客户端和服务器端请求和应答的标准，主要用于www(万维网)服务器传输超文本到本地浏览器之间的请求数据和响应数据的协议。客户端通过使用网页浏览器或者其他工具发起一个Http请求到服务器指定的端口:默认端口80，服务器接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http协议理解">
+<meta property="og:url" content="http://sopp.gitee.io/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、Http协议介绍1.1 什么HttpHttp是超文本传输协议(Hyper Text Transfer Protocol)的缩写。协议位于TCP&#x2F;IP协议栈的应用层。 Http是一个客户端和服务器端请求和应答的标准，主要用于www(万维网)服务器传输超文本到本地浏览器之间的请求数据和响应数据的协议。客户端通过使用网页浏览器或者其他工具发起一个Http请求到服务器指定的端口:默认端口80，服务器接">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-14T14:53:34.286Z">
+<meta property="article:modified_time" content="2021-01-17T14:54:11.289Z">
+<meta property="article:author" content="Sopp">
+<meta property="article:tag" content="网络-http">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://sopp.gitee.io/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>http协议理解 | Hexo</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?dc070acb49c7e545823ecd293bfd2ce6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-menu"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/blog/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/blog/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://sopp.gitee.io/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          http协议理解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-17 22:54:11" itemprop="dateModified" datetime="2021-01-17T22:54:11+08:00">2021-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-meta-item leancloud_visitors" data-flag-title="http协议理解" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="一、Http协议介绍"><a href="#一、Http协议介绍" class="headerlink" title="一、Http协议介绍"></a>一、Http协议介绍</h1><h2 id="1-1-什么Http"><a href="#1-1-什么Http" class="headerlink" title="1.1 什么Http"></a>1.1 什么Http</h2><p>Http是<strong>超文本传输协议</strong>(Hyper Text Transfer Protocol)的缩写。<br>协议位于TCP/IP协议栈的应用层。<br><br></p>
+<p>Http是一个客户端和服务器端请求和应答的标准，主要用于www(万维网)服务器传输超文本到本地浏览器之间的请求数据和响应数据的协议。客户端通过使用网页浏览器或者其他工具发起一个Http请求到服务器指定的端口:默认端口80，服务器接收到请求过后，返回响应内容(文本、图片等)。<br></p>
+<p>Http协议是基于TCP协议来进行数据的传输的。</p>
+<h2 id="1-2-Http的版本"><a href="#1-2-Http的版本" class="headerlink" title="1.2 Http的版本"></a>1.2 Http的版本</h2><p>Http协议已经演化出了很多版本，他们中的大部分都是向下兼容的。客户端在请求的开始告诉服务器它采用的协议版本号，然后后者则在响应中采用相同或者更加早的协议版本，现在大多都是1.1的版本。</p>
+<ul>
+<li><p><strong>1.0 版本</strong>： Http协议非常老的标准，为了提高系统的效率，Http1.0规定浏览器与服务器只需要保持短暂的连接，浏览器每次请求都需要与服务器建立一个TCP连接，服务器完成请求处理后，立即断开TCP连接，服务器不跟踪每个客户端也不记录每一个的请求。正是因为这种特性造成了一些性能上的缺陷。</p>
+</li>
+<li><p><strong>1.1 版本</strong>：克服了Http1.0的缺陷，Http 1.1支持持久连接(Http 1.1的默认模式是使用带流水线的持久连接)，在一个TCP连接上可以传送多个Http请求和响应，减少了建立和关闭连接的消耗和延迟。同时还增加更多的请求头和响应头来改进和扩充Http1.0的功能(比如POST请求头字段等)。</p>
+</li>
+<li><p><strong>2.0 版本</strong>：2015年5月作为互联网标准正式发布。主要新增的特性如下：多路复用，二进制分帧，首部压缩，服务端推送。</p>
+</li>
+</ul>
+<h1 id="二、Http消息请求"><a href="#二、Http消息请求" class="headerlink" title="二、Http消息请求"></a>二、Http消息请求</h1><h2 id="2-1-URI、URL、URN"><a href="#2-1-URI、URL、URN" class="headerlink" title="2.1 URI、URL、URN"></a>2.1 URI、URL、URN</h2><p>通过Http或者HTTPS协议请求的资源由统一资源标识符(Uniform Resource Identifiers，URI)来标识。我们常用的是URL，对应的三者区别如下：</p>
+<blockquote>
+<p>URI = Uniform Resource Identifier   统一资源标识符<br><br>URL = Uniform Resource Locator      统一资源定位符<br><br>URN = Uniform Resource Name         统一资源名称</p>
+</blockquote>
+<p>三者关系如下：</p>
+<ol>
+<li>URI用唯一标识符来标识一个资源，是一个很通俗的概念，由URL和URN组成。</li>
+<li>URL用来描述资源的位置来标识资源。</li>
+<li>URN通过资源名字来标识资源，与其所在位置无关，这样即便资源的位置发生改变，URN也不会改变。</li>
+</ol>
+<a id="more"></a>
+
+<h2 id="2-2-消息请求格式"><a href="#2-2-消息请求格式" class="headerlink" title="2.2 消息请求格式"></a>2.2 消息请求格式</h2><p>Http的消息请求主要包含以下三个部分：</p>
+<ul>
+<li>请求行</li>
+<li>请求头</li>
+<li>数据体</li>
+</ul>
+<p>分别对这三个类型进行解释：</p>
+<h3 id="2-2-1-请求行"><a href="#2-2-1-请求行" class="headerlink" title="2.2.1 请求行"></a>2.2.1 请求行</h3><p>请求行包含了三个内容：method + request-Url + http-version</p>
+<ol>
+<li>method主要有以下方法：<br></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">方法名</th>
+<th align="center">方法描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">get</td>
+<td align="center">通过请求URI获得资源</td>
+</tr>
+<tr>
+<td align="center">post</td>
+<td align="center">用于添加新的资源，用于表单提交</td>
+</tr>
+<tr>
+<td align="center">put</td>
+<td align="center">用于修改某个内容</td>
+</tr>
+<tr>
+<td align="center">delete</td>
+<td align="center">删除某个内容</td>
+</tr>
+<tr>
+<td align="center">connect</td>
+<td align="center">用于代理进行传输例如SSL</td>
+</tr>
+<tr>
+<td align="center">options</td>
+<td align="center">询问可以执行那些方法</td>
+</tr>
+<tr>
+<td align="center">patch</td>
+<td align="center">部分文档更该</td>
+</tr>
+<tr>
+<td align="center">propfind</td>
+<td align="center">查看属性</td>
+</tr>
+<tr>
+<td align="center">proppatch</td>
+<td align="center">设置属性</td>
+</tr>
+<tr>
+<td align="center">mkcol</td>
+<td align="center">创建集合</td>
+</tr>
+<tr>
+<td align="center">copy</td>
+<td align="center">拷贝</td>
+</tr>
+<tr>
+<td align="center">move</td>
+<td align="center">移动</td>
+</tr>
+<tr>
+<td align="center">lock</td>
+<td align="center">加锁</td>
+</tr>
+<tr>
+<td align="center">unlock</td>
+<td align="center">解锁</td>
+</tr>
+<tr>
+<td align="center">trace</td>
+<td align="center">用于远程诊断服务器</td>
+</tr>
+<tr>
+<td align="center">head</td>
+<td align="center">类似于get，用于检查对象是否存在用于得到元数据</td>
+</tr>
+</tbody></table>
+<p>常见的网站开发中，都基本会使用get或者post方法，这两个区别，也是一些面试需要了解的，详情请了解以下文章：</p>
+<h3 id="2-2-2-请求头"><a href="#2-2-2-请求头" class="headerlink" title="2.2.2 请求头"></a>2.2.2 请求头</h3><p>请求头主要包含以下内容：</p>
+<ol>
+<li>Accept：值浏览器或者其他客户端可以接收到额MiMe文件格式。servlet可以根据它判断并返回适当的文件格式。</li>
+<li>User-Agent：是客户端浏览器名称。</li>
+<li>Host：对应翁罗URL中的Web名称和端口号。</li>
+<li>Accept-Langueage：指出浏览器可以接受的语言种类，如en或者en-us(英语)。</li>
+<li>connection：用来告诉服务器是否可以维持固定的Http连接，Http是无连接的，Http 1.1使用Keep-Alive为默认值，这样，当浏览器需要多个文件时(比如一个Html文件和相关的图形文件)，不需要每次都建立连接。</li>
+<li>Cookie：浏览器用这个属性向服务器发送Cookie。Cookie是在浏览器中积存的小型数据体，它可以记载和服务器相关的用户信息，也可以用来实现会话功能。</li>
+<li>Referer：表明产生请求的网页URL。如从网页/gitee.io/index.jsp中点击了一个连接到网页/gitee.io/search，在向服务器发送的get /gitee.io/search 中的请求中，Referer是<a target="_blank" rel="noopener" href="http://hostname:8080/gitee.io/index.jsp%E3%80%82">http://hostname:8080/gitee.io/index.jsp。</a> 这个属性可以用来跟踪web请求是从什么网站来的。</li>
+<li>User-Agent：是用户浏览器的名称。</li>
+<li>Content-Type：用来表明request的内容类型。可以ongoingHTTPServletRequest的getContentType()方法取到。<strong>post才有，get方式为空</strong>。</li>
+<li>Accept-Charset：支出浏览器可以接受的字符编码。英文浏览器的默认值是ISO-8859-1。</li>
+<li>Accept-Encoding：指出浏览器可以接受的编码方式。编码方式不同于文件格式，它是为了压缩文件并加速文件传递速度。浏览器在接收到Web响应之后先解码，然后再检查文件格式。<br>
+post请求专属：</li>
+<li>Content-Length：表示post的数据的长度。</li>
+</ol>
+<h2 id="2-3-数据体"><a href="#2-3-数据体" class="headerlink" title="2.3 数据体"></a>2.3 数据体</h2><p>主要就是请求参数的内容。例如：<br>username=ceshi&amp;password=1234.</p>
+<h1 id="三、Http消息响应"><a href="#三、Http消息响应" class="headerlink" title="三、Http消息响应"></a>三、Http消息响应</h1><p>Http响应由三个部分组成：状态行、响应头、响应正文</p>
+<p>状态行是由Http-Verion + Status-Code + Reason-Phrase</p>
+<p>比如：HTTP/1.1 200 ok<br>分别表示为：http版本 + 状态吗 + 状态码描述</p>
+<p>状态码和对应描述如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">状态码</th>
+<th align="left">状态码描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1xx</td>
+<td align="left">指示信息–表示请求已接收，继续处理</td>
+</tr>
+<tr>
+<td align="center">2xx</td>
+<td align="left">成功–表示请求已被成功接收、理解、接受</td>
+</tr>
+<tr>
+<td align="center">3xx</td>
+<td align="left">重定向–要完成请求必须进行更进一步的操作。</td>
+</tr>
+<tr>
+<td align="center">4xx</td>
+<td align="left">客户端错误–请求有语法错误或请求无法实现。</td>
+</tr>
+<tr>
+<td align="center">5xx</td>
+<td align="left">服务器端错误–服务器未能实现合法的请求。</td>
+</tr>
+</tbody></table>
+<p>最常见的状态码如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">状态码</th>
+<th align="center">英文描述</th>
+<th align="left">中文描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">200</td>
+<td align="center">OK</td>
+<td align="left">客户端请求成功</td>
+</tr>
+<tr>
+<td align="center">400</td>
+<td align="center">Bad Request</td>
+<td align="left">客户端请求有语法错误，不能被服务器所理解</td>
+</tr>
+<tr>
+<td align="center">401</td>
+<td align="center">Unauthorized</td>
+<td align="left">请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用</td>
+</tr>
+<tr>
+<td align="center">403</td>
+<td align="center">Forbidden</td>
+<td align="left">服务器收到请求，但是拒绝提供服务</td>
+</tr>
+<tr>
+<td align="center">404</td>
+<td align="center">Not Found</td>
+<td align="left">请求资源不存在，比如：输入了错误的URL</td>
+</tr>
+<tr>
+<td align="center">500</td>
+<td align="center">Internal Server Error</td>
+<td align="left">服务器发生不可预期的错误</td>
+</tr>
+<tr>
+<td align="center">503</td>
+<td align="center">Server Unavailable</td>
+<td align="left">由于超载或系统维护，服务器暂时的无法处理客户端的请求</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/%E7%BD%91%E7%BB%9C-http/" rel="tag"># 网络-http</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/" rel="prev" title="分布式id策略">
+      <i class="fa fa-chevron-left"></i> 分布式id策略
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81Http%E5%8D%8F%E8%AE%AE%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">一、Http协议介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88Http"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么Http</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Http%E7%9A%84%E7%89%88%E6%9C%AC"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Http的版本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Http%E6%B6%88%E6%81%AF%E8%AF%B7%E6%B1%82"><span class="nav-number">2.</span> <span class="nav-text">二、Http消息请求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-URI%E3%80%81URL%E3%80%81URN"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 URI、URL、URN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%B6%88%E6%81%AF%E8%AF%B7%E6%B1%82%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 消息请求格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-%E8%AF%B7%E6%B1%82%E8%A1%8C"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 请求行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 请求头</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%95%B0%E6%8D%AE%E4%BD%93"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 数据体</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81Http%E6%B6%88%E6%81%AF%E5%93%8D%E5%BA%94"><span class="nav-number">3.</span> <span class="nav-text">三、Http消息响应</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sopp"
+      src="/blog/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Sopp</p>
+  <div class="site-description" itemprop="description">个人hexo博客，记录每一天的小东西~~~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/blog/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/blog/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZipperLi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZipperLi" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:893891491@qq.com" title="E-Mail → mailto:893891491@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/sopp" title="码云 → https:&#x2F;&#x2F;gitee.com&#x2F;sopp" rel="noopener" target="_blank"><i class="fa fa-fw fa-git-square"></i>码云</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Sopp_Li" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Sopp_Li" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sopp</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/pisces.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'HUylHrKFKGa4iAG5Rfr9L4dW-gzGzoHsz',
+      appKey     : 'aRED7zbzPeuPUExWFYI98IS6',
+      placeholder: "欢迎评论区留言交流~~~~",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
