@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/sopp.github.io/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/sopp.github.io/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/sopp.github.io/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/sopp.github.io/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/sopp.github.io/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/sopp.github.io/lib/font-awesome/css/font-awesome.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"sopp.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"zipperli.github.io","root":"/sopp.github.io/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="关于http请求的get和post的区别在web开发的时候，我们一般都会使用ajax等技术直接访问后端的接口，这个时候，我们一般使用get或者post方法，今天来记录一下这两种方法的区别：    区别类型 get post    url可见性 url可见 url不可见   数据传输性 拼接url进行参数传递 通过body体进行数据传输   缓存性 get可以缓存 post不可缓存   页面后退 g">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GET和POST请求的区别">
-<meta property="og:url" content="http://sopp.github.io/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:url" content="http://zipperli.github.io/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="关于http请求的get和post的区别在web开发的时候，我们一般都会使用ajax等技术直接访问后端的接口，这个时候，我们一般使用get或者post方法，今天来记录一下这两种方法的区别：    区别类型 get post    url可见性 url可见 url不可见   数据传输性 拼接url进行参数传递 通过body体进行数据传输   缓存性 get可以缓存 post不可缓存   页面后退 g">
 <meta property="og:locale" content="zh_CN">
@@ -33,7 +33,7 @@
 <meta property="article:tag" content="GET &amp;&amp; POST">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://sopp.github.io/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/">
+<link rel="canonical" href="http://zipperli.github.io/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/">
 
 
 <script id="page-configurations">
@@ -104,7 +104,7 @@
 
   <div class="site-meta">
 
-    <a href="/" class="brand" rel="start">
+    <a href="/sopp.github.io/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <h1 class="site-title">Hexo</h1>
       <span class="logo-line-after"><i></i></span>
@@ -125,32 +125,32 @@
   <ul id="menu" class="menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-menu"></i>首页</a>
+    <a href="/sopp.github.io/" rel="section"><i class="fa fa-fw fa-menu"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+    <a href="/sopp.github.io/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+    <a href="/sopp.github.io/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+    <a href="/sopp.github.io/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+    <a href="/sopp.github.io/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-commonweal">
 
-    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+    <a href="/sopp.github.io/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -208,10 +208,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://sopp.github.io/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="image" content="/sopp.github.io/images/avatar.jpeg">
       <meta itemprop="name" content="Sopp">
       <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
     </span>
@@ -246,12 +246,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" itemprop="url" rel="index"><span itemprop="name">网络请求</span></a>
+                  <a href="/sopp.github.io/categories/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" itemprop="url" rel="index"><span itemprop="name">网络请求</span></a>
                 </span>
             </span>
 
           
-            <span id="/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-meta-item leancloud_visitors" data-flag-title="GET和POST请求的区别" title="阅读次数">
+            <span id="/sopp.github.io/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-meta-item leancloud_visitors" data-flag-title="GET和POST请求的区别" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -266,8 +266,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="commentCount"></span>
+    <a title="valine" href="/sopp.github.io/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/sopp.github.io/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -374,7 +374,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/GET-POST/" rel="tag"># GET && POST</a>
+              <a href="/sopp.github.io/tags/GET-POST/" rel="tag"># GET && POST</a>
           </div>
 
         
@@ -383,11 +383,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/" rel="prev" title="kafka基本理解">
+    <a href="/sopp.github.io/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/" rel="prev" title="kafka基本理解">
       <i class="fa fa-chevron-left"></i> kafka基本理解
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/" rel="next" title="docker容器mysql时间不同步">
+    <a href="/sopp.github.io/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/" rel="next" title="docker容器mysql时间不同步">
       docker容器mysql时间不同步 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -456,27 +456,27 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Sopp"
-      src="/images/avatar.jpeg">
+      src="/sopp.github.io/images/avatar.jpeg">
   <p class="site-author-name" itemprop="name">Sopp</p>
   <div class="site-description" itemprop="description">个人hexo博客，记录每一天的小东西~~~</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
+          <a href="/sopp.github.io/archives/">
         
           <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
+            <a href="/sopp.github.io/categories/">
           
         <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
+            <a href="/sopp.github.io/tags/">
           
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
@@ -542,30 +542,30 @@
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/sopp.github.io/lib/anime.min.js"></script>
+  <script src="/sopp.github.io/lib/velocity/velocity.min.js"></script>
+  <script src="/sopp.github.io/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/utils.js"></script>
+<script src="/sopp.github.io/js/utils.js"></script>
 
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
+<script src="/sopp.github.io/js/motion.js"></script>
 
 
-<script src="/js/next-boot.js"></script>
+<script src="/sopp.github.io/js/schemes/pisces.js"></script>
 
 
-
-
-  
+<script src="/sopp.github.io/js/next-boot.js"></script>
 
 
 
 
   
-<script src="/js/local-search.js"></script>
+
+
+
+
+  
+<script src="/sopp.github.io/js/local-search.js"></script>
 
 
 
