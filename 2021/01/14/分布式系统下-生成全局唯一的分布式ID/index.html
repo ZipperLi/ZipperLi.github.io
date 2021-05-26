@@ -5,25 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/blog/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"zipperli.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"sopp.gitee.io","root":"/blog/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="springboot中-全局ID的生成(分布式ID)一、背景知识在分布式系统中，经常需要对大量的数据，消息，http请求等进行唯一的标识。常见的，就是在springcloud中，对请求路径进行记录，一般使用链路分析的时候，必须要对请求，使用唯一标识，这个时候如果直接使用数据库自增的id，不能满足实际情况，这个时候，只能使用生成唯一ID的系统，该系统必须满足以下的要求：  全局唯一性：不能出现重复的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式id策略">
-<meta property="og:url" content="http://zipperli.github.io/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/index.html">
+<meta property="og:url" content="http://sopp.gitee.io/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="springboot中-全局ID的生成(分布式ID)一、背景知识在分布式系统中，经常需要对大量的数据，消息，http请求等进行唯一的标识。常见的，就是在springcloud中，对请求路径进行记录，一般使用链路分析的时候，必须要对请求，使用唯一标识，这个时候如果直接使用数据库自增的id，不能满足实际情况，这个时候，只能使用生成唯一ID的系统，该系统必须满足以下的要求：  全局唯一性：不能出现重复的">
 <meta property="og:locale" content="zh_CN">
@@ -36,7 +36,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://www.dubby.cn/upload/1508161671799snowflake-64bit.jpg">
 
-<link rel="canonical" href="http://zipperli.github.io/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/">
+<link rel="canonical" href="http://sopp.gitee.io/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/">
 
 
 <script id="page-configurations">
@@ -107,7 +107,7 @@
 
   <div class="site-meta">
 
-    <a href="/" class="brand" rel="start">
+    <a href="/blog/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <h1 class="site-title">Hexo</h1>
       <span class="logo-line-after"><i></i></span>
@@ -128,32 +128,32 @@
   <ul id="menu" class="menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-fw fa-menu"></i>首页</a>
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-menu"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+    <a href="/blog/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+    <a href="/blog/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+    <a href="/blog/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
 
   </li>
         <li class="menu-item menu-item-commonweal">
 
-    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+    <a href="/blog/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -211,10 +211,10 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/">
+    <link itemprop="mainEntityOfPage" href="http://sopp.gitee.io/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="image" content="/blog/images/avatar.jpeg">
       <meta itemprop="name" content="Sopp">
       <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
     </span>
@@ -249,12 +249,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
+                  <a href="/blog/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
                 </span>
             </span>
 
           
-            <span id="/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/" class="post-meta-item leancloud_visitors" data-flag-title="分布式id策略" title="阅读次数">
+            <span id="/blog/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/" class="post-meta-item leancloud_visitors" data-flag-title="分布式id策略" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -269,8 +269,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/" itemprop="commentCount"></span>
+    <a title="valine" href="/blog/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/blog/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -388,7 +388,7 @@ MongoDB的ObjectId设计成轻量型的，不同的机器，都可以用全局�
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8Fid/" rel="tag"># 分布式id</a>
+              <a href="/blog/tags/%E5%88%86%E5%B8%83%E5%BC%8Fid/" rel="tag"># 分布式id</a>
           </div>
 
         
@@ -397,11 +397,11 @@ MongoDB的ObjectId设计成轻量型的，不同的机器，都可以用全局�
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" rel="prev" title="红黑树">
+    <a href="/blog/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" rel="prev" title="红黑树">
       <i class="fa fa-chevron-left"></i> 红黑树
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" rel="next" title="http协议理解">
+    <a href="/blog/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" rel="next" title="http协议理解">
       http协议理解 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -470,27 +470,27 @@ MongoDB的ObjectId设计成轻量型的，不同的机器，都可以用全局�
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Sopp"
-      src="/images/avatar.jpeg">
+      src="/blog/images/avatar.jpeg">
   <p class="site-author-name" itemprop="name">Sopp</p>
   <div class="site-description" itemprop="description">个人hexo博客，记录每一天的小东西~~~</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
+          <a href="/blog/archives/">
         
           <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
+            <a href="/blog/categories/">
           
         <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
+            <a href="/blog/tags/">
           
         <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
@@ -556,30 +556,30 @@ MongoDB的ObjectId设计成轻量型的，不同的机器，都可以用全局�
   </div>
 
   
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/utils.js"></script>
+<script src="/blog/js/utils.js"></script>
 
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
+<script src="/blog/js/motion.js"></script>
 
 
-<script src="/js/next-boot.js"></script>
+<script src="/blog/js/schemes/pisces.js"></script>
 
 
-
-
-  
+<script src="/blog/js/next-boot.js"></script>
 
 
 
 
   
-<script src="/js/local-search.js"></script>
+
+
+
+
+  
+<script src="/blog/js/local-search.js"></script>
 
 
 
