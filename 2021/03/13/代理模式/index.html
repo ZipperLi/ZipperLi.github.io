@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"zipperli.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="代理模式 本篇学习整理，借鉴了博客https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_34178598&#x2F;article&#x2F;details&#x2F;78630934  解析： 一种为其他对象提供一种代理以控制这个对象的访问。 主要存在以下两种类型：  静态代理 动态代理  主要作用：增强方法和权限拦截  静态代理：由程序员创建代理类，在程序运行前代理类的.class文件就已经存在了。 动态代理：程序运行期间通过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代理模式">
+<meta property="og:url" content="http://zipperli.github.io/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Sopp&#39;s 记录">
+<meta property="og:description" content="代理模式 本篇学习整理，借鉴了博客https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_34178598&#x2F;article&#x2F;details&#x2F;78630934  解析： 一种为其他对象提供一种代理以控制这个对象的访问。 主要存在以下两种类型：  静态代理 动态代理  主要作用：增强方法和权限拦截  静态代理：由程序员创建代理类，在程序运行前代理类的.class文件就已经存在了。 动态代理：程序运行期间通过">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T07:49:41.482Z">
+<meta property="article:modified_time" content="2021-05-26T14:57:12.082Z">
+<meta property="article:author" content="Sopp">
+<meta property="article:tag" content="设计模式-代理模式">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://zipperli.github.io/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>代理模式 | Sopp's 记录</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?dc070acb49c7e545823ecd293bfd2ce6";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Sopp's 记录</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-menu"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sopp's 记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          代理模式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-13 15:49:41" itemprop="dateCreated datePublished" datetime="2021-03-13T15:49:41+08:00">2021-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-26 22:57:12" itemprop="dateModified" datetime="2021-05-26T22:57:12+08:00">2021-05-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="post-meta-item leancloud_visitors" data-flag-title="代理模式" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><blockquote>
+<p>本篇学习整理，借鉴了博客<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34178598/article/details/78630934">https://blog.csdn.net/qq_34178598/article/details/78630934</a></p>
+</blockquote>
+<p>解析： <strong>一种为其他对象提供一种代理以控制这个对象的访问。</strong></p>
+<p>主要存在以下两种类型：</p>
+<ul>
+<li>静态代理</li>
+<li>动态代理</li>
+</ul>
+<p>主要作用：<strong>增强方法和权限拦截</strong></p>
+<ol>
+<li>静态代理：由程序员创建代理类，在程序运行前代理类的.class文件就已经存在了。</li>
+<li>动态代理：程序运行期间通过反射机制动态创建而成。AOP就是用这个实现的</li>
+</ol>
+<blockquote>
+<p>AOP就是基于动态代理实现的。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="静态代理："><a href="#静态代理：" class="headerlink" title="静态代理："></a>静态代理：</h2><p> 静态代理举例：<strong>找房子</strong></p>
+<p> 说明：你现在要去租房子，但是由于20年疫情的影响，导致你找不到个人房源，好的房子都在中介的手上，那么你只能通过中介来找房子，虽然最后是和房东签合同，但是你是通过了中介，这个中介就相当于起到了代理的作用。如下图：(图暂时没有)</p>
+<p>你&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;中介&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;房东</p>
+<p>上图所示：</p>
+<p>你是调用类、中介是代理类、房东是被代理类。</p>
+<p>这个时候中介在中间赚点money，起到增强方法的作用。</p>
+<p>但是如果目标类很多方法，代理类也就需要有很多方法，很没有必要，所以只需要一些特定的代理方法即可，所以使用接口实现统一方法。</p>
+<p>定义一个代理类和被代理类的接口：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface RentingService&#123;</span><br><span class="line">		&#x2F;&#x2F;租房方法</span><br><span class="line">		Integer rentingRoom();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>房东类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class LandLoard implements RentingService&#123;</span><br><span class="line">		</span><br><span class="line">		@Override</span><br><span class="line">		public Integer rentingRoom()&#123;</span><br><span class="line">			System.out.println(&quot;我要出租房子了,2000的套二，精装修。。。。。&quot;);</span><br><span class="line">			return 2000;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>中介类(代理类):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class IntermediaryProxy implements RentingService&#123;</span><br><span class="line">		</span><br><span class="line">		private LandLoard landLoard;</span><br><span class="line">		</span><br><span class="line">		@Override</span><br><span class="line">		public Integer rengingRoom()&#123;</span><br><span class="line">			if(landLoard &#x3D;&#x3D;  null)&#123;</span><br><span class="line">				landloard &#x3D; new LandLoard();</span><br><span class="line">			&#125;</span><br><span class="line">			Integer money &#x3D; landloard.rentingRoom();</span><br><span class="line">			return money + money;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用户类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class User&#123;</span><br><span class="line">	public static void main(Striing[] args)&#123;</span><br><span class="line">		IntermediaryProxy intermediaryProxy &#x3D; new IntermediaryProxy();</span><br><span class="line">		Integer money &#x3D; intermediaryProxy.rentingRoom();</span><br><span class="line">		System.out.println(&quot;xxx先生您好，租房一共需要租金：&quot; + money + &quot;元&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>静态代理实例如上。</p>
+<h2 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h2><p>先说静态代理缺点：因为代理对象需要和被代理对象实现一样的接口，所有会有很多代理类，类太多的同时，如果一旦接口增加方法，被代理对象和代理对象都需要维护。</p>
+<p>为了解决这个缺点，就出现了动态代理，动态代理的好处，就是在代理的过程中，我们不需要手动编写代理类，在运行的时候，动态的在内存中产生代理类。(字节码对象级别的代理对象)。</p>
+<p>动态代理实现的方式：</p>
+<ul>
+<li>jdk本身的动态代理方式。</li>
+<li>cglib的动态代理方式。</li>
+</ul>
+<h3 id="jdk动态代理"><a href="#jdk动态代理" class="headerlink" title="jdk动态代理"></a>jdk动态代理</h3><p>在java.lang.reflect中有一个代理类Proxy</p>
+<p>注意：如果使用jdk的动态代理，那么Proxy方式实现的目标对象，必须有接口，没有接口不能使用该方式实现动态代理。</p>
+<p>统一接口：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface TragetInterface&#123;</span><br><span class="line">	void method1();</span><br><span class="line">	void method2();</span><br><span class="line">	int method3(Integer number);</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+<p>目标类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class Target implements TargetInterface&#123;</span><br><span class="line">	@Override</span><br><span class="line">    public void method1() &#123;</span><br><span class="line">        System.out.println(&quot;method1 running ...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    public void method2() &#123;</span><br><span class="line">        System.out.println(&quot;method2 running ...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    public int method3(Integer number) &#123;</span><br><span class="line">        System.out.println(&quot;method3 running ...&quot;);</span><br><span class="line">        return number;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代理工厂类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class ProxyFactory &#123;</span><br><span class="line">    static &lt;T&gt; Object getProxy(T t)&#123;</span><br><span class="line">        &#x2F;&#x2F;返回一个代理对象</span><br><span class="line">        Object object &#x3D; Proxy.newProxyInstance(t.getClass().getClassLoader(), t.getClass().getInterfaces(), new InvocationHandler() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">                &#x2F;&#x2F; proxy就是目标对象，method就是调用目标对象中方法，args就是调用目标对象中方法的参数。</span><br><span class="line">                &#x2F;&#x2F;比如说：代理对象.method1(),这时proxy就是目标类，method1就是method,args就是method1方法参数。</span><br><span class="line">                System.out.println(&quot;执行方法前...&quot;);</span><br><span class="line">                Object invoke &#x3D; method.invoke(t, args);</span><br><span class="line">                System.out.println(&quot;执行方法后...&quot;);</span><br><span class="line">                return invoke;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        return object;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用者类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;</span><br><span class="line">     public static void main(String[] args) &#123;</span><br><span class="line">        Target target &#x3D; new Target();</span><br><span class="line">        TargetInterface proxy &#x3D; (TargetInterface) ProxyFactory.getProxy(target);</span><br><span class="line">        proxy.method1();</span><br><span class="line">        System.out.println(&quot;-------------------------&quot;);</span><br><span class="line">        proxy.method2();</span><br><span class="line">        System.out.println(&quot;-------------------------&quot;);</span><br><span class="line">        int number &#x3D; proxy.method3(100);</span><br><span class="line">        System.out.println(number);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="cglib代理"><a href="#cglib代理" class="headerlink" title="cglib代理"></a>cglib代理</h3><p>cglib是一种第三方代理，原理是可以对目标对象的接口实现代理，也可以进行继承代理(不能对final修饰的代理继承)。需要引入cglib才行，spring本身自带了cglib，aop本身已经实现了cglib和jdk自带的代理了。</p>
+<p>代码实现如下：</p>
+<p>目标类：（可以不用实现接口，因为生成的代理类是目标类的子类）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Target &#123;</span><br><span class="line">    public void method1() &#123;</span><br><span class="line">        System.out.println(&quot;method1 running ...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void method2() &#123;</span><br><span class="line">        System.out.println(&quot;method2 running ...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public int method3(Integer i) &#123;</span><br><span class="line">        System.out.println(&quot;method3 running ...&quot;);</span><br><span class="line">        return i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>CglibFactory类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class CglibFactory &#123;</span><br><span class="line"> </span><br><span class="line">    static &lt;T&gt; Object getProxy(T t)&#123;</span><br><span class="line">        Enhancer en &#x3D; new Enhancer(); &#x2F;&#x2F;帮我们生成代理对象</span><br><span class="line">        en.setSuperclass(t.getClass());&#x2F;&#x2F;设置要代理的目标类</span><br><span class="line">        en.setCallback(new MethodInterceptor() &#123;&#x2F;&#x2F;代理要做什么</span><br><span class="line">            @Override</span><br><span class="line">            public Object intercept(Object object, Method method, Object[] args, MethodProxy methodProxy) throws Throwable &#123;</span><br><span class="line">                System.out.println(&quot;执行方法前。。。&quot;);</span><br><span class="line">                &#x2F;&#x2F;调用原有方法  </span><br><span class="line">                Object invoke &#x3D; methodProxy.invokeSuper(object, args);</span><br><span class="line">&#x2F;&#x2F;              Object invoke &#x3D; method.invoke(t,args); 作用等同与上面。</span><br><span class="line">                System.out.println(&quot;执行方法后。。。&quot;);</span><br><span class="line">                return invoke;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Object proxyObj &#x3D; en.create();&#x2F;&#x2F;生成代理对象</span><br><span class="line">        return proxyObj;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Created by Ming on 2017&#x2F;11&#x2F;25.</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class User &#123;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Target target &#x3D; new Target();</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        TargetInterface proxy &#x3D; (TargetInterface) CglibFactory.getProxy(target);</span><br><span class="line"> </span><br><span class="line">        System.out.println(proxy.method3(100));</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说明：Spring AOP使用的就是动态代理。使用了jdk代理和cglib代理，比如Spring的事务也是使用的aop实现的，如果目标类没有实现接口的话，就会使用cglib代理。</p>
+<p>总结：</p>
+<ul>
+<li>静态代理需要自己写代理类和目标方法</li>
+<li>动态代理不需要自己实现代理类和目标方法，但是动态代理的目标类必须要实现接口。</li>
+<li>cglib代理的目标类可以实现接口也可以不实现，因可以使用继承子类的方式代理。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式-代理模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/" rel="prev" title="HotSpot虚拟机对象探秘">
+      <i class="fa fa-chevron-left"></i> HotSpot虚拟机对象探秘
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC/" rel="next" title="多线程基本学习">
+      多线程基本学习 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">代理模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">静态代理：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">动态代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jdk%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">jdk动态代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cglib%E4%BB%A3%E7%90%86"><span class="nav-number">1.2.2.</span> <span class="nav-text">cglib代理</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Sopp"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">Sopp</p>
+  <div class="site-description" itemprop="description">个人hexo博客，记录每一天的小东西~~~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ZipperLi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ZipperLi" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:893891491@qq.com" title="E-Mail → mailto:893891491@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/sopp" title="码云 → https:&#x2F;&#x2F;gitee.com&#x2F;sopp" rel="noopener" target="_blank"><i class="fa fa-fw fa-git-square"></i>码云</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/Sopp_Li" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;Sopp_Li" rel="noopener" target="_blank"><i class="fa fa-fw fa-copyright"></i>CSDN</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sopp</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : 'HUylHrKFKGa4iAG5Rfr9L4dW-gzGzoHsz',
+      appKey     : 'aRED7zbzPeuPUExWFYI98IS6',
+      placeholder: "欢迎评论区留言交流~~~~",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

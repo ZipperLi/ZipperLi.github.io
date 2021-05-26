@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.3.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
@@ -22,9 +22,9 @@
 
   <meta name="description" content="个人hexo博客，记录每一天的小东西~~~">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Sopp&#39;s 记录">
 <meta property="og:url" content="http://zipperli.github.io/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Sopp&#39;s 记录">
 <meta property="og:description" content="个人hexo博客，记录每一天的小东西~~~">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Sopp">
@@ -43,7 +43,7 @@
   };
 </script>
 
-  <title>Hexo</title>
+  <title>Sopp's 记录</title>
   
 
 
@@ -103,7 +103,7 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">Sopp's 记录</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -204,7 +204,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/05/26/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -213,12 +213,468 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Sopp's 记录">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" class="post-title-link" itemprop="url">红黑树</a>
+            <a href="/2021/05/26/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/" class="post-title-link" itemprop="url">JVM运行时内存区域</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-05-26 23:02:05 / 修改时间：23:28:27" itemprop="dateCreated datePublished" datetime="2021-05-26T23:02:05+08:00">2021-05-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/05/26/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/" class="post-meta-item leancloud_visitors" data-flag-title="JVM运行时内存区域" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/05/26/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/26/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="JVM运行时内存区域"><a href="#JVM运行时内存区域" class="headerlink" title="JVM运行时内存区域"></a>JVM运行时内存区域</h1><blockquote>
+<p>本文参考于《深入理解Java虚拟机》第三版</p>
+</blockquote>
+<p>根据《 Java 虚拟机规范》的规定，Java 虚拟机所管理的内存将会包括以下几个运行时数据区域：</p>
+<ul>
+<li><h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><p>  具体内容参考这篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Sopp_Li/article/details/117224149">程序计数器-JVM</a></p>
+</li>
+<li><h2 id="Java-虚拟机栈"><a href="#Java-虚拟机栈" class="headerlink" title="Java 虚拟机栈"></a>Java 虚拟机栈</h2><p>  Java 虚拟机栈，类似于程序计数器，也是线程私有的，它的生命周期和线程相同。<br>  虚拟机栈描述的是Java方法执行的线程模型：每个方法被执行的时候，Java虚拟机都会同步创建一个<code>栈帧</code>，用于存储</p>
+<ul>
+<li><code>局部变量表</code>、指向了 8 大原始类型、对象引用</li>
+<li><code>操作数栈</code>、</li>
+<li><code>动态连接</code>、</li>
+<li><code>方法出口</code></li>
+<li><code>栈帧</code>等信息。每一个方法被调用直至执行完毕的过程，就对应一个栈帧在虚拟机栈的出栈和入栈的功能。</li>
+</ul></li></ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/05/26/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/03/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sopp's 记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC/" class="post-title-link" itemprop="url">多线程基本学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-13 15:49:54" itemprop="dateCreated datePublished" datetime="2021-03-13T15:49:54+08:00">2021-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-26 23:27:52" itemprop="dateModified" datetime="2021-05-26T23:27:52+08:00">2021-05-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">多线程</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/03/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC/" class="post-meta-item leancloud_visitors" data-flag-title="多线程基本学习" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="多线程学习-线程基本"><a href="#多线程学习-线程基本" class="headerlink" title="多线程学习-线程基本"></a>多线程学习-线程基本</h1><ol>
+<li><h2 id="线程有哪些实现方式？"><a href="#线程有哪些实现方式？" class="headerlink" title="线程有哪些实现方式？"></a>线程有哪些实现方式？</h2><p>常见的线程有哪些实现方式？分别来看下：</p>
+<p>先来看看两种实现方式的代码：</p>
+<h4 id="实现Runnable接口"><a href="#实现Runnable接口" class="headerlink" title="实现Runnable接口"></a>实现Runnable接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RunnableThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;用实现Runnable接口实现多线程&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方式确实可以实现多线程，只需要实现Ruunable接口，重写run方法，然后把这个实现了run方法的实例传递到Thread类中即可实现多线程。</p>
+<h4 id="继承Thread类"><a href="#继承Thread类" class="headerlink" title="继承Thread类"></a>继承Thread类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExtendsThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;通过继承Thread类实现多线程&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sopp's 记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">代理模式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-13 15:49:41" itemprop="dateCreated datePublished" datetime="2021-03-13T15:49:41+08:00">2021-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-26 22:57:12" itemprop="dateModified" datetime="2021-05-26T22:57:12+08:00">2021-05-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" class="post-meta-item leancloud_visitors" data-flag-title="代理模式" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><blockquote>
+<p>本篇学习整理，借鉴了博客<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34178598/article/details/78630934">https://blog.csdn.net/qq_34178598/article/details/78630934</a></p>
+</blockquote>
+<p>解析： <strong>一种为其他对象提供一种代理以控制这个对象的访问。</strong></p>
+<p>主要存在以下两种类型：</p>
+<ul>
+<li>静态代理</li>
+<li>动态代理</li>
+</ul>
+<p>主要作用：<strong>增强方法和权限拦截</strong></p>
+<ol>
+<li>静态代理：由程序员创建代理类，在程序运行前代理类的.class文件就已经存在了。</li>
+<li>动态代理：程序运行期间通过反射机制动态创建而成。AOP就是用这个实现的</li>
+</ol>
+<blockquote>
+<p>AOP就是基于动态代理实现的。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sopp's 记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/" class="post-title-link" itemprop="url">HotSpot虚拟机对象探秘</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-05 21:42:07" itemprop="dateCreated datePublished" datetime="2021-02-05T21:42:07+08:00">2021-02-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-26 23:01:01" itemprop="dateModified" datetime="2021-05-26T23:01:01+08:00">2021-05-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/" class="post-meta-item leancloud_visitors" data-flag-title="HotSpot虚拟机对象探秘" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="JVM学习笔记-HotSpot虚拟机对象探秘"><a href="#JVM学习笔记-HotSpot虚拟机对象探秘" class="headerlink" title="JVM学习笔记-HotSpot虚拟机对象探秘"></a>JVM学习笔记-HotSpot虚拟机对象探秘</h1><blockquote>
+<p>大部分笔记内容都从 学习 <a target="_blank" rel="noopener" href="https://doocs.gitee.io/jvm/#/docs/01-jvm-memory-structure">https://doocs.gitee.io/jvm/#/docs/01-jvm-memory-structure</a> 此文章和书籍：《深入理解Java虚拟机-jvm高级特性与最佳实践-第3版》而来，笔记中除了图片，其余都是纯粹手打，希望借这个能够更加熟悉关于jvm的知识。</p>
+</blockquote>
+<h2 id="HotSpot虚拟机对象探秘"><a href="#HotSpot虚拟机对象探秘" class="headerlink" title="HotSpot虚拟机对象探秘"></a>HotSpot虚拟机对象探秘</h2><h2 id="1-对象的内存布局"><a href="#1-对象的内存布局" class="headerlink" title="1. 对象的内存布局"></a>1. 对象的内存布局</h2><p>在HotSpot虚拟机中，对象的内存布局分为以下3块区域：</p>
+<ul>
+<li>对象头</li>
+<li>实例数据</li>
+<li>对齐填充</li>
+</ul>
+<p>如图所示：<img src="/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80.png" alt="对象内存布局"></p>
+<h4 id="对象头"><a href="#对象头" class="headerlink" title="对象头"></a>对象头</h4><p>对象头记录了对象在运行过程中所需要使用的一些数据：</p>
+<ul>
+<li>哈希码</li>
+<li>GC分代年龄</li>
+<li>锁状态标志</li>
+<li>线程持有的锁</li>
+<li>偏向线程ID</li>
+<li>偏向时间戳</li>
+</ul>
+<p>对象头可能包含类型指针，通过该指针能确定对象属于哪个类。如果对象是一个数组，那么对象头还会包含数组长度。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sopp's 记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">http协议理解</a>
         </h2>
 
         <div class="post-meta">
@@ -235,7 +691,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-17 22:54:17" itemprop="dateModified" datetime="2021-01-17T22:54:17+08:00">2021-01-17</time>
+                <time title="修改时间：2021-05-26 22:59:55" itemprop="dateModified" datetime="2021-05-26T22:59:55+08:00">2021-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,12 +699,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
                 </span>
             </span>
 
           
-            <span id="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" class="post-meta-item leancloud_visitors" data-flag-title="红黑树" title="阅读次数">
+            <span id="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-meta-item leancloud_visitors" data-flag-title="http协议理解" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -263,8 +719,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -279,26 +735,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="关于红黑树的那点事儿"><a href="#关于红黑树的那点事儿" class="headerlink" title="关于红黑树的那点事儿"></a>关于红黑树的那点事儿</h1><blockquote>
-<p>本文参考于<a target="_blank" rel="noopener" href="http://www.360doc.com/content/18/0904/19/25944647_783893127.shtml">http://www.360doc.com/content/18/0904/19/25944647_783893127.shtml</a></p>
-</blockquote>
-<p>&emsp;关于红黑树，我们可能是即熟悉又陌生，在大学的几年撸代码生涯中，老师或多或少会讲述关于红黑树的问题，<br>但是一般只有当我们面试的时候，或者校招的时候，才会花时间去了解和复习什么是红黑树。今天来记录一下，自己关于红黑树的复习与理解。</p>
-<p>  &emsp;在进入红黑树的学习之前，必须要了解一个东西，叫做-二叉查找树(BST)<br></p>
-<p>  &emsp;二叉查找树的特性如下：</p>
-<ul>
-<li><p>左子树上所有的节点的值均小于或等于他的根节点的值。</p>
-</li>
-<li><p>右子数上所有的节点的值均大于或等于他的根节点的值。</p>
-</li>
-<li><p>左右子树也一定分别为二叉排序树。</p>
-<p>以下为一颗二叉查找树：</p>
-<p><img src="/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91.png" alt="/二叉查找树"></p>
-</li>
-</ul>
-<p>&emsp;为什么一定要有这种结构呢？这种结构的好处在哪里呢？<br>接下来我们来查找一下值为10这个节点的数据，看一下具体的步骤是怎样的：</p>
+          <h1 id="一、Http协议介绍"><a href="#一、Http协议介绍" class="headerlink" title="一、Http协议介绍"></a>一、Http协议介绍</h1><h2 id="1-1-什么Http"><a href="#1-1-什么Http" class="headerlink" title="1.1 什么Http"></a>1.1 什么Http</h2><p>Http是<strong>超文本传输协议</strong>(Hyper Text Transfer Protocol)的缩写。<br>协议位于TCP/IP协议栈的应用层。<br><br></p>
+<p>Http是一个客户端和服务器端请求和应答的标准，主要用于www(万维网)服务器传输超文本到本地浏览器之间的请求数据和响应数据的协议。客户端通过使用网页浏览器或者其他工具发起一个Http请求到服务器指定的端口:默认端口80，服务器接收到请求过后，返回响应内容(文本、图片等)。<br></p>
+<p>Http协议是基于TCP协议来进行数据的传输的。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/#more" rel="contents">
+              <a class="btn" href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -331,7 +773,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Sopp's 记录">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -353,7 +795,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-17 22:53:59" itemprop="dateModified" datetime="2021-01-17T22:53:59+08:00">2021-01-17</time>
+                <time title="修改时间：2021-05-26 22:59:50" itemprop="dateModified" datetime="2021-05-26T22:59:50+08:00">2021-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -408,45 +850,7 @@
 <li>使用redis的incr命令生成(本文不讲述)</li>
 <li>使用Twitter的snowflake(雪花)算法</li>
 <li>利用zookeeper生成唯一ID</li>
-<li>MongoDB的ObjectId<br>
-
-</li>
-</ul>
-<h4 id="经典方案实现"><a href="#经典方案实现" class="headerlink" title="经典方案实现"></a>经典方案实现</h4><h4 id="1-UUID"><a href="#1-UUID" class="headerlink" title="1. UUID"></a>1. UUID</h4><p><br>&emsp;UUID是在一定范围内唯一的机器生成的标识符，UUID一般是生成32位或者36位，唯一局别是是否存在对应-号。<br><br>&emsp;UUID生成规则为：网卡MAC地址+时间戳+名字空间+随机或者伪随机数+时序等元素，UUID的复杂性，保证了它的唯一性，意味着只能由计算机生成。<br><br></p>
-<h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h5><ul>
-<li>本地生成ID，不需要远程调用，延迟低，性能很高。<br>
-
-</li>
-</ul>
-<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h5><ul>
-<li>UUID过程，很多场景，例如数据库索引字段，很不适合。</li>
-<li>没有排序，没办法趋势的递增。</li>
-</ul>
-<h4 id="2-使用数据库自增ID"><a href="#2-使用数据库自增ID" class="headerlink" title="2. 使用数据库自增ID"></a>2. 使用数据库自增ID</h4><p><br>&emsp;例如：使用mysql的自增主键id。<br><br></p>
-<h5 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h5><ul>
-<li>充分借助了数据库的自增ID机制，可靠性高，生成有序的ID。</li>
-</ul>
-<br>
-##### 缺点：
-- ID生成性能依赖单台数据库读写性能
-- 依赖数据库，当数据库GG，全部都不可用。
-
-
-<h4 id="3-使用雪花算法生成"><a href="#3-使用雪花算法生成" class="headerlink" title="3. 使用雪花算法生成"></a>3. 使用雪花算法生成</h4><p><br>&emsp; 这种方案生成一个64bit的数字，这个数字被分成多个段，分别表示时间戳、机器编码、序号。<br><br><br><br><img src="http://www.dubby.cn/upload/1508161671799snowflake-64bit.jpg" alt="雪花算法" title="雪花算法"></p>
-<h5 id="ID为64bit-的long-数字，由三部分组成："><a href="#ID为64bit-的long-数字，由三部分组成：" class="headerlink" title="ID为64bit 的long 数字，由三部分组成："></a>ID为64bit 的long 数字，由三部分组成：</h5><ul>
-<li>41位的时间序列(精确到毫秒，41位的长度可以使用69年)。</li>
-<li>10位的机器标识(10位的长度最多支持部署1024个节点)。</li>
-<li>12位的计数顺序号(12位的计数顺序号支持每个节点每毫秒产生4096个ID序号)。</li>
-</ul>
-<br />
-##### 优点:
-- 时间戳在高位，自增序列在低位，整个ID是趋势递增的，按照时间有序。
-- 性能高，每秒可生成几百万ID。
-- 可以根据自身业务需求灵活调整bit位划分，满足不同需求。
-
-<h5 id="缺点：-1"><a href="#缺点：-1" class="headerlink" title="缺点："></a>缺点：</h5><ul>
-<li>依赖机器时钟，如果机器时钟回拨，会导致重复ID生成。</li>
-<li>在单机上是递增的，但是由于涉及到分布式环境，每台机器上的时钟不可能完全同步，有时候会出现不是全局递增的情况。</li>
+<li>MongoDB的ObjectId<br></li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -474,7 +878,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -483,12 +887,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Sopp's 记录">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">http协议理解</a>
+            <a href="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" class="post-title-link" itemprop="url">红黑树</a>
         </h2>
 
         <div class="post-meta">
@@ -505,7 +909,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-17 22:54:11" itemprop="dateModified" datetime="2021-01-17T22:54:11+08:00">2021-01-17</time>
+                <time title="修改时间：2021-05-26 23:00:02" itemprop="dateModified" datetime="2021-05-26T23:00:02+08:00">2021-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -513,12 +917,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
                 </span>
             </span>
 
           
-            <span id="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-meta-item leancloud_visitors" data-flag-title="http协议理解" title="阅读次数">
+            <span id="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" class="post-meta-item leancloud_visitors" data-flag-title="红黑树" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -533,8 +937,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -549,145 +953,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="一、Http协议介绍"><a href="#一、Http协议介绍" class="headerlink" title="一、Http协议介绍"></a>一、Http协议介绍</h1><h2 id="1-1-什么Http"><a href="#1-1-什么Http" class="headerlink" title="1.1 什么Http"></a>1.1 什么Http</h2><p>Http是<strong>超文本传输协议</strong>(Hyper Text Transfer Protocol)的缩写。<br>协议位于TCP/IP协议栈的应用层。<br><br></p>
-<p>Http是一个客户端和服务器端请求和应答的标准，主要用于www(万维网)服务器传输超文本到本地浏览器之间的请求数据和响应数据的协议。客户端通过使用网页浏览器或者其他工具发起一个Http请求到服务器指定的端口:默认端口80，服务器接收到请求过后，返回响应内容(文本、图片等)。<br></p>
-<p>Http协议是基于TCP协议来进行数据的传输的。</p>
-<h2 id="1-2-Http的版本"><a href="#1-2-Http的版本" class="headerlink" title="1.2 Http的版本"></a>1.2 Http的版本</h2><p>Http协议已经演化出了很多版本，他们中的大部分都是向下兼容的。客户端在请求的开始告诉服务器它采用的协议版本号，然后后者则在响应中采用相同或者更加早的协议版本，现在大多都是1.1的版本。</p>
-<ul>
-<li><p><strong>1.0 版本</strong>： Http协议非常老的标准，为了提高系统的效率，Http1.0规定浏览器与服务器只需要保持短暂的连接，浏览器每次请求都需要与服务器建立一个TCP连接，服务器完成请求处理后，立即断开TCP连接，服务器不跟踪每个客户端也不记录每一个的请求。正是因为这种特性造成了一些性能上的缺陷。</p>
-</li>
-<li><p><strong>1.1 版本</strong>：克服了Http1.0的缺陷，Http 1.1支持持久连接(Http 1.1的默认模式是使用带流水线的持久连接)，在一个TCP连接上可以传送多个Http请求和响应，减少了建立和关闭连接的消耗和延迟。同时还增加更多的请求头和响应头来改进和扩充Http1.0的功能(比如POST请求头字段等)。</p>
-</li>
-<li><p><strong>2.0 版本</strong>：2015年5月作为互联网标准正式发布。主要新增的特性如下：多路复用，二进制分帧，首部压缩，服务端推送。</p>
-</li>
-</ul>
-<h1 id="二、Http消息请求"><a href="#二、Http消息请求" class="headerlink" title="二、Http消息请求"></a>二、Http消息请求</h1><h2 id="2-1-URI、URL、URN"><a href="#2-1-URI、URL、URN" class="headerlink" title="2.1 URI、URL、URN"></a>2.1 URI、URL、URN</h2><p>通过Http或者HTTPS协议请求的资源由统一资源标识符(Uniform Resource Identifiers，URI)来标识。我们常用的是URL，对应的三者区别如下：</p>
-<blockquote>
-<p>URI = Uniform Resource Identifier   统一资源标识符<br><br>URL = Uniform Resource Locator      统一资源定位符<br><br>URN = Uniform Resource Name         统一资源名称</p>
+          <h1 id="关于红黑树的那点事儿"><a href="#关于红黑树的那点事儿" class="headerlink" title="关于红黑树的那点事儿"></a>关于红黑树的那点事儿</h1><blockquote>
+<p>本文参考于<a target="_blank" rel="noopener" href="http://www.360doc.com/content/18/0904/19/25944647_783893127.shtml">http://www.360doc.com/content/18/0904/19/25944647_783893127.shtml</a></p>
 </blockquote>
-<p>三者关系如下：</p>
-<ol>
-<li>URI用唯一标识符来标识一个资源，是一个很通俗的概念，由URL和URN组成。</li>
-<li>URL用来描述资源的位置来标识资源。</li>
-<li>URN通过资源名字来标识资源，与其所在位置无关，这样即便资源的位置发生改变，URN也不会改变。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Sopp">
-      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">kafka基本理解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-17 22:54:37" itemprop="dateModified" datetime="2021-01-17T22:54:37+08:00">2021-01-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">消息中间件</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="kafka基本理解" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Kafka的基本属于理解"><a href="#Kafka的基本属于理解" class="headerlink" title="Kafka的基本属于理解"></a>Kafka的基本属于理解</h1><p>&emsp;最近在看kafka，对于kafka的使用，基本能够在官方的中文文档中得到一些基本的概念，但是对于kafka的一些基本术语的理解不够深刻，在百度上找寻了几篇文章，现在在这里留下自己关于kafka的理解。</p>
-<p>kafka的基本术语有以下几个：</p>
+<p>&emsp;关于红黑树，我们可能是即熟悉又陌生，在大学的几年撸代码生涯中，老师或多或少会讲述关于红黑树的问题，<br>但是一般只有当我们面试的时候，或者校招的时候，才会花时间去了解和复习什么是红黑树。今天来记录一下，自己关于红黑树的复习与理解。</p>
+<p>  &emsp;在进入红黑树的学习之前，必须要了解一个东西，叫做-二叉查找树(BST)<br></p>
+<p>  &emsp;二叉查找树的特性如下：</p>
 <ul>
-<li>broker</li>
-<li>topic</li>
-<li>stream</li>
-<li>partition</li>
-<li>offset</li>
-<li>producer</li>
-<li>consumer</li>
-<li>consumer group</li>
+<li>左子树上所有的节点的值均小于或等于他的根节点的值。</li>
+<li>右子数上所有的节点的值均大于或等于他的根节点的值。</li>
+<li>左右子树也一定分别为二叉排序树。</li>
 </ul>
-<p>稍后一个一个介绍上述术语，现在先来看一下kafka的工作流程：<br><br>&emsp;消息由producer进行产生，消息按照topic进行归类，并push(发送)到broker中，然后broker中保存了一个或者多个topic的消息，consumer通过订阅者模式，订阅一组topic消息，通过持续的pull进行消息的拉取，然后进行后续消息的处理。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/#more" rel="contents">
+              <a class="btn" href="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -720,7 +999,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Sopp's 记录">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -742,7 +1021,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-17 22:54:43" itemprop="dateModified" datetime="2021-01-17T22:54:43+08:00">2021-01-17</time>
+                <time title="修改时间：2021-05-26 23:01:21" itemprop="dateModified" datetime="2021-05-26T23:01:21+08:00">2021-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -829,8 +1108,6 @@
     <td>物理层</td>
   </tr>
 </table>
-
-<p>对应体系结构解释：</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/#more" rel="contents">
@@ -866,7 +1143,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Sopp's 记录">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -888,7 +1165,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-17 22:54:26" itemprop="dateModified" datetime="2021-01-17T22:54:26+08:00">2021-01-17</time>
+                <time title="修改时间：2021-05-26 23:00:11" itemprop="dateModified" datetime="2021-05-26T23:00:11+08:00">2021-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -975,7 +1252,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Sopp's 记录">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -997,7 +1274,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-17 22:54:32" itemprop="dateModified" datetime="2021-01-17T22:54:32+08:00">2021-01-17</time>
+                <time title="修改时间：2021-05-26 23:00:23" itemprop="dateModified" datetime="2021-05-26T23:00:23+08:00">2021-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1101,11 +1378,6 @@
 <td align="center">post不可</td>
 </tr>
 </tbody></table>
-<p>具体内容解释如下：</p>
-<ol>
-<li>请求速度：<br>get较快，因为post方式需要在请求的body包含部分数据，所以多了几个描述字段，如：Content-Type，但是，这不是最重要的，最重要的原因是：<strong>post请求在真正传送数据之前，会先将请求头发送到服务器进行确认</strong>，然后再发送数据。</li>
-</ol>
-<p>这样理解：</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/#more" rel="contents">
@@ -1130,6 +1402,9 @@
 
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1196,20 +1471,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

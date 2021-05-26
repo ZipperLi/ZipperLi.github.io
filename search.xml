@@ -1,46 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>kafka基本理解</title>
-    <url>/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="Kafka的基本属于理解"><a href="#Kafka的基本属于理解" class="headerlink" title="Kafka的基本属于理解"></a>Kafka的基本属于理解</h1><p>&emsp;最近在看kafka，对于kafka的使用，基本能够在官方的中文文档中得到一些基本的概念，但是对于kafka的一些基本术语的理解不够深刻，在百度上找寻了几篇文章，现在在这里留下自己关于kafka的理解。</p>
-<p>kafka的基本术语有以下几个：</p>
+    <title>HotSpot虚拟机对象探秘</title>
+    <url>/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/</url>
+    <content><![CDATA[<h1 id="JVM学习笔记-HotSpot虚拟机对象探秘"><a href="#JVM学习笔记-HotSpot虚拟机对象探秘" class="headerlink" title="JVM学习笔记-HotSpot虚拟机对象探秘"></a>JVM学习笔记-HotSpot虚拟机对象探秘</h1><blockquote>
+<p>大部分笔记内容都从 学习 <a href="https://doocs.gitee.io/jvm/#/docs/01-jvm-memory-structure">https://doocs.gitee.io/jvm/#/docs/01-jvm-memory-structure</a> 此文章和书籍：《深入理解Java虚拟机-jvm高级特性与最佳实践-第3版》而来，笔记中除了图片，其余都是纯粹手打，希望借这个能够更加熟悉关于jvm的知识。</p>
+</blockquote>
+<h2 id="HotSpot虚拟机对象探秘"><a href="#HotSpot虚拟机对象探秘" class="headerlink" title="HotSpot虚拟机对象探秘"></a>HotSpot虚拟机对象探秘</h2><h2 id="1-对象的内存布局"><a href="#1-对象的内存布局" class="headerlink" title="1. 对象的内存布局"></a>1. 对象的内存布局</h2><p>在HotSpot虚拟机中，对象的内存布局分为以下3块区域：</p>
 <ul>
-<li>broker</li>
-<li>topic</li>
-<li>stream</li>
-<li>partition</li>
-<li>offset</li>
-<li>producer</li>
-<li>consumer</li>
-<li>consumer group</li>
+<li>对象头</li>
+<li>实例数据</li>
+<li>对齐填充</li>
 </ul>
-<p>稍后一个一个介绍上述术语，现在先来看一下kafka的工作流程：<br><br>&emsp;消息由producer进行产生，消息按照topic进行归类，并push(发送)到broker中，然后broker中保存了一个或者多个topic的消息，consumer通过订阅者模式，订阅一组topic消息，通过持续的pull进行消息的拉取，然后进行后续消息的处理。</p>
+<p>如图所示：<img src="/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/%E5%AF%B9%E8%B1%A1%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80.png" alt="对象内存布局"></p>
+<h4 id="对象头"><a href="#对象头" class="headerlink" title="对象头"></a>对象头</h4><p>对象头记录了对象在运行过程中所需要使用的一些数据：</p>
+<ul>
+<li>哈希码</li>
+<li>GC分代年龄</li>
+<li>锁状态标志</li>
+<li>线程持有的锁</li>
+<li>偏向线程ID</li>
+<li>偏向时间戳</li>
+</ul>
+<p>对象头可能包含类型指针，通过该指针能确定对象属于哪个类。如果对象是一个数组，那么对象头还会包含数组长度。</p>
 <a id="more"></a>
 
+<h4 id="实例数据"><a href="#实例数据" class="headerlink" title="实例数据"></a>实例数据</h4><p>实例数据部分就是成员变量的值，其中包括父类成员变量和本类的成员变量。</p>
+<h4 id="对齐填充"><a href="#对齐填充" class="headerlink" title="对齐填充"></a>对齐填充</h4><p>用于确保对象的总长度为8字节的整数倍。</p>
+<p>HotSpot VM的自动内存管理系统要求对象的大小必须是8字节的整数倍。而对象头部分正好是8字节的倍数(1倍或者2倍)</p>
+<blockquote>
+<p>对齐填充并不是必然存在，也没有特别的含义，它仅仅起着占位符的作用。</p>
+</blockquote>
+<h2 id="2-对象的创建过程"><a href="#2-对象的创建过程" class="headerlink" title="2. 对象的创建过程"></a>2. 对象的创建过程</h2><ul>
+<li><h4 id="类加载检查"><a href="#类加载检查" class="headerlink" title="类加载检查"></a>类加载检查</h4><p>虚拟机在解析.class文件时，若遇到一条new指令，首先它会去检查常量池中是否存在这个类的符号引用，并且检查这个符号引用对应的对象是否被加载、解析、实例化过。如果没有，那么就必须执行对应的加载过程。</p>
+</li>
+<li><h4 id="为新生对象分配内存"><a href="#为新生对象分配内存" class="headerlink" title="为新生对象分配内存"></a>为新生对象分配内存</h4><p>对象所需内存的大小在类加载完成过后就会完全确定，接下来从堆中划分一块对应大小的内存空间给新的对象。分配堆中内存有两种方式：</p>
 <ul>
-<li><p>broker<br>&nbsp;一个kafka集群中包含了一个或者多个服务器，这些服务器称为broker，保存producer发送的消息。</p>
+<li><p>指针碰撞</p>
+<p>如果Java<strong>堆中内存绝对规整(说明采用的是“复制算法”或“标记整理法”)，空闲内存和已使用内存中间存放着一个指针作为分界点指示器，那么分配内存时，只需要把指针向空闲内存挪动一段与对象大小一样的距离，这种分配方式成为<strong>“指针碰撞”</strong>。</strong></p>
 </li>
-<li><p>topic<br>&nbsp;每条发送到broker的消息都有一个类别，这个类别称作为topic。</p>
-</li>
-<li><p>partition<br>&nbsp;一个topic的消息实际上是由多个队列进行存储的，一个队列在kafka上成为分区，即partition。</p>
-</li>
-<li><p>producer<br>&nbsp;负责发送指定的topic消息到broker，通俗的意思就是生产者。</p>
-</li>
-<li><p>consumer<br>&nbsp;消息读取的客户端，通过订阅一组topic的消息从broker拉取消息，也就是消费者。</p>
-</li>
-<li><p>consumer group<br>&nbsp;消费者组，一个消费者组是由一个或者多个consumer组成的，对于同一个topic，不同的消费者组都能将消费到全量的消息，而同一个消费者组中的consumer将竞争每个消息(在多个consumer消费同一个topic时，topic的任何一个分区将同时只能被一个consumer消费)。</p>
-</li>
-<li><p>offset<br>&nbsp;偏移量，kafka为每条消息在分区的消息保存一个偏移量offset，者也是消费者在分区的位置。比如一个偏移量是5的消费者，表示已经消费了从0-4偏移量的消息，下一个要消费的消息的偏移量是5。</p>
+<li><p>空闲列表</p>
+<p>如果Java<strong>堆中内存并不规整</strong>，已经使用的内存和空闲内存交错（说明使用的是标记-清除 算法，有碎片），此时没法简单进行指针碰撞，VM必须维护一个列表，记录其中哪些内存块空闲可用。分配之时从空闲列表中找到一个足够大的内存空间划分给对象实例。这种方式成为<strong>“空闲列表”</strong>。</p>
 </li>
 </ul>
-<p>后续会继续更新关于kafka的使用，以及使用中遇到的问题~~~~~~~~~~~~</p>
+</li>
+<li><h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>分配完内存过后，为对象中的成员变量赋上初始值，设置对象头信息，调用对象的构造函数方法进行初始化。</p>
+<p>至此，整个对象的创建过程就完了。</p>
+</li>
+</ul>
+<h2 id="3-对象的访问方式"><a href="#3-对象的访问方式" class="headerlink" title="3. 对象的访问方式"></a>3. 对象的访问方式</h2><p>所有对象的存储空间都是在堆中分配的，但是这个对象的引用确实在堆栈中分配的。也就是说在建立一个对象时，两个地方都在分配内存，在堆中分配的内存实际建立这个对象，而在堆栈中分配的内存只是一个指向这个堆对象的指针(引用)而已。那么根据引用存放的地址类型的不同，对象有不同的访问方式。</p>
+<ul>
+<li><p>句柄访问方式</p>
+<p>堆中需要一块叫做“句柄池”的内存空间，句柄中包含了对象实例数据与类型数据各自的具体地址信息。</p>
+<p>引用类型的变量存放的是该对象的句柄地址。访问对象时，首先需要通过引用类型的变量找到该对象的句柄。然后根据句柄中对象的地址找到对象。</p>
+<p><img src="/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/%E5%8F%A5%E6%9F%84%E8%AE%BF%E9%97%AE%E6%96%B9%E5%BC%8F.jpg" alt="句柄访问方式"></p>
+</li>
+<li><p>直接指针访问方式</p>
+<p>引用类型的变量直接存放对象的地址，从而不需要句柄池，通过引用能够直接访问对象。但对象所在的内存空间需要额外的策略储存对象所属的类信息的地址。</p>
+<p><img src="/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/%E7%9B%B4%E6%8E%A5%E6%8C%87%E9%92%88%E8%AE%BF%E9%97%AE.jpg" alt="直接指针访问"></p>
+<blockquote>
+<p>需要说明，HotSpot采用的第二种方式，即直接指针方式来访问对象，只需要一次寻址操作，所以在性能上比句柄访问方式快一倍。但像上面所说，它需要额外的策略来储存对象在方法池中类信息的地址。</p>
+</blockquote>
+</li>
+</ul>
 ]]></content>
       <categories>
-        <category>消息中间件</category>
+        <category>JVM</category>
       </categories>
       <tags>
-        <tag>kafka</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JVM运行时内存区域</title>
+    <url>/2021/05/26/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/</url>
+    <content><![CDATA[<h1 id="JVM运行时内存区域"><a href="#JVM运行时内存区域" class="headerlink" title="JVM运行时内存区域"></a>JVM运行时内存区域</h1><blockquote>
+<p>本文参考于《深入理解Java虚拟机》第三版</p>
+</blockquote>
+<p>根据《 Java 虚拟机规范》的规定，Java 虚拟机所管理的内存将会包括以下几个运行时数据区域：</p>
+<ul>
+<li><h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><p>  具体内容参考这篇文章：<a href="https://blog.csdn.net/Sopp_Li/article/details/117224149">程序计数器-JVM</a></p>
+</li>
+<li><h2 id="Java-虚拟机栈"><a href="#Java-虚拟机栈" class="headerlink" title="Java 虚拟机栈"></a>Java 虚拟机栈</h2><p>  Java 虚拟机栈，类似于程序计数器，也是线程私有的，它的生命周期和线程相同。<br>  虚拟机栈描述的是Java方法执行的线程模型：每个方法被执行的时候，Java虚拟机都会同步创建一个<code>栈帧</code>，用于存储</p>
+<ul>
+<li><code>局部变量表</code>、指向了 8 大原始类型、对象引用</li>
+<li><code>操作数栈</code>、</li>
+<li><code>动态连接</code>、</li>
+<li><code>方法出口</code></li>
+<li><code>栈帧</code>等信息。每一个方法被调用直至执行完毕的过程，就对应一个栈帧在虚拟机栈的出栈和入栈的功能。</li>
+</ul>
+  <a id="more"></a>
+<p>  具体如下图：</p>
+<p>  <img src="/2021/05/26/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/jvm-stack.jpg" alt="jvm-stack"></p>
+<p>  压栈和出栈的过程分析：<br>  当方法运行过程中，需要创建局部变量的时候，就讲局部变量的值存入栈帧中的局部变量表中。</p>
+<p>  Java虚拟机栈的栈顶的栈帧是当前正在执行的活动栈，也就是当前正在执行的方法，PC 寄存器也会指向这个地址。只有这个活动的栈帧的本地变量可以被操作数栈使用，当这个栈帧中调用另一个方法，与之对应的栈帧又会被创建，新创建的栈帧压入栈顶，变为当前的活动栈帧。</p>
+<p>  方法结束过后，当前栈帧被移除，栈帧的返回值变化成新的活动栈帧中操作数栈的一个操作数。如果没有返回值，那么新的活动栈帧操作数栈的操作数没有变化。</p>
+<blockquote>
+<p><strong>由于 Java 虚拟机栈是与线程同步的，数据不是线程共享的，因此不用关心数据一致性问题，也不会存在同步锁的问题。</strong></p>
+</blockquote>
+<h3 id="Java虚拟机栈的特点："><a href="#Java虚拟机栈的特点：" class="headerlink" title="Java虚拟机栈的特点："></a>Java虚拟机栈的特点：</h3><ul>
+<li>局部变量表随着栈帧的创建而创建，它的大小在编译时确定，创建时只需要分配事先规定的大小即可。在方法运行过程中，局部变量表不会发生改变。</li>
+<li>Java虚拟机栈会出现两种异常： `StackOverFlowError 和 OutOfMemoryError。<ul>
+<li>StackOverFlowError 若 Java 虚拟机栈的大小不允许动态扩展，那么当线程请求栈的深度超过当前的 Java 虚拟机栈的最大深度的时候，就会抛出该异常。</li>
+<li>OutOfMemoryError 若允许动态扩展，那么当线程请求栈时内存用完了，无法再动态扩展时，抛出该异常。</li>
+</ul>
+</li>
+<li>Java 虚拟机栈也是线程私有，随着线程创建而创建，随着线程的结束而销毁。</li>
+</ul>
+<blockquote>
+<p>出现 StackOverFlowError 时，内存空间可能还有很多。</p>
+</blockquote>
+</li>
+<li><h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><h3 id="本地方法栈的定义"><a href="#本地方法栈的定义" class="headerlink" title="本地方法栈的定义"></a>本地方法栈的定义</h3><p>本地方法栈是为 JVM 运行 Native 方法而准备的空间，由于很多 Native 方法都是 C 语言实现的，所以通常它又叫做 C 栈。它与 Java 虚拟机栈实现的功能类似，只不过本地方法栈是描述本地方法运行过程的内存模型。</p>
+<h3 id="栈帧变化的过程"><a href="#栈帧变化的过程" class="headerlink" title="栈帧变化的过程"></a>栈帧变化的过程</h3><p>本地方法被执行时，在本地方法栈也会创建一块栈帧，用于存放该方法的局部变量表、操作数栈、动态连接、方法出口信息等。</p>
+<p>方法执行结束过后，相应的栈帧也会出栈，并释放内存空间。也会抛出 StackOverFlowError 和 OutOfMemoryError 异常。</p>
+<blockquote>
+<p>如果 Java 虚拟机本身不支持 Native 方法，或者本身不依赖传统栈，那么可以不提供本地方法栈。如果支持本地方法栈，那么这个栈一般会在线程创阿金的时候按线程分配。</p>
+</blockquote>
+</li>
+<li><h2 id="Java-堆"><a href="#Java-堆" class="headerlink" title="Java 堆"></a>Java 堆</h2><h3 id="堆的定义："><a href="#堆的定义：" class="headerlink" title="堆的定义："></a>堆的定义：</h3><p>堆是用来存放对象的内存空间，几乎所有的对象都储存在堆中。</p>
+<h3 id="堆的特点："><a href="#堆的特点：" class="headerlink" title="堆的特点："></a>堆的特点：</h3><ul>
+<li>线程共享，整个 Java 虚拟机只有一个堆，所有的线程都访问同一个堆。而程序计数器、Java 虚拟机栈、本地方法栈都是一个线程对应一个。</li>
+<li>在虚拟机启动的时候创建。</li>
+<li>是垃圾回收的主要场所。</li>
+<li>进一步可以分为：<code>新生代</code>、<code>老年代</code>。</li>
+</ul>
+<p>不同区域存放不同生命周期的对象，这样可以根据不同的区域使用不同的垃圾回收算法，更具有针对性。</p>
+<p>堆的大小即可以固定也可以扩展，但是对于主流的虚拟机，堆的大小是可以扩展的，因此当线程请求分配内存，但是堆已经满了，且内存已经无法再扩展时，就抛出 OOM 异常。</p>
+<blockquote>
+<p>Java 堆所使用的的内存不需要保证是连续的。而由于堆是被所有线程所共享的。所以对它的访问需要注意同步问题，方法和对应的属性都要保证一致性。</p>
+</blockquote>
+</li>
+<li><h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><h3 id="方法区的定义"><a href="#方法区的定义" class="headerlink" title="方法区的定义"></a>方法区的定义</h3><p>Java 虚拟机规范中定义方法区是堆的一个逻辑部分。方法去存放以下信息：</p>
+<ul>
+<li>已经被虚拟机加载的类信息</li>
+<li>常量 &amp;&amp; 静态常量</li>
+<li>即时编译器编译过后的代码</li>
+</ul>
+<h3 id="方法区的特点"><a href="#方法区的特点" class="headerlink" title="方法区的特点"></a>方法区的特点</h3><ul>
+<li>线程共享。方法区是堆的一个逻辑部分，因此和堆一样，都是线程共享的。<code>整个虚拟机中只有一个方法区</code>。</li>
+<li>永久代。方法区中的信息一般需要长期存在，而且它又是堆的逻辑分区，因此用堆的划分方法，把方法区称为“永久代”。</li>
+<li>内存回收效率低。方法区中的信息一般需要长期存在，回收一遍之后可能只有少量信息无效。主要回收目标是：<ul>
+<li>对常量池的回收；</li>
+<li>对类型的卸载。</li>
+</ul>
+</li>
+<li>Java 虚拟机规范对方法区的要求比较宽松。和堆一样，允许固定大小，也允许动态扩展，还允许不实现垃圾收集。</li>
+</ul>
+</li>
+<li><h2 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h2><p>方法区中存放： 类信息、常量、静态常量、即时编译器编译过后的代码。常量就存放在运行时常量池中。</p>
+<p>当类被 Java 虚拟机加载过后，.class 文件中的常量就存放在方法区中的运行时常量池中。而且在运行期间，可以向常量池中添加新的常量。如 String 类的 </p>
+<p>intern() 方法就能在运行期间向常量池中添加字符串常量。</p>
+</li>
+<li><h2 id="直接内存-也叫堆外内存"><a href="#直接内存-也叫堆外内存" class="headerlink" title="直接内存(也叫堆外内存)"></a>直接内存(也叫堆外内存)</h2><p>直接内存时除开 Java 虚拟机之外的内存，但是也可以被 Java 使用。</p>
+<h3 id="操作直接内存"><a href="#操作直接内存" class="headerlink" title="操作直接内存"></a>操作直接内存</h3><p>在 NIO 中引入了一种基于通道和缓冲的 IO 方式。它可以通过调用本地方法直接分配 Java 虚拟机之外的内存，然后通过一个储存在堆中的 DirectByteBuffer 对象直接操作该内存，而无需先将外部内存中的数据复制到堆中再进行操作，从而提高了数据库操作的效率。</p>
+<p>直接内存的大小不受 Java 虚拟机的控制，但是既然是内存，当内存不足的时候，也会出现 OOM 异常。</p>
+<h3 id="直接内存与堆内存比较"><a href="#直接内存与堆内存比较" class="headerlink" title="直接内存与堆内存比较"></a>直接内存与堆内存比较</h3><ul>
+<li>直接内存申请空间耗费更高的性能</li>
+<li>直接内存读取 IO 的性能要优于普通的堆内存。</li>
+<li>直接内存作用链： 本地 IO -&gt; 直接内存 -&gt; 本地 IO</li>
+<li>堆内存作用链：本地 IO -&gt; 直接内存 -&gt; 非直接内存 -&gt; 直接内存 -&gt; 本地 IO</li>
+</ul>
+<blockquote>
+<p>服务器管理员在配置虚拟机参数时，会根据实际内存设置 -Xmx 等参数信息，但经常<br>忽略直接内存，使得各个内存区域总和大于物理内存限制，从而导致动态扩展时出<br>现 OutOfMemoryError 异常。</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>JVM</tag>
       </tags>
   </entry>
   <entry>
@@ -90,9 +221,9 @@
   </tr>
 </table>
 
-<p>对应体系结构解释：</p>
 <a id="more"></a>
 
+<p>对应体系结构解释：</p>
 <h3 id="1-1-网络接口层"><a href="#1-1-网络接口层" class="headerlink" title="1.1 网络接口层"></a>1.1 网络接口层</h3><p>主要是值物理层次的一些接口，比如电缆等。</p>
 <h3 id="1-2-网络层"><a href="#1-2-网络层" class="headerlink" title="1.2 网络层"></a>1.2 网络层</h3><p>提供独立于硬件的逻辑寻址，实现物理地址与逻辑地址的转换。<br>在TCP/IP协议族中，网络层协议包括IP协议(网际协议)，ICMP协议(Internet互联网控制报文协议)，以及IGMP协议(Internet组管理协议)。</p>
 <h3 id="1-3-传输层"><a href="#1-3-传输层" class="headerlink" title="1.3 传输层"></a>1.3 传输层</h3><p>为网络层提供了流量控制，错误控制和确认服务。<br>在TCP/IP协议族中，由两个互不相同的传输协议：TCP(传输控制协议)和UDP(用户数据报协议)。</p>
@@ -194,14 +325,13 @@
 <td align="center">post不可</td>
 </tr>
 </tbody></table>
+<a id="more"></a>
+
 <p>具体内容解释如下：</p>
 <ol>
 <li>请求速度：<br>get较快，因为post方式需要在请求的body包含部分数据，所以多了几个描述字段，如：Content-Type，但是，这不是最重要的，最重要的原因是：<strong>post请求在真正传送数据之前，会先将请求头发送到服务器进行确认</strong>，然后再发送数据。</li>
 </ol>
-<p>这样理解：</p>
-<a id="more"></a>
-
-<p>post请求的过程如下：</p>
+<p>这样理解：<br>post请求的过程如下：</p>
 <ol>
 <li>浏览器请求tcp连接（第一次握手）</li>
 <li>服务器答应进行tcp连接（第二次握手）</li>
@@ -226,155 +356,124 @@
       </tags>
   </entry>
   <entry>
-    <title>红黑树</title>
-    <url>/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/</url>
-    <content><![CDATA[<h1 id="关于红黑树的那点事儿"><a href="#关于红黑树的那点事儿" class="headerlink" title="关于红黑树的那点事儿"></a>关于红黑树的那点事儿</h1><blockquote>
-<p>本文参考于<a href="http://www.360doc.com/content/18/0904/19/25944647_783893127.shtml">http://www.360doc.com/content/18/0904/19/25944647_783893127.shtml</a></p>
-</blockquote>
-<p>&emsp;关于红黑树，我们可能是即熟悉又陌生，在大学的几年撸代码生涯中，老师或多或少会讲述关于红黑树的问题，<br>但是一般只有当我们面试的时候，或者校招的时候，才会花时间去了解和复习什么是红黑树。今天来记录一下，自己关于红黑树的复习与理解。</p>
-<p>  &emsp;在进入红黑树的学习之前，必须要了解一个东西，叫做-二叉查找树(BST)<br></p>
-<p>  &emsp;二叉查找树的特性如下：</p>
+    <title>kafka基本理解</title>
+    <url>/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="Kafka的基本属于理解"><a href="#Kafka的基本属于理解" class="headerlink" title="Kafka的基本属于理解"></a>Kafka的基本属于理解</h1><p>&emsp;最近在看kafka，对于kafka的使用，基本能够在官方的中文文档中得到一些基本的概念，但是对于kafka的一些基本术语的理解不够深刻，在百度上找寻了几篇文章，现在在这里留下自己关于kafka的理解。</p>
+<p>kafka的基本术语有以下几个：</p>
 <ul>
-<li><p>左子树上所有的节点的值均小于或等于他的根节点的值。</p>
-</li>
-<li><p>右子数上所有的节点的值均大于或等于他的根节点的值。</p>
-</li>
-<li><p>左右子树也一定分别为二叉排序树。</p>
-<p>以下为一颗二叉查找树：</p>
-<p><img src="/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91.png" alt="/二叉查找树"></p>
-</li>
+<li>broker</li>
+<li>topic</li>
+<li>stream</li>
+<li>partition</li>
+<li>offset</li>
+<li>producer</li>
+<li>consumer</li>
+<li>consumer group</li>
 </ul>
-<p>&emsp;为什么一定要有这种结构呢？这种结构的好处在哪里呢？<br>接下来我们来查找一下值为10这个节点的数据，看一下具体的步骤是怎样的：</p>
+<p>稍后一个一个介绍上述术语，现在先来看一下kafka的工作流程：<br><br>&emsp;消息由producer进行产生，消息按照topic进行归类，并push(发送)到broker中，然后broker中保存了一个或者多个topic的消息，consumer通过订阅者模式，订阅一组topic消息，通过持续的pull进行消息的拉取，然后进行后续消息的处理。</p>
 <a id="more"></a>
 
-<br>
-
-<ol>
-<li><p>查找跟节点9，如图所示：</p>
-<p><img src="/%E8%8A%82%E7%82%B99.png" alt="节点9"></p>
+<ul>
+<li><p>broker<br>&nbsp;一个kafka集群中包含了一个或者多个服务器，这些服务器称为broker，保存producer发送的消息。</p>
 </li>
-<li><p>由于查找的节点值为10,10大于根节点9，那么久表示需要查询右边孩子节点13，如图：</p>
-<p><img src="/%E8%8A%82%E7%82%B913.png" alt="节点13"></p>
+<li><p>topic<br>&nbsp;每条发送到broker的消息都有一个类别，这个类别称作为topic。</p>
 </li>
-<li><p>由于查询的值10 &lt; 13，那么久查询左孩子节点11：如图：</p>
-<p><img src="/%E8%8A%82%E7%82%B911.png" alt="节点11"></p>
+<li><p>partition<br>&nbsp;一个topic的消息实际上是由多个队列进行存储的，一个队列在kafka上成为分区，即partition。</p>
 </li>
-<li><p>由于查询的值10 &lt; 11,那么查询左节点10，最终查询到10这个节点值，如图：</p>
-<p><img src="/%E8%8A%82%E7%82%B910.png" alt="节点10"></p>
+<li><p>producer<br>&nbsp;负责发送指定的topic消息到broker，通俗的意思就是生产者。</p>
 </li>
-</ol>
-<p>经历了以上4步操作，最终查找到了节点数据为10的子节点。<br>以上的操作，是参照了二分查找的思想</p>
+<li><p>consumer<br>&nbsp;消息读取的客户端，通过订阅一组topic的消息从broker拉取消息，也就是消费者。</p>
+</li>
+<li><p>consumer group<br>&nbsp;消费者组，一个消费者组是由一个或者多个consumer组成的，对于同一个topic，不同的消费者组都能将消费到全量的消息，而同一个消费者组中的consumer将竞争每个消息(在多个consumer消费同一个topic时，topic的任何一个分区将同时只能被一个consumer消费)。</p>
+</li>
+<li><p>offset<br>&nbsp;偏移量，kafka为每条消息在分区的消息保存一个偏移量offset，者也是消费者在分区的位置。比如一个偏移量是5的消费者，表示已经消费了从0-4偏移量的消息，下一个要消费的消息的偏移量是5。</p>
+</li>
+</ul>
+<p>后续会继续更新关于kafka的使用，以及使用中遇到的问题~~~~~~~~~~~~</p>
 ]]></content>
       <categories>
-        <category>算法</category>
+        <category>消息中间件</category>
       </categories>
       <tags>
-        <tag>红黑树-算法</tag>
+        <tag>kafka</tag>
       </tags>
   </entry>
   <entry>
-    <title>分布式id策略</title>
-    <url>/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/</url>
-    <content><![CDATA[<h1 id="springboot中-全局ID的生成-分布式ID"><a href="#springboot中-全局ID的生成-分布式ID" class="headerlink" title="springboot中-全局ID的生成(分布式ID)"></a>springboot中-全局ID的生成(分布式ID)</h1><h3 id="一、背景知识"><a href="#一、背景知识" class="headerlink" title="一、背景知识"></a>一、背景知识</h3><p>在分布式系统中，经常需要对大量的数据，消息，http请求等进行唯一的标识。<br>常见的，就是在springcloud中，对请求路径进行记录，一般使用链路分析的时候，必须要对请求，使用唯一标识，这个时候如果直接使用数据库自增的id，不能满足实际情况，这个时候，只能使用生成唯一ID的系统，该系统必须满足以下的要求：<br></p>
+    <title>代理模式</title>
+    <url>/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><blockquote>
+<p>本篇学习整理，借鉴了博客<a href="https://blog.csdn.net/qq_34178598/article/details/78630934">https://blog.csdn.net/qq_34178598/article/details/78630934</a></p>
+</blockquote>
+<p>解析： <strong>一种为其他对象提供一种代理以控制这个对象的访问。</strong></p>
+<p>主要存在以下两种类型：</p>
 <ul>
-<li>全局唯一性：不能出现重复的ID。</li>
-<li>高可用：ID生成系统是基础系统，被许多关键系统调用，如果GG(宕机)，会很被锤。</li>
+<li>静态代理</li>
+<li>动态代理</li>
 </ul>
-<h4 id="经典方案："><a href="#经典方案：" class="headerlink" title="经典方案："></a>经典方案：</h4><ul>
-<li>使用UUID</li>
-<li>使用数据库自增ID</li>
-<li>使用redis的incr命令生成(本文不讲述)</li>
-<li>使用Twitter的snowflake(雪花)算法</li>
-<li>利用zookeeper生成唯一ID</li>
-<li>MongoDB的ObjectId<br>
-
-</li>
-</ul>
-<h4 id="经典方案实现"><a href="#经典方案实现" class="headerlink" title="经典方案实现"></a>经典方案实现</h4><h4 id="1-UUID"><a href="#1-UUID" class="headerlink" title="1. UUID"></a>1. UUID</h4><p><br>&emsp;UUID是在一定范围内唯一的机器生成的标识符，UUID一般是生成32位或者36位，唯一局别是是否存在对应-号。<br><br>&emsp;UUID生成规则为：网卡MAC地址+时间戳+名字空间+随机或者伪随机数+时序等元素，UUID的复杂性，保证了它的唯一性，意味着只能由计算机生成。<br><br></p>
-<h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h5><ul>
-<li>本地生成ID，不需要远程调用，延迟低，性能很高。<br>
-
-</li>
-</ul>
-<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h5><ul>
-<li>UUID过程，很多场景，例如数据库索引字段，很不适合。</li>
-<li>没有排序，没办法趋势的递增。</li>
-</ul>
-<h4 id="2-使用数据库自增ID"><a href="#2-使用数据库自增ID" class="headerlink" title="2. 使用数据库自增ID"></a>2. 使用数据库自增ID</h4><p><br>&emsp;例如：使用mysql的自增主键id。<br><br></p>
-<h5 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h5><ul>
-<li>充分借助了数据库的自增ID机制，可靠性高，生成有序的ID。</li>
-</ul>
-<br>
-##### 缺点：
-- ID生成性能依赖单台数据库读写性能
-- 依赖数据库，当数据库GG，全部都不可用。
-
-
-<h4 id="3-使用雪花算法生成"><a href="#3-使用雪花算法生成" class="headerlink" title="3. 使用雪花算法生成"></a>3. 使用雪花算法生成</h4><p><br>&emsp; 这种方案生成一个64bit的数字，这个数字被分成多个段，分别表示时间戳、机器编码、序号。<br><br><br><br><img src="http://www.dubby.cn/upload/1508161671799snowflake-64bit.jpg" alt="雪花算法" title="雪花算法"></p>
-<h5 id="ID为64bit-的long-数字，由三部分组成："><a href="#ID为64bit-的long-数字，由三部分组成：" class="headerlink" title="ID为64bit 的long 数字，由三部分组成："></a>ID为64bit 的long 数字，由三部分组成：</h5><ul>
-<li>41位的时间序列(精确到毫秒，41位的长度可以使用69年)。</li>
-<li>10位的机器标识(10位的长度最多支持部署1024个节点)。</li>
-<li>12位的计数顺序号(12位的计数顺序号支持每个节点每毫秒产生4096个ID序号)。</li>
-</ul>
-<br />
-##### 优点:
-- 时间戳在高位，自增序列在低位，整个ID是趋势递增的，按照时间有序。
-- 性能高，每秒可生成几百万ID。
-- 可以根据自身业务需求灵活调整bit位划分，满足不同需求。
-
-<h5 id="缺点：-1"><a href="#缺点：-1" class="headerlink" title="缺点："></a>缺点：</h5><ul>
-<li>依赖机器时钟，如果机器时钟回拨，会导致重复ID生成。</li>
-<li>在单机上是递增的，但是由于涉及到分布式环境，每台机器上的时钟不可能完全同步，有时候会出现不是全局递增的情况。</li>
-</ul>
+<p>主要作用：<strong>增强方法和权限拦截</strong></p>
+<ol>
+<li>静态代理：由程序员创建代理类，在程序运行前代理类的.class文件就已经存在了。</li>
+<li>动态代理：程序运行期间通过反射机制动态创建而成。AOP就是用这个实现的</li>
+</ol>
+<blockquote>
+<p>AOP就是基于动态代理实现的。</p>
+</blockquote>
 <a id="more"></a>
 
-<h4 id="4-利用zookeeper生成唯一ID"><a href="#4-利用zookeeper生成唯一ID" class="headerlink" title="4. 利用zookeeper生成唯一ID"></a>4. 利用zookeeper生成唯一ID</h4><p>代码如下：</p>
+<h2 id="静态代理："><a href="#静态代理：" class="headerlink" title="静态代理："></a>静态代理：</h2><p> 静态代理举例：<strong>找房子</strong></p>
+<p> 说明：你现在要去租房子，但是由于20年疫情的影响，导致你找不到个人房源，好的房子都在中介的手上，那么你只能通过中介来找房子，虽然最后是和房东签合同，但是你是通过了中介，这个中介就相当于起到了代理的作用。如下图：(图暂时没有)</p>
+<p>你&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;中介&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;房东</p>
+<p>上图所示：</p>
+<p>你是调用类、中介是代理类、房东是被代理类。</p>
+<p>这个时候中介在中间赚点money，起到增强方法的作用。</p>
+<p>但是如果目标类很多方法，代理类也就需要有很多方法，很没有必要，所以只需要一些特定的代理方法即可，所以使用接口实现统一方法。</p>
+<p>定义一个代理类和被代理类的接口：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public interface RentingService&#123;</span><br><span class="line">		&#x2F;&#x2F;租房方法</span><br><span class="line">		Integer rentingRoom();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>房东类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class LandLoard implements RentingService&#123;</span><br><span class="line">		</span><br><span class="line">		@Override</span><br><span class="line">		public Integer rentingRoom()&#123;</span><br><span class="line">			System.out.println(&quot;我要出租房子了,2000的套二，精装修。。。。。&quot;);</span><br><span class="line">			return 2000;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>中介类(代理类):</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class IntermediaryProxy implements RentingService&#123;</span><br><span class="line">		</span><br><span class="line">		private LandLoard landLoard;</span><br><span class="line">		</span><br><span class="line">		@Override</span><br><span class="line">		public Integer rengingRoom()&#123;</span><br><span class="line">			if(landLoard &#x3D;&#x3D;  null)&#123;</span><br><span class="line">				landloard &#x3D; new LandLoard();</span><br><span class="line">			&#125;</span><br><span class="line">			Integer money &#x3D; landloard.rentingRoom();</span><br><span class="line">			return money + money;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用户类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class User&#123;</span><br><span class="line">	public static void main(Striing[] args)&#123;</span><br><span class="line">		IntermediaryProxy intermediaryProxy &#x3D; new IntermediaryProxy();</span><br><span class="line">		Integer money &#x3D; intermediaryProxy.rentingRoom();</span><br><span class="line">		System.out.println(&quot;xxx先生您好，租房一共需要租金：&quot; + money + &quot;元&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>静态代理实例如上。</p>
+<h2 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h2><p>先说静态代理缺点：因为代理对象需要和被代理对象实现一样的接口，所有会有很多代理类，类太多的同时，如果一旦接口增加方法，被代理对象和代理对象都需要维护。</p>
+<p>为了解决这个缺点，就出现了动态代理，动态代理的好处，就是在代理的过程中，我们不需要手动编写代理类，在运行的时候，动态的在内存中产生代理类。(字节码对象级别的代理对象)。</p>
+<p>动态代理实现的方式：</p>
 <ul>
-<li><p>引入依赖</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.zookeeper&lt;&#x2F;groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;zookeeper&lt;&#x2F;artifactId&gt;</span><br><span class="line">	&lt;version&gt;3.4.12&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.curator&lt;&#x2F;groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;curator-framework&lt;&#x2F;artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.8.0&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.curator&lt;&#x2F;groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;curator-recipes&lt;&#x2F;artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.8.0&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编写代码</p>
-</li>
+<li>jdk本身的动态代理方式。</li>
+<li>cglib的动态代理方式。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.sopp.learning;</span><br><span class="line"></span><br><span class="line">import org.apache.curator.RetryPolicy;</span><br><span class="line">import org.apache.curator.framework.CuratorFramework;</span><br><span class="line">import org.apache.curator.framework.CuratorFrameworkFactory;</span><br><span class="line">import org.apache.curator.retry.ExponentialBackoffRetry;</span><br><span class="line">import org.apache.zookeeper.CreateMode;</span><br><span class="line">import org.apache.zookeeper.data.Stat;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.ExecutorService;</span><br><span class="line">import java.util.concurrent.Executors;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class DistributedIdGeneraterService &#123;</span><br><span class="line"></span><br><span class="line">    private static CuratorFramework curatorFrameworkClient;</span><br><span class="line"></span><br><span class="line">    private static RetryPolicy retryPolicy;</span><br><span class="line"></span><br><span class="line">    private static ExecutorService executorService;</span><br><span class="line"></span><br><span class="line">    private static String IP_TOSTRING &#x3D; &quot;10.200.121.46:2181,10.200.121.43:2181,10.200.121.167:2181&quot;;</span><br><span class="line"></span><br><span class="line">    private static String ROOT &#x3D; &quot;&#x2F;root&quot;;</span><br><span class="line"></span><br><span class="line">    private static String NODE_NAME &#x3D; &quot;idgenerator&quot;;</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        retryPolicy &#x3D; new ExponentialBackoffRetry(1000, 3);</span><br><span class="line">        curatorFrameworkClient &#x3D; CuratorFrameworkFactory</span><br><span class="line">                .builder()</span><br><span class="line">                .connectString(IP_TOSTRING)</span><br><span class="line">                .sessionTimeoutMs(5000)</span><br><span class="line">                .connectionTimeoutMs(5000)</span><br><span class="line">                .retryPolicy(retryPolicy)</span><br><span class="line">                .build();</span><br><span class="line">        curatorFrameworkClient.start();</span><br><span class="line">        try &#123;</span><br><span class="line">            executorService &#x3D; Executors.newFixedThreadPool(10);</span><br><span class="line">            &#x2F;&#x2F;请先判断父节点&#x2F;root节点是否存在</span><br><span class="line">            Stat stat &#x3D; curatorFrameworkClient.checkExists().forPath(ROOT);</span><br><span class="line">            if (stat &#x3D;&#x3D; null) &#123;</span><br><span class="line">                curatorFrameworkClient.create().withMode(CreateMode.PERSISTENT).forPath(ROOT, null);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static String generateId() &#123;</span><br><span class="line">        String backPath &#x3D; &quot;&quot;;</span><br><span class="line"></span><br><span class="line">        String fullPath &#x3D; ROOT.concat(&quot;&#x2F;&quot;).concat(NODE_NAME);</span><br><span class="line">        try &#123;</span><br><span class="line">            &#x2F;&#x2F; 关键点：创建持久顺序节点</span><br><span class="line">            backPath &#x3D; curatorFrameworkClient.create().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(fullPath, null);</span><br><span class="line">            &#x2F;&#x2F;为防止生成的节点浪费系统资源，故生成后异步删除此节点</span><br><span class="line">            String finalBackPath &#x3D; backPath;</span><br><span class="line">            executorService.execute(() -&gt; &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    curatorFrameworkClient.delete().forPath(finalBackPath);</span><br><span class="line">                &#125; catch (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            String ID &#x3D; this.splitID(backPath);</span><br><span class="line">            System.out.println(&quot;生成的ID&#x3D;&quot; + ID);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return backPath;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String splitID(String path) &#123;</span><br><span class="line">        int index &#x3D; path.lastIndexOf(NODE_NAME);</span><br><span class="line">        if (index &gt;&#x3D; 0) &#123;</span><br><span class="line">            index +&#x3D; NODE_NAME.length();</span><br><span class="line">            return index &lt;&#x3D; path.length() ? path.substring(index) : &quot;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        return path;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="5-使用MongoDB实现分布式ID"><a href="#5-使用MongoDB实现分布式ID" class="headerlink" title="5.使用MongoDB实现分布式ID"></a>5.使用MongoDB实现分布式ID</h4><br>
-MongoDB的ObjectId设计成轻量型的，不同的机器，都可以用全局唯一的同种方法方便的生成它。MongoDB从一开始就设计用来作为分布式数据库，处理多个节点是一个核心的要求。使其在分片环境中要容易生成得多。<br>
-##### 原理：
-格式如下：<br>
-
-<p><img src="http://upload-images.jianshu.io/upload_images/2279594-fa59770ee4c176cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="ObjectId" title="ObjectId"></p>
+<h3 id="jdk动态代理"><a href="#jdk动态代理" class="headerlink" title="jdk动态代理"></a>jdk动态代理</h3><p>在java.lang.reflect中有一个代理类Proxy</p>
+<p>注意：如果使用jdk的动态代理，那么Proxy方式实现的目标对象，必须有接口，没有接口不能使用该方式实现动态代理。</p>
+<p>统一接口：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public interface TragetInterface&#123;</span><br><span class="line">	void method1();</span><br><span class="line">	void method2();</span><br><span class="line">	int method3(Integer number);</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+<p>目标类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Target implements TargetInterface&#123;</span><br><span class="line">	@Override</span><br><span class="line">    public void method1() &#123;</span><br><span class="line">        System.out.println(&quot;method1 running ...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    public void method2() &#123;</span><br><span class="line">        System.out.println(&quot;method2 running ...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    @Override</span><br><span class="line">    public int method3(Integer number) &#123;</span><br><span class="line">        System.out.println(&quot;method3 running ...&quot;);</span><br><span class="line">        return number;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代理工厂类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class ProxyFactory &#123;</span><br><span class="line">    static &lt;T&gt; Object getProxy(T t)&#123;</span><br><span class="line">        &#x2F;&#x2F;返回一个代理对象</span><br><span class="line">        Object object &#x3D; Proxy.newProxyInstance(t.getClass().getClassLoader(), t.getClass().getInterfaces(), new InvocationHandler() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">                &#x2F;&#x2F; proxy就是目标对象，method就是调用目标对象中方法，args就是调用目标对象中方法的参数。</span><br><span class="line">                &#x2F;&#x2F;比如说：代理对象.method1(),这时proxy就是目标类，method1就是method,args就是method1方法参数。</span><br><span class="line">                System.out.println(&quot;执行方法前...&quot;);</span><br><span class="line">                Object invoke &#x3D; method.invoke(t, args);</span><br><span class="line">                System.out.println(&quot;执行方法后...&quot;);</span><br><span class="line">                return invoke;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        return object;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用者类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class User &#123;</span><br><span class="line">     public static void main(String[] args) &#123;</span><br><span class="line">        Target target &#x3D; new Target();</span><br><span class="line">        TargetInterface proxy &#x3D; (TargetInterface) ProxyFactory.getProxy(target);</span><br><span class="line">        proxy.method1();</span><br><span class="line">        System.out.println(&quot;-------------------------&quot;);</span><br><span class="line">        proxy.method2();</span><br><span class="line">        System.out.println(&quot;-------------------------&quot;);</span><br><span class="line">        int number &#x3D; proxy.method3(100);</span><br><span class="line">        System.out.println(number);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="cglib代理"><a href="#cglib代理" class="headerlink" title="cglib代理"></a>cglib代理</h3><p>cglib是一种第三方代理，原理是可以对目标对象的接口实现代理，也可以进行继承代理(不能对final修饰的代理继承)。需要引入cglib才行，spring本身自带了cglib，aop本身已经实现了cglib和jdk自带的代理了。</p>
+<p>代码实现如下：</p>
+<p>目标类：（可以不用实现接口，因为生成的代理类是目标类的子类）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class Target &#123;</span><br><span class="line">    public void method1() &#123;</span><br><span class="line">        System.out.println(&quot;method1 running ...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void method2() &#123;</span><br><span class="line">        System.out.println(&quot;method2 running ...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public int method3(Integer i) &#123;</span><br><span class="line">        System.out.println(&quot;method3 running ...&quot;);</span><br><span class="line">        return i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>CglibFactory类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class CglibFactory &#123;</span><br><span class="line"> </span><br><span class="line">    static &lt;T&gt; Object getProxy(T t)&#123;</span><br><span class="line">        Enhancer en &#x3D; new Enhancer(); &#x2F;&#x2F;帮我们生成代理对象</span><br><span class="line">        en.setSuperclass(t.getClass());&#x2F;&#x2F;设置要代理的目标类</span><br><span class="line">        en.setCallback(new MethodInterceptor() &#123;&#x2F;&#x2F;代理要做什么</span><br><span class="line">            @Override</span><br><span class="line">            public Object intercept(Object object, Method method, Object[] args, MethodProxy methodProxy) throws Throwable &#123;</span><br><span class="line">                System.out.println(&quot;执行方法前。。。&quot;);</span><br><span class="line">                &#x2F;&#x2F;调用原有方法  </span><br><span class="line">                Object invoke &#x3D; methodProxy.invokeSuper(object, args);</span><br><span class="line">&#x2F;&#x2F;              Object invoke &#x3D; method.invoke(t,args); 作用等同与上面。</span><br><span class="line">                System.out.println(&quot;执行方法后。。。&quot;);</span><br><span class="line">                return invoke;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        Object proxyObj &#x3D; en.create();&#x2F;&#x2F;生成代理对象</span><br><span class="line">        return proxyObj;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Created by Ming on 2017&#x2F;11&#x2F;25.</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class User &#123;</span><br><span class="line"> </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Target target &#x3D; new Target();</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        TargetInterface proxy &#x3D; (TargetInterface) CglibFactory.getProxy(target);</span><br><span class="line"> </span><br><span class="line">        System.out.println(proxy.method3(100));</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>说明：Spring AOP使用的就是动态代理。使用了jdk代理和cglib代理，比如Spring的事务也是使用的aop实现的，如果目标类没有实现接口的话，就会使用cglib代理。</p>
+<p>总结：</p>
 <ul>
-<li><p>前4 个字节是从标准纪元开始的时间戳，单位为秒。时间戳，与随后的5 个字节组合起来，提供了秒级别的唯一性。由于时间戳在前，这意味着ObjectId 大致会按照插入的顺序排列。这对于某些方面很有用，如将其作为索引提高效率。这4 个字节也隐含了文档创建的时间。绝大多数客户端类库都会公开一个方法从ObjectId 获取这个信息。</p>
-</li>
-<li><p>接下来的3 字节是所在主机的唯一标识符。通常是机器主机名的散列值。这样就可以确保不同主机生成不同的ObjectId，不产生冲突。为了确保在同一台机器上并发的多个进程产生的ObjectId 是唯一的，接下来的两字节来自产生ObjectId 的进程标识符（PID）。</p>
-</li>
-<li><p>前9 字节保证了同一秒钟不同机器不同进程产生的ObjectId 是唯一的。</p>
-</li>
-<li><p>后3 字节就是一个自动增加的计数器，确保相同进程同一秒产生的ObjectId 也是不一样的。同一秒钟最多允许每个进程拥有2563（16 777 216）个不同的ObjectId。</p>
-</li>
+<li>静态代理需要自己写代理类和目标方法</li>
+<li>动态代理不需要自己实现代理类和目标方法，但是动态代理的目标类必须要实现接口。</li>
+<li>cglib代理的目标类可以实现接口也可以不实现，因可以使用继承子类的方式代理。</li>
 </ul>
-<h5 id="编码："><a href="#编码：" class="headerlink" title="编码："></a>编码：</h5><ul>
-<li>在springboot中引入MongoDB：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;!--mvc--&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-web&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--lombok--&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.projectlombok&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;lombok&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;optional&gt;true&lt;&#x2F;optional&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-test&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-test&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;scope&gt;test&lt;&#x2F;scope&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--mongodb --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-data-mongodb&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建一个实体类</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.cetc.entity;</span><br><span class="line"></span><br><span class="line">import lombok.Data;</span><br><span class="line">import org.springframework.data.annotation.Id;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @ClassName: Customer</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author: Sopp</span><br><span class="line"> * @Date: 2019&#x2F;4&#x2F;26 10:38</span><br><span class="line"> **&#x2F;</span><br><span class="line">@Data</span><br><span class="line">public class Customer &#123;</span><br><span class="line">    @Id</span><br><span class="line">    public String id;</span><br><span class="line"></span><br><span class="line">    public String firstName;</span><br><span class="line">    public String lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建mongodb接口类：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.cetc.dao;</span><br><span class="line"></span><br><span class="line">import com.cetc.entity.Customer;</span><br><span class="line">import org.springframework.data.mongodb.repository.MongoRepository;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @ClassName: CustomerRepository</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author: Sopp</span><br><span class="line"> * @Date: 2019&#x2F;4&#x2F;26 10:39</span><br><span class="line"> **&#x2F;</span><br><span class="line">public interface CustomerRepository extends MongoRepository&lt;Customer, String&gt; &#123;</span><br><span class="line">    public Customer findByFirstName(String firstName);</span><br><span class="line"></span><br><span class="line">    public List&lt;Customer&gt; findByLastName(String lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建测试类</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import com.cetc.dao.CustomerRepository;</span><br><span class="line">import com.cetc.entity.Customer;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @ClassName: TestMongodb</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author: Sopp</span><br><span class="line"> * @Date: 2019&#x2F;4&#x2F;26 10:40</span><br><span class="line"> **&#x2F;</span><br><span class="line">@Slf4j</span><br><span class="line">public class TestMongodb &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    CustomerRepository customerRepository;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void mongodbIdTest() &#123;</span><br><span class="line">        Customer customer &#x3D; new Customer(&quot;lxdxil&quot;, &quot;dd&quot;);</span><br><span class="line">        customer &#x3D; customerRepository.save(customer);</span><br><span class="line">        log.info(&quot;mongodbId:&quot; + customer.getId());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+]]></content>
       <categories>
-        <category>分布式</category>
+        <category>设计模式</category>
       </categories>
       <tags>
-        <tag>分布式id</tag>
+        <tag>设计模式-代理模式</tag>
       </tags>
   </entry>
   <entry>
@@ -383,6 +482,8 @@ MongoDB的ObjectId设计成轻量型的，不同的机器，都可以用全局�
     <content><![CDATA[<h1 id="一、Http协议介绍"><a href="#一、Http协议介绍" class="headerlink" title="一、Http协议介绍"></a>一、Http协议介绍</h1><h2 id="1-1-什么Http"><a href="#1-1-什么Http" class="headerlink" title="1.1 什么Http"></a>1.1 什么Http</h2><p>Http是<strong>超文本传输协议</strong>(Hyper Text Transfer Protocol)的缩写。<br>协议位于TCP/IP协议栈的应用层。<br><br></p>
 <p>Http是一个客户端和服务器端请求和应答的标准，主要用于www(万维网)服务器传输超文本到本地浏览器之间的请求数据和响应数据的协议。客户端通过使用网页浏览器或者其他工具发起一个Http请求到服务器指定的端口:默认端口80，服务器接收到请求过后，返回响应内容(文本、图片等)。<br></p>
 <p>Http协议是基于TCP协议来进行数据的传输的。</p>
+<a id="more"></a>
+
 <h2 id="1-2-Http的版本"><a href="#1-2-Http的版本" class="headerlink" title="1.2 Http的版本"></a>1.2 Http的版本</h2><p>Http协议已经演化出了很多版本，他们中的大部分都是向下兼容的。客户端在请求的开始告诉服务器它采用的协议版本号，然后后者则在响应中采用相同或者更加早的协议版本，现在大多都是1.1的版本。</p>
 <ul>
 <li><p><strong>1.0 版本</strong>： Http协议非常老的标准，为了提高系统的效率，Http1.0规定浏览器与服务器只需要保持短暂的连接，浏览器每次请求都需要与服务器建立一个TCP连接，服务器完成请求处理后，立即断开TCP连接，服务器不跟踪每个客户端也不记录每一个的请求。正是因为这种特性造成了一些性能上的缺陷。</p>
@@ -402,8 +503,6 @@ MongoDB的ObjectId设计成轻量型的，不同的机器，都可以用全局�
 <li>URL用来描述资源的位置来标识资源。</li>
 <li>URN通过资源名字来标识资源，与其所在位置无关，这样即便资源的位置发生改变，URN也不会改变。</li>
 </ol>
-<a id="more"></a>
-
 <h2 id="2-2-消息请求格式"><a href="#2-2-消息请求格式" class="headerlink" title="2.2 消息请求格式"></a>2.2 消息请求格式</h2><p>Http的消息请求主要包含以下三个部分：</p>
 <ul>
 <li>请求行</li>
@@ -588,6 +687,192 @@ post请求专属：</li>
       </categories>
       <tags>
         <tag>网络-http</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分布式id策略</title>
+    <url>/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/</url>
+    <content><![CDATA[<h1 id="springboot中-全局ID的生成-分布式ID"><a href="#springboot中-全局ID的生成-分布式ID" class="headerlink" title="springboot中-全局ID的生成(分布式ID)"></a>springboot中-全局ID的生成(分布式ID)</h1><h3 id="一、背景知识"><a href="#一、背景知识" class="headerlink" title="一、背景知识"></a>一、背景知识</h3><p>在分布式系统中，经常需要对大量的数据，消息，http请求等进行唯一的标识。<br>常见的，就是在springcloud中，对请求路径进行记录，一般使用链路分析的时候，必须要对请求，使用唯一标识，这个时候如果直接使用数据库自增的id，不能满足实际情况，这个时候，只能使用生成唯一ID的系统，该系统必须满足以下的要求：<br></p>
+<ul>
+<li>全局唯一性：不能出现重复的ID。</li>
+<li>高可用：ID生成系统是基础系统，被许多关键系统调用，如果GG(宕机)，会很被锤。</li>
+</ul>
+<h4 id="经典方案："><a href="#经典方案：" class="headerlink" title="经典方案："></a>经典方案：</h4><ul>
+<li>使用UUID</li>
+<li>使用数据库自增ID</li>
+<li>使用redis的incr命令生成(本文不讲述)</li>
+<li>使用Twitter的snowflake(雪花)算法</li>
+<li>利用zookeeper生成唯一ID</li>
+<li>MongoDB的ObjectId<br></li>
+</ul>
+<a id="more"></a>
+
+<h4 id="经典方案实现"><a href="#经典方案实现" class="headerlink" title="经典方案实现"></a>经典方案实现</h4><h4 id="1-UUID"><a href="#1-UUID" class="headerlink" title="1. UUID"></a>1. UUID</h4><p><br>&emsp;UUID是在一定范围内唯一的机器生成的标识符，UUID一般是生成32位或者36位，唯一局别是是否存在对应-号。<br><br>&emsp;UUID生成规则为：网卡MAC地址+时间戳+名字空间+随机或者伪随机数+时序等元素，UUID的复杂性，保证了它的唯一性，意味着只能由计算机生成。<br><br></p>
+<h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h5><ul>
+<li>本地生成ID，不需要远程调用，延迟低，性能很高。<br></li>
+</ul>
+<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h5><ul>
+<li>UUID过程，很多场景，例如数据库索引字段，很不适合。</li>
+<li>没有排序，没办法趋势的递增。</li>
+</ul>
+<h4 id="2-使用数据库自增ID"><a href="#2-使用数据库自增ID" class="headerlink" title="2. 使用数据库自增ID"></a>2. 使用数据库自增ID</h4><p><br>&emsp;例如：使用mysql的自增主键id。<br><br></p>
+<h5 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h5><ul>
+<li>充分借助了数据库的自增ID机制，可靠性高，生成有序的ID。</li>
+</ul>
+<br>
+##### 缺点：
+- ID生成性能依赖单台数据库读写性能
+- 依赖数据库，当数据库GG，全部都不可用。
+
+
+<h4 id="3-使用雪花算法生成"><a href="#3-使用雪花算法生成" class="headerlink" title="3. 使用雪花算法生成"></a>3. 使用雪花算法生成</h4><p><br>&emsp; 这种方案生成一个64bit的数字，这个数字被分成多个段，分别表示时间戳、机器编码、序号。<br><br><br><br><img src="http://www.dubby.cn/upload/1508161671799snowflake-64bit.jpg" alt="雪花算法" title="雪花算法"></p>
+<h5 id="ID为64bit-的long-数字，由三部分组成："><a href="#ID为64bit-的long-数字，由三部分组成：" class="headerlink" title="ID为64bit 的long 数字，由三部分组成："></a>ID为64bit 的long 数字，由三部分组成：</h5><ul>
+<li>41位的时间序列(精确到毫秒，41位的长度可以使用69年)。</li>
+<li>10位的机器标识(10位的长度最多支持部署1024个节点)。</li>
+<li>12位的计数顺序号(12位的计数顺序号支持每个节点每毫秒产生4096个ID序号)。</li>
+</ul>
+<br>
+##### 优点:
+- 时间戳在高位，自增序列在低位，整个ID是趋势递增的，按照时间有序。
+- 性能高，每秒可生成几百万ID。
+- 可以根据自身业务需求灵活调整bit位划分，满足不同需求。
+
+<h5 id="缺点：-1"><a href="#缺点：-1" class="headerlink" title="缺点："></a>缺点：</h5><ul>
+<li>依赖机器时钟，如果机器时钟回拨，会导致重复ID生成。</li>
+<li>在单机上是递增的，但是由于涉及到分布式环境，每台机器上的时钟不可能完全同步，有时候会出现不是全局递增的情况。</li>
+</ul>
+<h4 id="4-利用zookeeper生成唯一ID"><a href="#4-利用zookeeper生成唯一ID" class="headerlink" title="4. 利用zookeeper生成唯一ID"></a>4. 利用zookeeper生成唯一ID</h4><p>代码如下：</p>
+<ul>
+<li><p>引入依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.zookeeper&lt;&#x2F;groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;zookeeper&lt;&#x2F;artifactId&gt;</span><br><span class="line">	&lt;version&gt;3.4.12&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.curator&lt;&#x2F;groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;curator-framework&lt;&#x2F;artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.8.0&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.curator&lt;&#x2F;groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;curator-recipes&lt;&#x2F;artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.8.0&lt;&#x2F;version&gt;</span><br><span class="line">&lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>编写代码</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.sopp.learning;</span><br><span class="line"></span><br><span class="line">import org.apache.curator.RetryPolicy;</span><br><span class="line">import org.apache.curator.framework.CuratorFramework;</span><br><span class="line">import org.apache.curator.framework.CuratorFrameworkFactory;</span><br><span class="line">import org.apache.curator.retry.ExponentialBackoffRetry;</span><br><span class="line">import org.apache.zookeeper.CreateMode;</span><br><span class="line">import org.apache.zookeeper.data.Stat;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.ExecutorService;</span><br><span class="line">import java.util.concurrent.Executors;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class DistributedIdGeneraterService &#123;</span><br><span class="line"></span><br><span class="line">    private static CuratorFramework curatorFrameworkClient;</span><br><span class="line"></span><br><span class="line">    private static RetryPolicy retryPolicy;</span><br><span class="line"></span><br><span class="line">    private static ExecutorService executorService;</span><br><span class="line"></span><br><span class="line">    private static String IP_TOSTRING &#x3D; &quot;10.200.121.46:2181,10.200.121.43:2181,10.200.121.167:2181&quot;;</span><br><span class="line"></span><br><span class="line">    private static String ROOT &#x3D; &quot;&#x2F;root&quot;;</span><br><span class="line"></span><br><span class="line">    private static String NODE_NAME &#x3D; &quot;idgenerator&quot;;</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        retryPolicy &#x3D; new ExponentialBackoffRetry(1000, 3);</span><br><span class="line">        curatorFrameworkClient &#x3D; CuratorFrameworkFactory</span><br><span class="line">                .builder()</span><br><span class="line">                .connectString(IP_TOSTRING)</span><br><span class="line">                .sessionTimeoutMs(5000)</span><br><span class="line">                .connectionTimeoutMs(5000)</span><br><span class="line">                .retryPolicy(retryPolicy)</span><br><span class="line">                .build();</span><br><span class="line">        curatorFrameworkClient.start();</span><br><span class="line">        try &#123;</span><br><span class="line">            executorService &#x3D; Executors.newFixedThreadPool(10);</span><br><span class="line">            &#x2F;&#x2F;请先判断父节点&#x2F;root节点是否存在</span><br><span class="line">            Stat stat &#x3D; curatorFrameworkClient.checkExists().forPath(ROOT);</span><br><span class="line">            if (stat &#x3D;&#x3D; null) &#123;</span><br><span class="line">                curatorFrameworkClient.create().withMode(CreateMode.PERSISTENT).forPath(ROOT, null);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static String generateId() &#123;</span><br><span class="line">        String backPath &#x3D; &quot;&quot;;</span><br><span class="line"></span><br><span class="line">        String fullPath &#x3D; ROOT.concat(&quot;&#x2F;&quot;).concat(NODE_NAME);</span><br><span class="line">        try &#123;</span><br><span class="line">            &#x2F;&#x2F; 关键点：创建持久顺序节点</span><br><span class="line">            backPath &#x3D; curatorFrameworkClient.create().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(fullPath, null);</span><br><span class="line">            &#x2F;&#x2F;为防止生成的节点浪费系统资源，故生成后异步删除此节点</span><br><span class="line">            String finalBackPath &#x3D; backPath;</span><br><span class="line">            executorService.execute(() -&gt; &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    curatorFrameworkClient.delete().forPath(finalBackPath);</span><br><span class="line">                &#125; catch (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            String ID &#x3D; this.splitID(backPath);</span><br><span class="line">            System.out.println(&quot;生成的ID&#x3D;&quot; + ID);</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        return backPath;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String splitID(String path) &#123;</span><br><span class="line">        int index &#x3D; path.lastIndexOf(NODE_NAME);</span><br><span class="line">        if (index &gt;&#x3D; 0) &#123;</span><br><span class="line">            index +&#x3D; NODE_NAME.length();</span><br><span class="line">            return index &lt;&#x3D; path.length() ? path.substring(index) : &quot;&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        return path;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-使用MongoDB实现分布式ID"><a href="#5-使用MongoDB实现分布式ID" class="headerlink" title="5.使用MongoDB实现分布式ID"></a>5.使用MongoDB实现分布式ID</h4><br>
+MongoDB的ObjectId设计成轻量型的，不同的机器，都可以用全局唯一的同种方法方便的生成它。MongoDB从一开始就设计用来作为分布式数据库，处理多个节点是一个核心的要求。使其在分片环境中要容易生成得多。<br>
+##### 原理：
+格式如下：<br>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/2279594-fa59770ee4c176cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="ObjectId" title="ObjectId"></p>
+<ul>
+<li><p>前4 个字节是从标准纪元开始的时间戳，单位为秒。时间戳，与随后的5 个字节组合起来，提供了秒级别的唯一性。由于时间戳在前，这意味着ObjectId 大致会按照插入的顺序排列。这对于某些方面很有用，如将其作为索引提高效率。这4 个字节也隐含了文档创建的时间。绝大多数客户端类库都会公开一个方法从ObjectId 获取这个信息。</p>
+</li>
+<li><p>接下来的3 字节是所在主机的唯一标识符。通常是机器主机名的散列值。这样就可以确保不同主机生成不同的ObjectId，不产生冲突。为了确保在同一台机器上并发的多个进程产生的ObjectId 是唯一的，接下来的两字节来自产生ObjectId 的进程标识符（PID）。</p>
+</li>
+<li><p>前9 字节保证了同一秒钟不同机器不同进程产生的ObjectId 是唯一的。</p>
+</li>
+<li><p>后3 字节就是一个自动增加的计数器，确保相同进程同一秒产生的ObjectId 也是不一样的。同一秒钟最多允许每个进程拥有2563（16 777 216）个不同的ObjectId。</p>
+</li>
+</ul>
+<h5 id="编码："><a href="#编码：" class="headerlink" title="编码："></a>编码：</h5><ul>
+<li>在springboot中引入MongoDB：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;!--mvc--&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-web&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--lombok--&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.projectlombok&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;lombok&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;optional&gt;true&lt;&#x2F;optional&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-test&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-test&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;scope&gt;test&lt;&#x2F;scope&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--mongodb --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-data-mongodb&lt;&#x2F;artifactId&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;dependencies&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建一个实体类</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.cetc.entity;</span><br><span class="line"></span><br><span class="line">import lombok.Data;</span><br><span class="line">import org.springframework.data.annotation.Id;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @ClassName: Customer</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author: Sopp</span><br><span class="line"> * @Date: 2019&#x2F;4&#x2F;26 10:38</span><br><span class="line"> **&#x2F;</span><br><span class="line">@Data</span><br><span class="line">public class Customer &#123;</span><br><span class="line">    @Id</span><br><span class="line">    public String id;</span><br><span class="line"></span><br><span class="line">    public String firstName;</span><br><span class="line">    public String lastName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建mongodb接口类：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.cetc.dao;</span><br><span class="line"></span><br><span class="line">import com.cetc.entity.Customer;</span><br><span class="line">import org.springframework.data.mongodb.repository.MongoRepository;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @ClassName: CustomerRepository</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author: Sopp</span><br><span class="line"> * @Date: 2019&#x2F;4&#x2F;26 10:39</span><br><span class="line"> **&#x2F;</span><br><span class="line">public interface CustomerRepository extends MongoRepository&lt;Customer, String&gt; &#123;</span><br><span class="line">    public Customer findByFirstName(String firstName);</span><br><span class="line"></span><br><span class="line">    public List&lt;Customer&gt; findByLastName(String lastName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建测试类</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import com.cetc.dao.CustomerRepository;</span><br><span class="line">import com.cetc.entity.Customer;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @ClassName: TestMongodb</span><br><span class="line"> * @Description: TODO</span><br><span class="line"> * @Author: Sopp</span><br><span class="line"> * @Date: 2019&#x2F;4&#x2F;26 10:40</span><br><span class="line"> **&#x2F;</span><br><span class="line">@Slf4j</span><br><span class="line">public class TestMongodb &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    CustomerRepository customerRepository;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void mongodbIdTest() &#123;</span><br><span class="line">        Customer customer &#x3D; new Customer(&quot;lxdxil&quot;, &quot;dd&quot;);</span><br><span class="line">        customer &#x3D; customerRepository.save(customer);</span><br><span class="line">        log.info(&quot;mongodbId:&quot; + customer.getId());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>分布式</category>
+      </categories>
+      <tags>
+        <tag>分布式id</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>多线程基本学习</title>
+    <url>/2021/03/13/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E6%9C%AC/</url>
+    <content><![CDATA[<h1 id="多线程学习-线程基本"><a href="#多线程学习-线程基本" class="headerlink" title="多线程学习-线程基本"></a>多线程学习-线程基本</h1><ol>
+<li><h2 id="线程有哪些实现方式？"><a href="#线程有哪些实现方式？" class="headerlink" title="线程有哪些实现方式？"></a>线程有哪些实现方式？</h2><p>常见的线程有哪些实现方式？分别来看下：</p>
+<p>先来看看两种实现方式的代码：</p>
+<h4 id="实现Runnable接口"><a href="#实现Runnable接口" class="headerlink" title="实现Runnable接口"></a>实现Runnable接口</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RunnableThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;用实现Runnable接口实现多线程&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方式确实可以实现多线程，只需要实现Ruunable接口，重写run方法，然后把这个实现了run方法的实例传递到Thread类中即可实现多线程。</p>
+<h4 id="继承Thread类"><a href="#继承Thread类" class="headerlink" title="继承Thread类"></a>继承Thread类</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExtendsThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;通过继承Thread类实现多线程&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h4 id="线程池创建线程"><a href="#线程池创建线程" class="headerlink" title="线程池创建线程"></a>线程池创建线程</h4><p>为什么还有第三种或者第四种创建线程的方式呢？先看下第三种方式：通过创建线程池来创建线程，但是我们还是来看下线程池是如何实现线程创建的呢？</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">static class DefaultThreadFactory implements ThreadFactory &#123;</span><br><span class="line">  </span><br><span class="line">    DefaultThreadFactory() &#123;</span><br><span class="line">        SecurityManager s &#x3D; System.getSecurityManager();</span><br><span class="line">        group &#x3D; (s !&#x3D; null) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup();</span><br><span class="line">        namePrefix &#x3D; &quot;pool-&quot; + poolNumber.getAndIncrement() + &quot;-thread-&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Thread newThread(Runnable r) &#123;</span><br><span class="line">        Thread t &#x3D; new Thread(group, r,namePrefix + threadNumber.getAndIncrement(),0);</span><br><span class="line">        if (t.isDaemon())&#123;</span><br><span class="line">          t.setDaemon(false);</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">        if (t.getPriority() !&#x3D; Thread.NORM_PRIORITY)&#123;</span><br><span class="line">          t.setPriority(Thread.NORM_PRIORITY);</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">        return t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于线程池来说，本质来说是通过线程工厂来创建线程的，默认采用的是 DefaultThreadFactory ，它会给线程池创建的线程设置一些默认值，比如：线程的</p>
+<p>名字、线程是否守护线程、以及线程的优先级等。但是无论怎么设置，最后都是通过new Thread() 来创建的，只不过传参更多了一点而已。</p>
+<h4 id="有返回值的Callable创建线程"><a href="#有返回值的Callable创建线程" class="headerlink" title="有返回值的Callable创建线程"></a>有返回值的Callable创建线程</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class CallableTask implements Callable&lt;Integer&gt; &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Integer call() throws Exception &#123;</span><br><span class="line">        return new Random().nextInt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;创建线程池</span><br><span class="line">ExecutorService service &#x3D; Executors.newFixedThreadPool(10);</span><br><span class="line">&#x2F;&#x2F;提交任务，并用 Future提交返回结果</span><br><span class="line">Future&lt;Integer&gt; future &#x3D; service.submit(new CallableTask());</span><br><span class="line"></span><br><span class="line">System.out.println(future.get());</span><br></pre></td></tr></table></figure>
+<p>第 4 种线程创建方式是通过有返回值的 Callable 创建线程，Runnable 创建线程是无返回值的，而 Callable 和与之相关的 Future、FutureTask，它们可以把</p>
+<p>线程执行的结果作为返回值返回，如代码所示，实现了 Callable 接口，并且给它的泛型设置成 Integer，然后它会返回一个随机数。</p>
+<p>但是，无论是 Callable 还是 FutureTask，它们首先和 Runnable 一样，都是一个任务，是需要被执行的，而不是说它们本身就是线程。它们可以放到线程池</p>
+<p>中执行，如代码所示， submit() 方法把任务放到线程池中，并由线程池创建线程，不管用什么方法，最终都是靠线程来执行的，而子线程的创建方式仍脱离不</p>
+<p>了最开始讲的两种基本方式，也就是实现 Runnable 接口和继承 Thread 类。</p>
+<h3 id="其他方式"><a href="#其他方式" class="headerlink" title="其他方式"></a>其他方式</h3><h4 id="定时器Timer"><a href="#定时器Timer" class="headerlink" title="定时器Timer"></a>定时器Timer</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class TimerThread extends Thread &#123;</span><br><span class="line">	&#x2F;&#x2F;具体实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果新建一个 Timer，令其每隔 10 秒或设置两个小时之后，执行一些任务，那么这时它确实也创建了线程并执行了任务，但如果我们深入分析定时器的源码</p>
+<p>会发现，本质上它还是会有一个继承自 Thread 类的 TimerThread，所以定时器创建线程最后又绕回到最开始说的两种方式。</p>
+<h3 id="实现线程只有一种方式"><a href="#实现线程只有一种方式" class="headerlink" title="实现线程只有一种方式"></a>实现线程只有一种方式</h3><p>事实上创建线程只有一种方式，就是<strong>构造一个Thread类</strong>，这是创建线程的唯一方式。</p>
+<h3 id="实现Runnable接口比继承Thread类实现线程要好"><a href="#实现Runnable接口比继承Thread类实现线程要好" class="headerlink" title="实现Runnable接口比继承Thread类实现线程要好"></a>实现Runnable接口比继承Thread类实现线程要好</h3><p>使用Runnable接口实现线程比Thread类好的原因如下：</p>
+<ul>
+<li>解耦，Runnable中的run放啊，定义需要执行的内容，Thread类负责线程启动和属性设置，权责分明，解耦。</li>
+<li>提高性能，使用Thread类，如果只是打印一个小内容，都需要线程创建与销毁，非常耗费性能，但是如果使用Runnable方式，就直接传递对应对象到线程池中，需要就执行，不需要就归还给线程池，不用销毁。</li>
+<li>继承并不方便扩展。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>线程基本</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>红黑树</title>
+    <url>/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/</url>
+    <content><![CDATA[<h1 id="关于红黑树的那点事儿"><a href="#关于红黑树的那点事儿" class="headerlink" title="关于红黑树的那点事儿"></a>关于红黑树的那点事儿</h1><blockquote>
+<p>本文参考于<a href="http://www.360doc.com/content/18/0904/19/25944647_783893127.shtml">http://www.360doc.com/content/18/0904/19/25944647_783893127.shtml</a></p>
+</blockquote>
+<p>&emsp;关于红黑树，我们可能是即熟悉又陌生，在大学的几年撸代码生涯中，老师或多或少会讲述关于红黑树的问题，<br>但是一般只有当我们面试的时候，或者校招的时候，才会花时间去了解和复习什么是红黑树。今天来记录一下，自己关于红黑树的复习与理解。</p>
+<p>  &emsp;在进入红黑树的学习之前，必须要了解一个东西，叫做-二叉查找树(BST)<br></p>
+<p>  &emsp;二叉查找树的特性如下：</p>
+<ul>
+<li>左子树上所有的节点的值均小于或等于他的根节点的值。</li>
+<li>右子数上所有的节点的值均大于或等于他的根节点的值。</li>
+<li>左右子树也一定分别为二叉排序树。</li>
+</ul>
+<a id="more"></a>
+
+<p>  以下为一颗二叉查找树：</p>
+<p>  <img src="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91.png" alt="二叉查找树"></p>
+<p>&emsp;为什么一定要有这种结构呢？这种结构的好处在哪里呢？<br>接下来我们来查找一下值为10这个节点的数据，看一下具体的步骤是怎样的：<br><br></p>
+<ol>
+<li>查找跟节点9，如图所示：</li>
+</ol>
+<p>  <img src="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/%E8%8A%82%E7%82%B99.png" alt="节点9"></p>
+<ol start="2">
+<li>由于查找的节点值为10,10大于根节点9，那么久表示需要查询右边孩子节点13，如图：</li>
+</ol>
+<p>  <img src="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/%E8%8A%82%E7%82%B913.png" alt="节点13"></p>
+<ol start="3">
+<li>由于查询的值10 &lt; 13，那么久查询左孩子节点11：如图：</li>
+</ol>
+<p>  <img src="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/%E8%8A%82%E7%82%B911.png" alt="节点11"></p>
+<ol start="4">
+<li>由于查询的值10 &lt; 11,那么查询左节点10，最终查询到10这个节点值，如图：</li>
+</ol>
+<p>  <img src="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/%E8%8A%82%E7%82%B910.png" alt="节点10"></p>
+<p>经历了以上4步操作，最终查找到了节点数据为10的子节点。<br>以上的操作，是参照了二分查找的思想</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>红黑树-算法</tag>
       </tags>
   </entry>
 </search>
