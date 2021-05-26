@@ -17,13 +17,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"sopp.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"zipperli.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="对于TCP&#x2F;IP的理解&amp;emsp;在很多人面试的时候，都遇见过招聘要求上要求这一项  精通TCP&#x2F;IP，熟练使用Socket进行网络编程。  看到这句话，贼提莫熟悉，很多人都觉得这些东西，在我们实际的开发中遇不到，楼主在很早之前也是一样的想法，但是越工作，就越来越觉得这些知识很重要。下面我们就来了解以下什么是TCP&#x2F;IP。 一、什么是TCP&#x2F;IPtcp&#x2F;ip是一类协议系统，它是用于网络通信的一套协">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TCP&#x2F;IP的理解">
-<meta property="og:url" content="http://sopp.gitee.io/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:url" content="http://zipperli.github.io/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="对于TCP&#x2F;IP的理解&amp;emsp;在很多人面试的时候，都遇见过招聘要求上要求这一项  精通TCP&#x2F;IP，熟练使用Socket进行网络编程。  看到这句话，贼提莫熟悉，很多人都觉得这些东西，在我们实际的开发中遇不到，楼主在很早之前也是一样的想法，但是越工作，就越来越觉得这些知识很重要。下面我们就来了解以下什么是TCP&#x2F;IP。 一、什么是TCP&#x2F;IPtcp&#x2F;ip是一类协议系统，它是用于网络通信的一套协">
 <meta property="og:locale" content="zh_CN">
@@ -33,7 +33,7 @@
 <meta property="article:tag" content="TCP&#x2F;IP">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://sopp.gitee.io/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/">
+<link rel="canonical" href="http://zipperli.github.io/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/">
 
 
 <script id="page-configurations">
@@ -208,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://sopp.gitee.io/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -355,8 +355,8 @@
       <i class="fa fa-chevron-left"></i> docker容器mysql时间不同步
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" rel="next" title="红黑树">
-      红黑树 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/" rel="next" title="kafka基本理解">
+      kafka基本理解 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
