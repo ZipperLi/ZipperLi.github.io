@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"zipperli.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="对于TCP&#x2F;IP的理解&amp;emsp;在很多人面试的时候，都遇见过招聘要求上要求这一项  精通TCP&#x2F;IP，熟练使用Socket进行网络编程。  看到这句话，贼提莫熟悉，很多人都觉得这些东西，在我们实际的开发中遇不到，楼主在很早之前也是一样的想法，但是越工作，就越来越觉得这些知识很重要。下面我们就来了解以下什么是TCP&#x2F;IP。 一、什么是TCP&#x2F;IPtcp&#x2F;ip是一类协议系统，它是用于网络通信的一套协">
+  <meta name="description" content="Linux 5种IO模型阻塞式IO模型最传统的一种IO模型，即在读写的过程中会发生阻塞现象。 当用户线程发出IO请求过后，内核回去查看数据是否就绪，如果没有就绪，就等待数据就绪，而用户线程会阻塞，用户线程交出CPU。当数据就绪过后，内核会把 数据拷贝到用户线程中，并返回结果给用户线程，用户线程才解除 broken 状态。 典型的阻塞IO模型的例子如下： 1data &#x3D; socket.read();">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TCP&#x2F;IP的理解">
-<meta property="og:url" content="http://zipperli.github.io/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:title" content="Linux 5种IO模型">
+<meta property="og:url" content="http://zipperli.github.io/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Sopp&#39;s 记录">
-<meta property="og:description" content="对于TCP&#x2F;IP的理解&amp;emsp;在很多人面试的时候，都遇见过招聘要求上要求这一项  精通TCP&#x2F;IP，熟练使用Socket进行网络编程。  看到这句话，贼提莫熟悉，很多人都觉得这些东西，在我们实际的开发中遇不到，楼主在很早之前也是一样的想法，但是越工作，就越来越觉得这些知识很重要。下面我们就来了解以下什么是TCP&#x2F;IP。 一、什么是TCP&#x2F;IPtcp&#x2F;ip是一类协议系统，它是用于网络通信的一套协">
+<meta property="og:description" content="Linux 5种IO模型阻塞式IO模型最传统的一种IO模型，即在读写的过程中会发生阻塞现象。 当用户线程发出IO请求过后，内核回去查看数据是否就绪，如果没有就绪，就等待数据就绪，而用户线程会阻塞，用户线程交出CPU。当数据就绪过后，内核会把 数据拷贝到用户线程中，并返回结果给用户线程，用户线程才解除 broken 状态。 典型的阻塞IO模型的例子如下： 1data &#x3D; socket.read();">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-01-14T14:53:34.285Z">
-<meta property="article:modified_time" content="2021-05-26T15:01:21.710Z">
+<meta property="article:published_time" content="2021-06-01T10:15:20.976Z">
+<meta property="article:modified_time" content="2021-06-01T12:39:14.455Z">
 <meta property="article:author" content="Sopp">
-<meta property="article:tag" content="TCP&#x2F;IP">
+<meta property="article:tag" content="I&#x2F;O">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://zipperli.github.io/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/">
+<link rel="canonical" href="http://zipperli.github.io/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>TCP/IP的理解 | Sopp's 记录</title>
+  <title>Linux 5种IO模型 | Sopp's 记录</title>
   
 
 
@@ -208,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -221,7 +221,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          TCP/IP的理解
+          Linux 5种IO模型
         </h1>
 
         <div class="post-meta">
@@ -230,28 +230,22 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
+              <time title="创建时间：2021-06-01 18:15:20 / 修改时间：20:39:14" itemprop="dateCreated datePublished" datetime="2021-06-01T18:15:20+08:00">2021-06-01</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-26 23:01:21" itemprop="dateModified" datetime="2021-05-26T23:01:21+08:00">2021-05-26</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                  <a href="/categories/I-O/" itemprop="url" rel="index"><span itemprop="name">I/O</span></a>
                 </span>
             </span>
 
           
-            <span id="/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="TCP/IP的理解" title="阅读次数">
+            <span id="/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/" class="post-meta-item leancloud_visitors" data-flag-title="Linux 5种IO模型" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -266,8 +260,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -282,57 +276,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="对于TCP-IP的理解"><a href="#对于TCP-IP的理解" class="headerlink" title="对于TCP/IP的理解"></a>对于TCP/IP的理解</h1><p>&emsp;在很多人面试的时候，都遇见过招聘要求上要求这一项</p>
-<blockquote>
-<p>精通TCP/IP，熟练使用Socket进行网络编程。</p>
-</blockquote>
-<p>看到这句话，贼提莫熟悉，很多人都觉得这些东西，在我们实际的开发中遇不到，楼主在很早之前也是一样的想法，但是越工作，就越来越觉得这些知识很重要。<br>下面我们就来了解以下什么是TCP/IP。</p>
-<h2 id="一、什么是TCP-IP"><a href="#一、什么是TCP-IP" class="headerlink" title="一、什么是TCP/IP"></a>一、什么是TCP/IP</h2><p>tcp/ip是一类协议系统，它是用于网络通信的一套协议的集合。<br>传统的tcp/ip被认为是一个四层的协议系统。</p>
-<table>
-  <tr>
-    <th>OSI体系结构</th>
-    <th colspan="2">TCP/IP协议集合</th>
-  </tr>
-
-  <tr>
-    <td>应用层</td>
-    <td rowspan="3">应用层</td>
-    <td rowspan="3">TELNET、FTP、HTTP、SMTP、DNS等</td>
-  </tr>
-  <tr>
-    <td>表示层</td>
-  </tr>
-  <tr>
-    <td>会话层</td>
-  </tr>
-
-  <tr>
-    <td>传输层</td>
-    <td>传输层</td>
-    <td>TCP、UDP</td>
-  </tr>
-  <tr>
-    <td>网络层</td>
-    <td>网络层</td>
-    <td>IP、ICMP、ARP、RARP</td>
-  </tr>
-  <tr>
-    <td>数据链路层</td>
-    <td rowspan="2">网络层</td>
-    <td rowspan="2">各种物理通信网络接口</td>
-  </tr>
-  <tr>
-    <td>物理层</td>
-  </tr>
-</table>
-
+        <h1 id="Linux-5种IO模型"><a href="#Linux-5种IO模型" class="headerlink" title="Linux 5种IO模型"></a>Linux 5种IO模型</h1><h2 id="阻塞式IO模型"><a href="#阻塞式IO模型" class="headerlink" title="阻塞式IO模型"></a>阻塞式IO模型</h2><p>最传统的一种IO模型，即在读写的过程中会发生阻塞现象。</p>
+<p>当用户线程发出IO请求过后，内核回去查看数据是否就绪，如果没有就绪，就等待数据就绪，而用户线程会阻塞，用户线程交出CPU。当数据就绪过后，内核会把</p>
+<p>数据拷贝到用户线程中，并返回结果给用户线程，用户线程才解除 <code>broken</code> 状态。</p>
+<p>典型的阻塞IO模型的例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = socket.read();</span><br></pre></td></tr></table></figure>
+<p>如果数据没有就绪，就会一直阻塞在read方法。</p>
 <a id="more"></a>
 
-<p>对应体系结构解释：</p>
-<h3 id="1-1-网络接口层"><a href="#1-1-网络接口层" class="headerlink" title="1.1 网络接口层"></a>1.1 网络接口层</h3><p>主要是值物理层次的一些接口，比如电缆等。</p>
-<h3 id="1-2-网络层"><a href="#1-2-网络层" class="headerlink" title="1.2 网络层"></a>1.2 网络层</h3><p>提供独立于硬件的逻辑寻址，实现物理地址与逻辑地址的转换。<br>在TCP/IP协议族中，网络层协议包括IP协议(网际协议)，ICMP协议(Internet互联网控制报文协议)，以及IGMP协议(Internet组管理协议)。</p>
-<h3 id="1-3-传输层"><a href="#1-3-传输层" class="headerlink" title="1.3 传输层"></a>1.3 传输层</h3><p>为网络层提供了流量控制，错误控制和确认服务。<br>在TCP/IP协议族中，由两个互不相同的传输协议：TCP(传输控制协议)和UDP(用户数据报协议)。</p>
-<h3 id="1-4-应用层"><a href="#1-4-应用层" class="headerlink" title="1.4 应用层"></a>1.4 应用层</h3><p>为网络拍错，文件传输，远程控制和Internet操作提供具体的应用程序。</p>
+<h2 id="非阻塞式IO模型"><a href="#非阻塞式IO模型" class="headerlink" title="非阻塞式IO模型"></a>非阻塞式IO模型</h2><p>当用户线程发起一个 read 操作过后，并不需要等待，而是马上就得到了一个结果。如果结果是一个 error 时，它就知道数据还没有准备好，于是它可以再次发送 read 操作。一旦内核中数据准备好了，并且又再一次接收到了用户线程的请求，那么它马上就会将数据拷贝到用户线程，然后返回。</p>
+<p>所以事实上，在非阻塞IO模型中，用户线程需要不断地询问内核数据是否已经就位，也就是非阻塞IO不会交出 CPU，而会一直占用CPU。</p>
+<p>典型的非阻塞IO模型一般如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">	data = socket.read();</span><br><span class="line">	<span class="keyword">if</span>(data != error)&#123;</span><br><span class="line">		<span class="comment">//TODO 在这里处理你的数据</span></span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 但是对于非阻塞IO就有一个非常严重的问题，在 while 循环中需要不断地去询问内核数据是否已经就绪，这样会导致CPU占用非常，因此一般很少使用while循环这种方式来读取数据。</p>
+<h2 id="IO复用模型"><a href="#IO复用模型" class="headerlink" title="IO复用模型"></a>IO复用模型</h2><p>多路复用IO模型就是目前使用的比较多的模型。Java NIO 实际上就是多路复用IO。</p>
+<p>在多路复用IO模型中，会有一个线程不断去轮询多个 socket 的状态，只有当 socket 真正有读写事件的时候，才会真正调用实际的 IO 读写操作。因为在多路复用 </p>
+<p>IO 模型中，只需要使用一个线程就可以管理多个 socket，系统不需要建立新的进程或者线程，也不必维护这些线程和进程，并且只有在真正有 socket 读写事件</p>
+<p>时，才会使用 IO 资源，所以它大大减少了资源占用。</p>
+<p>在 Java NIO 中，，是通过 selector.select() 去查询每一个通道是否有到达事件，如果没有事件，则一直阻塞在哪里，因此这种方式会导致用户线程的阻塞。</p>
+<p>也有人说可，可以采用 多线程 + 阻塞IO 到达类似的效果，但是由于在 多线程+阻塞IO 中，每个 socket 对应一个线程，这样会造成很大的资源占用，并且尤其对于长连接来说，线程的资源一直不会释放，如果后续有很多连接的话，就会造成性能上的瓶颈。</p>
+<p>而多路复用模式，通过一个线程就可以管理多个 socket，只有当 socket 真正有读写事件发生才会占用资源来进行实际的读写操作。因此多路复用IO比较适合连接数比较多的情况。</p>
+<p>另外多路复用IO为何比非阻塞IO模型的效率高是因为在非阻塞IO中，不断地轮询 socket 状态是通过用户线程去做的，而在多路复用IO中，轮询每个 socket 状态是在内核中进行的，这个效率要比用户线程高得多。</p>
+<p>不过要注意的是，多路复用IO模型是通过轮询的方式来检测是否事件到达，并且对到达的事件逐一进行相应。因此对于多路复用IO模型来说，一旦事件响应体很大，那么就会导致后续的事件迟迟得不到处理，并且会影响新的事件轮询。</p>
+<h2 id="信号驱动IO模型"><a href="#信号驱动IO模型" class="headerlink" title="信号驱动IO模型"></a>信号驱动IO模型</h2><p>在信号驱动IO模型中，当用户线程发起一个IO请求操作，会给对应的socket注册一个信号函数，然后用户线程会继续执行，当内核数据就绪时会发送一个信号给用</p>
+<p>户线程，用户线程接收到信号过后，便在信号函数中调用IO读写操作来进行实际的IO操作。</p>
+<h2 id="异步IO模型"><a href="#异步IO模型" class="headerlink" title="异步IO模型"></a>异步IO模型</h2><p>异步IO模型是比较理想的IO模型，在异步IO模型中，当用户线程发起 read 操作之后，立刻就可以开始去做其他的事。而另一方面，从内核的角度，当它受到一个 </p>
+<p>asynchronous read 之后，它会立刻返回，说明 read 请求已经成功发起了，因此不会对用户线程产生任何 block。然后，内核会等待数据准备完成，然后将数据</p>
+<p>拷贝到用户线程，当一切都完成之后，内核会给用户线程发送一个信号，告诉它 read 操作完成了。也就是说用户线程完全不需要知道实际的整个IO操作是如何进</p>
+<p>行，只需要先发起一个请求，当接收内核返回的成功信号时表示IO操作已经完成，可以直接去使用数据了。</p>
+<p>也就是说在异步IO模型中，IO操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成的，然后发送一个信号告知用户线程操作已经完成。用户线程</p>
+<p>不需要再次调用IO函数进行具体的读写。这点是和信号驱动模型有所不同的，在信号驱动模型中，当用户线程接收到信号，表示用户数据已经就绪，然后需要用户</p>
+<p>线程调用IO函数进行实际的读写操作；而在异步IO模型中，收到信号表示IO操作已经完成，不需要再在用户线程中调用IO函数进行实际的读写操作。</p>
+<p>注意，异步IO是需要操作系统的底层支持，在 Java 7 中，提供了 Asynchronous IO。</p>
+<p>前面四种IO模型实际上都属于同步IO，只有最后一种是真正的异步IO，因为无论是多路复用IO还是信号驱动模型，IO操作的第2个阶段都会引起用户线程阻塞，也</p>
+<p>就是内核进行数据拷贝的过程都会让用户线程阻塞。</p>
 
     </div>
 
@@ -342,7 +319,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/TCP-IP/" rel="tag"># TCP/IP</a>
+              <a href="/tags/I-O/" rel="tag"># I/O</a>
           </div>
 
         
@@ -351,13 +328,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/" rel="prev" title="docker容器mysql时间不同步">
-      <i class="fa fa-chevron-left"></i> docker容器mysql时间不同步
+    <a href="/2021/06/01/BIO%E3%80%81NIO%E5%92%8CAIO%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%81%E4%B8%89%E7%A7%8DIO%E7%9A%84%E7%94%A8%E6%B3%95%E4%B8%8E%E5%8E%9F%E7%90%86/" rel="prev" title="BIO、NIO和AIO的区别及用法">
+      <i class="fa fa-chevron-left"></i> BIO、NIO和AIO的区别及用法
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/01/14/%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF~~~~/" rel="next" title="红黑树">
-      红黑树 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -417,7 +391,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8ETCP-IP%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">对于TCP&#x2F;IP的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFTCP-IP"><span class="nav-number">1.1.</span> <span class="nav-text">一、什么是TCP&#x2F;IP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%BD%91%E7%BB%9C%E6%8E%A5%E5%8F%A3%E5%B1%82"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 网络接口层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 网络层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 传输层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%BA%94%E7%94%A8%E5%B1%82"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 应用层</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-5%E7%A7%8DIO%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">Linux 5种IO模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E%E5%BC%8FIO%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">阻塞式IO模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E%E5%BC%8FIO%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">非阻塞式IO模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">IO复用模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8IO%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.4.</span> <span class="nav-text">信号驱动IO模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5IO%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.5.</span> <span class="nav-text">异步IO模型</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

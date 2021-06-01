@@ -204,6 +204,205 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sopp's 记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">Linux 5种IO模型</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-01 18:15:20 / 修改时间：20:39:14" itemprop="dateCreated datePublished" datetime="2021-06-01T18:15:20+08:00">2021-06-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/I-O/" itemprop="url" rel="index"><span itemprop="name">I/O</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/" class="post-meta-item leancloud_visitors" data-flag-title="Linux 5种IO模型" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Linux-5种IO模型"><a href="#Linux-5种IO模型" class="headerlink" title="Linux 5种IO模型"></a>Linux 5种IO模型</h1><h2 id="阻塞式IO模型"><a href="#阻塞式IO模型" class="headerlink" title="阻塞式IO模型"></a>阻塞式IO模型</h2><p>最传统的一种IO模型，即在读写的过程中会发生阻塞现象。</p>
+<p>当用户线程发出IO请求过后，内核回去查看数据是否就绪，如果没有就绪，就等待数据就绪，而用户线程会阻塞，用户线程交出CPU。当数据就绪过后，内核会把</p>
+<p>数据拷贝到用户线程中，并返回结果给用户线程，用户线程才解除 <code>broken</code> 状态。</p>
+<p>典型的阻塞IO模型的例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = socket.read();</span><br></pre></td></tr></table></figure>
+<p>如果数据没有就绪，就会一直阻塞在read方法。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/06/01/BIO%E3%80%81NIO%E5%92%8CAIO%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%81%E4%B8%89%E7%A7%8DIO%E7%9A%84%E7%94%A8%E6%B3%95%E4%B8%8E%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sopp's 记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/01/BIO%E3%80%81NIO%E5%92%8CAIO%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%81%E4%B8%89%E7%A7%8DIO%E7%9A%84%E7%94%A8%E6%B3%95%E4%B8%8E%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">BIO、NIO和AIO的区别及用法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-01 18:15:16 / 修改时间：20:39:24" itemprop="dateCreated datePublished" datetime="2021-06-01T18:15:16+08:00">2021-06-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/I-O/" itemprop="url" rel="index"><span itemprop="name">I/O</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/06/01/BIO%E3%80%81NIO%E5%92%8CAIO%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%81%E4%B8%89%E7%A7%8DIO%E7%9A%84%E7%94%A8%E6%B3%95%E4%B8%8E%E5%8E%9F%E7%90%86/" class="post-meta-item leancloud_visitors" data-flag-title="BIO、NIO和AIO的区别及用法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/01/BIO%E3%80%81NIO%E5%92%8CAIO%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%81%E4%B8%89%E7%A7%8DIO%E7%9A%84%E7%94%A8%E6%B3%95%E4%B8%8E%E5%8E%9F%E7%90%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/01/BIO%E3%80%81NIO%E5%92%8CAIO%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%81%E4%B8%89%E7%A7%8DIO%E7%9A%84%E7%94%A8%E6%B3%95%E4%B8%8E%E5%8E%9F%E7%90%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="BIO、NIO和AIO的区别、三种IO的用法与原理"><a href="#BIO、NIO和AIO的区别、三种IO的用法与原理" class="headerlink" title="BIO、NIO和AIO的区别、三种IO的用法与原理"></a>BIO、NIO和AIO的区别、三种IO的用法与原理</h1><h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><p>什么是IO？它是指计算机与外部世界或者一个程序与计算机的其余部分之间的接口。它对于任何计算机系统都非常关键，因而所有I/O的主体实际上内置在操作系统中的。单独的程序一般都是让系统为他们完成大部分的工作。</p>
+<h2 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h2><p>Java BIO 即 Block I/O，同步并阻塞的IO。</p>
+<p>BIO就是传统的java.io报包下面的代码实现。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/01/BIO%E3%80%81NIO%E5%92%8CAIO%E7%9A%84%E5%8C%BA%E5%88%AB%E3%80%81%E4%B8%89%E7%A7%8DIO%E7%9A%84%E7%94%A8%E6%B3%95%E4%B8%8E%E5%8E%9F%E7%90%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/05/26/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1130,276 +1329,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Sopp">
-      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sopp's 记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">docker容器mysql时间不同步</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-26 23:00:11" itemprop="dateModified" datetime="2021-05-26T23:00:11+08:00">2021-05-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker%E5%AE%B9%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">docker容器</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/" class="post-meta-item leancloud_visitors" data-flag-title="docker容器mysql时间不同步" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="docker容器mysql时间不同步问题"><a href="#docker容器mysql时间不同步问题" class="headerlink" title="docker容器mysql时间不同步问题"></a>docker容器mysql时间不同步问题</h1><p>最近由于项目中需要进行时间同步，刚好项目中需要使用到docker，所以从docker方面入手进行时间同步。</p>
-<blockquote>
-<p>每日一点学习，加油~</p>
-</blockquote>
-<ol>
-<li>首先进行容器和主机的时间同步。<br>在docker-compose的配置文件中，使用/etc/localtime:/etc/localtime参数进行容器时间同步。具体的示例如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mysql:</span><br><span class="line">    build:</span><br><span class="line">      #dockerfile的路径</span><br><span class="line">      context: .&#x2F;mysql</span><br><span class="line">      #dockerfile的名称</span><br><span class="line">      dockerfile: Dockerfile</span><br><span class="line">    ports:</span><br><span class="line">      - &quot;3307:3306&quot;</span><br><span class="line">    #相当于docker run命令中的-e</span><br><span class="line">    environment:</span><br><span class="line">      - &quot;MYSQL_ROOT_PASSWORD&#x3D;root&quot;</span><br><span class="line">      #初始化的数据库名称</span><br><span class="line">      - &quot;MYSQL_DATABASE&#x3D;test_compose&quot;</span><br><span class="line">      - &quot;MYSQL_ROOT_HOST&#x3D;%&quot;</span><br><span class="line">    #容器名称</span><br><span class="line">    container_name: mysql-compose</span><br><span class="line">    restart: always</span><br><span class="line">    #数据卷映射关系，也就是把本地的目录，和mysql容器中的目录，进行对应映射。</span><br><span class="line">    volumes:</span><br><span class="line">      - &quot;.&#x2F;mysql&#x2F;data&#x2F;:&#x2F;var&#x2F;lib&#x2F;mysql&quot;</span><br><span class="line">      - &quot;&#x2F;etc&#x2F;localtime:&#x2F;etc&#x2F;localtime&quot;</span><br></pre></td></tr></table></figure>
-说明：<br>这里最重要的即为 /etc/localtime:/etc/localtime，使用这个配置，对docker容器和外部主机的时间进行同步。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/14/docker%E5%AE%B9%E5%99%A8mysql%E6%97%B6%E9%97%B4%E4%B8%8D%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Sopp">
-      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sopp's 记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">GET和POST请求的区别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-26 23:00:23" itemprop="dateModified" datetime="2021-05-26T23:00:23+08:00">2021-05-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" itemprop="url" rel="index"><span itemprop="name">网络请求</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-meta-item leancloud_visitors" data-flag-title="GET和POST请求的区别" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="关于http请求的get和post的区别"><a href="#关于http请求的get和post的区别" class="headerlink" title="关于http请求的get和post的区别"></a>关于http请求的get和post的区别</h1><p>在web开发的时候，我们一般都会使用ajax等技术直接访问后端的接口，这个时候，我们一般使用get或者post方法，今天来记录一下这两种方法的区别：</p>
-<table>
-<thead>
-<tr>
-<th align="center">区别类型</th>
-<th align="center">get</th>
-<th align="center">post</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">url可见性</td>
-<td align="center">url可见</td>
-<td align="center">url不可见</td>
-</tr>
-<tr>
-<td align="center">数据传输性</td>
-<td align="center">拼接url进行参数传递</td>
-<td align="center">通过body体进行数据传输</td>
-</tr>
-<tr>
-<td align="center">缓存性</td>
-<td align="center">get可以缓存</td>
-<td align="center">post不可缓存</td>
-</tr>
-<tr>
-<td align="center">页面后退</td>
-<td align="center">get不产生影响</td>
-<td align="center">post提交新的请求</td>
-</tr>
-<tr>
-<td align="center">传输数据大小</td>
-<td align="center">get一般不超过2k-4k(根据浏览器和Web服务器限制)</td>
-<td align="center">post方式理论上没有大小限制，取决于服务器</td>
-</tr>
-<tr>
-<td align="center">安全性</td>
-<td align="center">get数据直接暴露在请求地址上</td>
-<td align="center">post请求地址不可看，有其他方式查看</td>
-</tr>
-<tr>
-<td align="center">数据类型</td>
-<td align="center">get只可以发送ASCII字符</td>
-<td align="center">post可以发送更多</td>
-</tr>
-<tr>
-<td align="center">操作目的</td>
-<td align="center">get一般用于搜索和筛选之类的</td>
-<td align="center">post主要用于修改和写入数据</td>
-</tr>
-<tr>
-<td align="center">请求速度</td>
-<td align="center">get较快</td>
-<td align="center">post较慢：原因请查看下文</td>
-</tr>
-<tr>
-<td align="center">能否管道化传输</td>
-<td align="center">get可以</td>
-<td align="center">post不可</td>
-</tr>
-</tbody></table>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/14/get%E8%AF%B7%E6%B1%82%E5%92%8Cpost%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1471,20 +1400,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
