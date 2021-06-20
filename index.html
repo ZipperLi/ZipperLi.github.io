@@ -204,6 +204,152 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/06/20/Java%E9%9B%86%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sopp's 记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/20/Java%E9%9B%86%E5%90%88/" class="post-title-link" itemprop="url">Java集合</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-20 10:31:05 / 修改时间：10:32:57" itemprop="dateCreated datePublished" datetime="2021-06-20T10:31:05+08:00">2021-06-20</time>
+            </span>
+
+          
+            <span id="/2021/06/20/Java%E9%9B%86%E5%90%88/" class="post-meta-item leancloud_visitors" data-flag-title="Java集合" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/20/Java%E9%9B%86%E5%90%88/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/20/Java%E9%9B%86%E5%90%88/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Java集合"><a href="#Java集合" class="headerlink" title="Java集合"></a>Java集合</h1><p>Java集合中，最主要包括两种数据结构：</p>
+<ul>
+<li>Collection</li>
+<li>Map</li>
+</ul>
+<p>参考下图，就是集合的相互关系图：</p>
+<p><img src="/2021/06/20/Java%E9%9B%86%E5%90%88/list_framework.png?lastModify=1624156273" alt="list_framework"></p>
+<h2 id="List、Set、Map-的区别和用途？"><a href="#List、Set、Map-的区别和用途？" class="headerlink" title="List、Set、Map 的区别和用途？"></a>List、Set、Map 的区别和用途？</h2><ul>
+<li>List 有序，可以重复，与数据结构类似，多用于数据顺序存储，</li>
+<li>Set 无序，不重复，多用于唯一性。</li>
+<li>Map key-value格式，用于存放键值对映射，比如存放后端返回前端的json映射。</li>
+</ul>
+<h2 id="List-及底层集合的知识："><a href="#List-及底层集合的知识：" class="headerlink" title="List 及底层集合的知识："></a>List 及底层集合的知识：</h2><h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><p>类似于 Object[] 数组，方便快速查找。优点是方便查找。</p>
+<h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><p>双向链表，在 Jdk 1.6之前是循环链表，1.7 过后取消了循环。优点是方便插入和删除。</p>
+<h3 id="Vector"><a href="#Vector" class="headerlink" title="Vector"></a>Vector</h3><p>Object[] 数组，很早版本的 Jdk 便存在了，很早前用于并发处理的同步集合，缺点很明显，并发处理速度慢(由于 Vector 底层方法都用 <code>synchronize</code> 关键字加了锁的)。</p>
+<h2 id="Set及底层集合"><a href="#Set及底层集合" class="headerlink" title="Set及底层集合"></a>Set及底层集合</h2><h3 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h3><p>基于  <code>HashMap</code> 实现，底层采用 <code>HashMap</code> 来保存元素。无序的，且唯一。</p>
+<h3 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h3><p>Set 中实现了 SortedSet 的排序接口，特点是唯一、不重复。底层实现为<code>红黑树</code>。</p>
+<h3 id="LinkedHashSet"><a href="#LinkedHashSet" class="headerlink" title="LinkedHashSet"></a>LinkedHashSet</h3><p>是 HashSet 的子类，底层通过 <code>LinkedHashMap</code> 来实现的。</p>
+<h2 id="Map-及底层集合"><a href="#Map-及底层集合" class="headerlink" title="Map 及底层集合"></a>Map 及底层集合</h2><h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p>Jdk 1.8 之前，通过 <code>数组+链表</code> 的方式来实现的，数组是 HashMap 的主体，链表则主要是为了解决 <code>Hash冲突</code> 而存在的(<code>拉链法</code> 解决)。Jdk 1.8 过后，在解决冲突的方法上有很大的改变，当链表长度大于 8 的时候，会将当前链表转换为 <code>红黑树</code> 来加快索引的速度，如果当链表长度小于 8 的时候，又会自动从红黑树转换为链表。</p>
+<blockquote>
+<p>有意思的是，在链表长度大于 8 的时候，不会马上进行红黑树的转换，而是会先判断数组的长度是否大于64，如果小于64，就会先扩容数组的大小到64 来减少哈希碰撞的概率，后续不够的情况，才会转换为红黑树。</p>
+</blockquote>
+<h3 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h3><p>继承自 HashMap ，所以它的底层仍然是基于<code>拉链式</code> 散列结构即由<code>数组+链表/红黑树</code>组成。另外，LinkedHashMap 在上面结构的基础上，增加了 一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作， 实现了访问顺序相关逻辑。</p>
+<h3 id="Hashtable"><a href="#Hashtable" class="headerlink" title="Hashtable"></a>Hashtable</h3><p>数组 + 链表 组成的，本来 Hashtable 的底层就是 HashMap 实现的。</p>
+<h3 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap"></a>TreeMap</h3><p>底层为红黑树(自平衡的二叉树)的一种 Map 集合。</p>
+<h2 id="如何选用集合？"><a href="#如何选用集合？" class="headerlink" title="如何选用集合？"></a>如何选用集合？</h2><p>首先应该是根据具体的使用场景再结合集合的特点来选择。比如，需要 key-value 的时候，首先想到map，如果不需要使用排序，首先想到 HashMap，如果需要使用排序，则为 TreeMap，需要保证线程安全的时候，选用 ConcurrentHashMap。</p>
+<p>当我们只需要存放元素的时候，选用 Collection 接口的集合，保证唯一性，选用 TreeSet/HashSet。不需要就选用 ArrayList/LinkedList。剩下的都根据对应集合的特点来使用。</p>
+<h2 id="为啥需要使用集合？"><a href="#为啥需要使用集合？" class="headerlink" title="为啥需要使用集合？"></a>为啥需要使用集合？</h2><p>其实很多人在学习的时候，就会想一个问题，其实集合的作用，很多的时候跟数组的作用是差不多的，那么，为什么更多的时候，不使用数组，而使用集合呢？其实很好理解：</p>
+<ol>
+<li>数组的格式单一，必须在创建的时候指定，没有办法使用泛型来对程序的灵活性进行扩展。</li>
+<li>数组的大小是指定的，没有办法动态扩容。</li>
+<li>数组是没有键值对的格式的，如果需要键值对，就洗白。</li>
+<li>数组是有序的，可重复的，那么就无法满足我们某些特定场景下的需求。</li>
+</ol>
+<h2 id="集合的遍历："><a href="#集合的遍历：" class="headerlink" title="集合的遍历："></a>集合的遍历：</h2><h3 id="Iterator-迭代器"><a href="#Iterator-迭代器" class="headerlink" title="Iterator 迭代器"></a>Iterator 迭代器</h3><p>Iterator 对象叫做迭代器(设计模式的一种：迭代器模式)，迭代器可以用来遍历集合对象，但是每一个 集合的内部数据结构可能是不一样的，所以每一个集合的存和取得方式可能完全不同，虽然我们可以在每一个类中定义 hasNext() 和 next() 方法来进行遍历，但是这样会让集合的体系过于臃肿。</p>
+<p>迭代器是将 hasNext() 和 next() 方法抽离出接口中，然后在每一个类的内部，自行定义自己的迭代方法，这样就约束了每一个集合的遍历方法都是 hasNext() 和 next() 了，使用者不需要了解怎么实现，只需要能用，就够了。</p>
+<p>迭代器就是提供一种方法访问一个容器对象的每一个元素，但是有不需要暴露该对象的内部细节。</p>
+<p>常见操作方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Iterator it &#x3D; list.iterator();</span><br><span class="line">while(it.hasNext()) &#123;</span><br><span class="line">　　Object obj &#x3D; it.next();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="常见集合的遍历方式"><a href="#常见集合的遍历方式" class="headerlink" title="常见集合的遍历方式"></a>常见集合的遍历方式</h3><h4 id="Map-的遍历方式"><a href="#Map-的遍历方式" class="headerlink" title="Map 的遍历方式"></a>Map 的遍历方式</h4><ul>
+<li><p>通过 Map 的 key 来进行遍历</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, String&gt; map &#x3D; new HashMap&lt;&gt;(16);</span><br><span class="line">&#x2F;&#x2F;得到所有key的集合</span><br><span class="line">Set&lt;Integer&gt; set &#x3D; map.keySet(); </span><br><span class="line">for (Integer in : map.keySet()) &#123;</span><br><span class="line">  &#x2F;&#x2F;得到每个key多对用value的值</span><br><span class="line">  String str &#x3D; map.get(in);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>通过 Map.entrySet 使用 iterator 遍历 key 和 value</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, String&gt; map &#x3D; new HashMap&lt;&gt;(16);</span><br><span class="line">Iterator&lt;Map.Entry&lt;Integer, String&gt;&gt; it &#x3D; map.entrySet().iterator();</span><br><span class="line">while (it.hasNext()) &#123;</span><br><span class="line">  Map.Entry&lt;Integer, String&gt; entry &#x3D; it.next();</span><br><span class="line">  System.out.println(&quot;key&#x3D; &quot; + entry.getKey() + &quot; and value&#x3D; &quot; +  entry.getValue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>通过 Map.entrySet 遍历 key 和 value，推荐，尤其是容量大时</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for (Map.Entry&lt;Integer, String&gt; entry : map.entrySet()) &#123;</span><br><span class="line">  &#x2F;&#x2F; Map.entry&lt;Integer,String&gt; 映射项（键-值对)</span><br><span class="line">  &#x2F;&#x2F; entry.getKey(); entry.getValue(); entry.setValue();</span><br><span class="line">  &#x2F;&#x2F; map.entrySet(): 返回此映射中包含的映射关系的 Set视图。</span><br><span class="line">  System.out.println(&quot;key&#x3D; &quot; + entry.getKey() + &quot; and value&#x3D; &quot; + entry.getValue());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>通过Map.values()遍历所有的value，但不能遍历key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, String&gt; map &#x3D; new HashMap&lt;&gt;(16);</span><br><span class="line">for (String value : map.values()) &#123;</span><br><span class="line">  System.out.println(&quot;value&#x3D; &quot; + value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="List-遍历方式"><a href="#List-遍历方式" class="headerlink" title="List 遍历方式"></a>List 遍历方式</h4></li>
+<li><p>第一种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List list &#x3D; new ArrayList();</span><br><span class="line">for(Iterator iterator &#x3D; list.iterator();iterator.hasNext();)&#123;                    </span><br><span class="line">    int i &#x3D; (Integer) iterator.next();                   </span><br><span class="line">    System.out.println(i);               </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>第二种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List list &#x3D; new ArrayList();</span><br><span class="line">Iterator iterator &#x3D; list.iterator();</span><br><span class="line">while(iterator.hasNext())&#123;</span><br><span class="line">    int i &#x3D; (Integer) iterator.next();</span><br><span class="line">    System.out.println(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>第三种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List list &#x3D; new ArrayList();</span><br><span class="line">for (Object object : list) &#123; </span><br><span class="line">    System.out.println(object); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第四种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List list &#x3D; new ArrayList();</span><br><span class="line">for(int i &#x3D; 0 ;i&lt;list.size();i++) &#123;  </span><br><span class="line">    int j&#x3D; (Integer) list.get(i);</span><br><span class="line">    System.out.println(j);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Set-遍历方式"><a href="#Set-遍历方式" class="headerlink" title="Set 遍历方式"></a>Set 遍历方式</h4></li>
+<li><p>第一种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;方法1 集合类的通用遍历方式, 从很早的版本就有, 用迭代器迭代</span><br><span class="line">Set&lt;String&gt; set &#x3D; new HashSet();</span><br><span class="line">Iterator iterator &#x3D; set.iterator();</span><br><span class="line">while(iterator.hasNext())&#123;</span><br><span class="line">		System.out.println(iterator.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>第二种：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;String&gt; set &#x3D; new HashSet();</span><br><span class="line">for(Iterator iterator &#x3D; set.iterator();it2iteratorhasNext();)&#123;</span><br><span class="line">  	System.out.println(iterator.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>第三种:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;String&gt; set &#x3D; new HashSet();</span><br><span class="line">for(String value: set)&#123;</span><br><span class="line">  	System.out.println(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -859,110 +1005,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Sopp">
-      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sopp's 记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">http协议理解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-26 22:59:55" itemprop="dateModified" datetime="2021-05-26T22:59:55+08:00">2021-05-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-meta-item leancloud_visitors" data-flag-title="http协议理解" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="一、Http协议介绍"><a href="#一、Http协议介绍" class="headerlink" title="一、Http协议介绍"></a>一、Http协议介绍</h1><h2 id="1-1-什么Http"><a href="#1-1-什么Http" class="headerlink" title="1.1 什么Http"></a>1.1 什么Http</h2><p>Http是<strong>超文本传输协议</strong>(Hyper Text Transfer Protocol)的缩写。<br>协议位于TCP/IP协议栈的应用层。<br><br></p>
-<p>Http是一个客户端和服务器端请求和应答的标准，主要用于www(万维网)服务器传输超文本到本地浏览器之间的请求数据和响应数据的协议。客户端通过使用网页浏览器或者其他工具发起一个Http请求到服务器指定的端口:默认端口80，服务器接收到请求过后，返回响应内容(文本、图片等)。<br></p>
-<p>Http协议是基于TCP协议来进行数据的传输的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1054,6 +1096,110 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/01/14/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%8B-%E7%94%9F%E6%88%90%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8FID/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sopp's 记录">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-title-link" itemprop="url">http协议理解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-26 22:59:55" itemprop="dateModified" datetime="2021-05-26T22:59:55+08:00">2021-05-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" class="post-meta-item leancloud_visitors" data-flag-title="http协议理解" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="一、Http协议介绍"><a href="#一、Http协议介绍" class="headerlink" title="一、Http协议介绍"></a>一、Http协议介绍</h1><h2 id="1-1-什么Http"><a href="#1-1-什么Http" class="headerlink" title="1.1 什么Http"></a>1.1 什么Http</h2><p>Http是<strong>超文本传输协议</strong>(Hyper Text Transfer Protocol)的缩写。<br>协议位于TCP/IP协议栈的应用层。<br><br></p>
+<p>Http是一个客户端和服务器端请求和应答的标准，主要用于www(万维网)服务器传输超文本到本地浏览器之间的请求数据和响应数据的协议。客户端通过使用网页浏览器或者其他工具发起一个Http请求到服务器指定的端口:默认端口80，服务器接收到请求过后，返回响应内容(文本、图片等)。<br></p>
+<p>Http协议是基于TCP协议来进行数据的传输的。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/14/%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE--http%E5%8D%8F%E8%AE%AE/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1185,150 +1331,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="Sopp">
-      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sopp's 记录">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">TCP/IP的理解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-14 22:53:34" itemprop="dateCreated datePublished" datetime="2021-01-14T22:53:34+08:00">2021-01-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-26 23:01:21" itemprop="dateModified" datetime="2021-05-26T23:01:21+08:00">2021-05-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">网络</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-meta-item leancloud_visitors" data-flag-title="TCP/IP的理解" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="对于TCP-IP的理解"><a href="#对于TCP-IP的理解" class="headerlink" title="对于TCP/IP的理解"></a>对于TCP/IP的理解</h1><p>&emsp;在很多人面试的时候，都遇见过招聘要求上要求这一项</p>
-<blockquote>
-<p>精通TCP/IP，熟练使用Socket进行网络编程。</p>
-</blockquote>
-<p>看到这句话，贼提莫熟悉，很多人都觉得这些东西，在我们实际的开发中遇不到，楼主在很早之前也是一样的想法，但是越工作，就越来越觉得这些知识很重要。<br>下面我们就来了解以下什么是TCP/IP。</p>
-<h2 id="一、什么是TCP-IP"><a href="#一、什么是TCP-IP" class="headerlink" title="一、什么是TCP/IP"></a>一、什么是TCP/IP</h2><p>tcp/ip是一类协议系统，它是用于网络通信的一套协议的集合。<br>传统的tcp/ip被认为是一个四层的协议系统。</p>
-<table>
-  <tr>
-    <th>OSI体系结构</th>
-    <th colspan="2">TCP/IP协议集合</th>
-  </tr>
-
-  <tr>
-    <td>应用层</td>
-    <td rowspan="3">应用层</td>
-    <td rowspan="3">TELNET、FTP、HTTP、SMTP、DNS等</td>
-  </tr>
-  <tr>
-    <td>表示层</td>
-  </tr>
-  <tr>
-    <td>会话层</td>
-  </tr>
-
-  <tr>
-    <td>传输层</td>
-    <td>传输层</td>
-    <td>TCP、UDP</td>
-  </tr>
-  <tr>
-    <td>网络层</td>
-    <td>网络层</td>
-    <td>IP、ICMP、ARP、RARP</td>
-  </tr>
-  <tr>
-    <td>数据链路层</td>
-    <td rowspan="2">网络层</td>
-    <td rowspan="2">各种物理通信网络接口</td>
-  </tr>
-  <tr>
-    <td>物理层</td>
-  </tr>
-</table>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1400,7 +1402,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1413,7 +1415,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
