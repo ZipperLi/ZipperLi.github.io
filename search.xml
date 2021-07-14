@@ -32,6 +32,135 @@
       </tags>
   </entry>
   <entry>
+    <title>ELK日志收集</title>
+    <url>/2021/06/20/ELK%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86/</url>
+    <content><![CDATA[<h2 id="ELK-日志收集平台"><a href="#ELK-日志收集平台" class="headerlink" title="ELK 日志收集平台"></a>ELK 日志收集平台</h2><p>很早之前就听过 ELK 日志收集，但是一直都没有具体的业务场景，也没有多余的时间去接触这个，这两天空了，学习下。</p>
+<p>关于 ELK，自己之前的认知，就是一个可以收集各个服务器的日志信息，并进行统一的分析处理的平台。</p>
+<p>学习的时候发现，有一篇文章关于 ELK 平台的认知讲的很好，就摘抄一小段：</p>
+<p>以下内容来自于以下网站：</p>
+<blockquote>
+<p><a href="https://blog.51cto.com/baidu/1676798">https://blog.51cto.com/baidu/1676798</a></p>
+</blockquote>
+<p>日志主要包括系统日志、应用程序日志和安全日志。系统运维和开发人员可以通过日志了解服务器软硬件信息、检查配置过程中的错误及错误发生的原因。经常分析日志可以了解服务器的负荷，性能安全性，从而及时采取措施纠正错误。</p>
+<p>通常，日志被分散的储存不同的设备上。如果你管理数十上百台服务器，你还在使用依次登录每台机器的传统方法查阅日志。这样是不是感觉很繁琐和效率低下。当务之急我们使用集中化的日志管理，例如：开源的 syslog ，将所有服务器上的日志收集汇总。</p>
+<p>集中化管理日志后，日志的统计和检索又成为一件比较麻烦的事情，一般我们使用 grep、awk 和 wc 等 Linux 命令能实现检索和统计，但是对于要求更高的查询、排序和统计等要求和庞大的机器数量依然使用这样的方法难免有点力不从心。</p>
+<p>开源实时日志分析 ELK 平台能够完美的解决我们上述的问题，ELK 由 ==ElasticSearch==、==Logstash== 和 ==Kiabana== 三个开源工具组成。官方网站：<a href="https://www.elastic.co/products%E3%80%82%E7%8E%B0%E5%9C%A8%E5%B8%B8%E7%94%A8%E7%9A%84">https://www.elastic.co/products。现在常用的</a> ELK 平台由以下部分组成：</p>
+<ul>
+<li><p>Elasticsearch 是个开源分布式搜索引擎，它的特点有：分布式，零配置，自动发现，索引自动分片，索引副本机制，restful 风格接口，多数据源，自动搜索负载等。</p>
+</li>
+<li><p>Logstash 是一个完全开源的工具，他可以对你的日志进行收集、分析，并将其存储供以后使用（如，搜索）。(由于 Logstash 性能不够达标，所以采用 elastic 官方发布了新的收集工具 ： beats-轻量级采集组件，在服务器上使用它进行日志采集)。</p>
+</li>
+<li><p>kibana 也是一个开源和免费的工具，Kibana 可以为  Logstash 和 ElasticSearch 提供的日志分析友好的 Web 界面，可以帮助您汇总、分析和搜索重要数据日志。</p>
+</li>
+<li><p>beats : 轻量级采集组件的统称，官方及社区的活跃成员，共发布了几百种不同的 beats。常见的 beats 有如下几种：</p>
+<ul>
+<li>filebeat: 进行<code>文件和目录</code>采集，主要用于收集日志数据。</li>
+<li>metricbeat: 进行<code>指标</code>采集，指标可以是系统的，也可以是众多中间件产品的，主要用于监控<code>系统和软件</code>的性能。</li>
+<li>packetbeat: 通过网络抓包、协议分析，对一些请求响应式的<code>系统通信</code>进行监控和数据收集，可以收集到很多常规方式无法收集到的信息。</li>
+<li>Winlogbeat: 专门针对 windows 的 <code>event log</code> 进行的数据采集。</li>
+<li>Heartbeat: <code>系统间连通性</code>检测，比如 icmp, tcp, http 等系统的连通性监控。</li>
+</ul>
+</li>
+<li><p>kafka : 常见的消息中间件，减轻服务器消息收集过后的压力。</p>
+</li>
+</ul>
+<p>ELK 整体运行的组件如下图所示：</p>
+<p>![ELK 日志](./ELK日志收集/ELK 日志.png)</p>
+<p>具体的运行逻辑：</p>
+<p>Beats 组件从应用服务器上收集到对应的日志信息，发送到 Kafka 中，然后通过 Logstash，进行统一的收集处理，然后存储在 ElasticSearch 中，最后通过可视化工具 Kibana 进行查看。</p>
+<h4 id="安装、运行、操作逻辑如下："><a href="#安装、运行、操作逻辑如下：" class="headerlink" title="安装、运行、操作逻辑如下："></a>安装、运行、操作逻辑如下：</h4>]]></content>
+      <tags>
+        <tag>ELK日志</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HashMap的问题</title>
+    <url>/2021/07/13/HashMap%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="谈谈-HashMap-吧"><a href="#谈谈-HashMap-吧" class="headerlink" title="谈谈 HashMap 吧"></a>谈谈 HashMap 吧</h2><blockquote>
+<p>很多的时候，你在面试的时候，很多面试官，在问到 java 集合的时候，都会问到 HashMap 这么一个神奇的结构，现在就来记录下关于 HashMap 的学习和理解</p>
+</blockquote>
+<p>HashMap 是 Java 中为数不多的支持 key-value 结构的集合。很多的时候都用来组装返回前端的数据结构，更多的时候，我们都不会过多关注与其底层设计，但其实，深入查看了 HashMap 的代码，你会发现，写 Java 都是些什么怪物哦，就很妙。</p>
+<p>HashMap的底层结构，是由 “数组 + 链表 / <code>红黑树</code>” 的结构实现的。</p>
+<blockquote>
+<p>在 jdk1.7 之前，都是使用的此结构。</p>
+<p>到了 jdk1.8 的时候，对此结构进行了小小的改变：</p>
+<ul>
+<li><p>当链表的长度超过 8 的时候，就会转换链表为 <code>红黑树</code> 。</p>
+</li>
+<li><p>如果小于 8 的时候，又会转换为 <code>链表</code></p>
+</li>
+</ul>
+</blockquote>
+<p>对应的源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 数组结构 </span></span><br><span class="line"><span class="keyword">transient</span> Node&lt;K,V&gt;[] table;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 链表结构</span></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="keyword">int</span> hash;</span><br><span class="line">  <span class="keyword">final</span> K key;</span><br><span class="line">  V value;</span><br><span class="line">  Node&lt;K,V&gt; next;</span><br><span class="line"></span><br><span class="line">  Node(<span class="keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">    <span class="keyword">this</span>.hash = hash;</span><br><span class="line">    <span class="keyword">this</span>.key = key;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">    <span class="keyword">this</span>.next = next;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> K <span class="title">getKey</span><span class="params">()</span>        </span>&#123; <span class="keyword">return</span> key; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">getValue</span><span class="params">()</span>      </span>&#123; <span class="keyword">return</span> value; &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> key + <span class="string">&quot;=&quot;</span> + value; &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Objects.hashCode(key) ^ Objects.hashCode(value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">setValue</span><span class="params">(V newValue)</span> </span>&#123;</span><br><span class="line">    V oldValue = value;</span><br><span class="line">    value = newValue;</span><br><span class="line">    <span class="keyword">return</span> oldValue;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (o == <span class="keyword">this</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (o <span class="keyword">instanceof</span> Map.Entry) &#123;</span><br><span class="line">      Map.Entry&lt;?,?&gt; e = (Map.Entry&lt;?,?&gt;)o;</span><br><span class="line">      <span class="keyword">if</span> (Objects.equals(key, e.getKey()) &amp;&amp;</span><br><span class="line">          Objects.equals(value, e.getValue()))</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 红黑树结构</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">LinkedHashMap</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">        TreeNode&lt;K,V&gt; parent;  <span class="comment">// red-black tree links</span></span><br><span class="line">        TreeNode&lt;K,V&gt; left;</span><br><span class="line">        TreeNode&lt;K,V&gt; right;</span><br><span class="line">        TreeNode&lt;K,V&gt; prev;    <span class="comment">// needed to unlink next upon deletion</span></span><br><span class="line">        <span class="keyword">boolean</span> red;</span><br><span class="line">  ....</span><br><span class="line">    </span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+<p>具体结构图如下：</p>
+<p><img src="/2021/07/13/HashMap%E7%9A%84%E9%97%AE%E9%A2%98/Hashmap.png" alt="Hashmap"></p>
+<p>常见问题：</p>
+<ul>
+<li><h3 id="table-的初始化时什么时候？初始化的-length-是多少？临界点是多少？实际上能够存储多少元素？"><a href="#table-的初始化时什么时候？初始化的-length-是多少？临界点是多少？实际上能够存储多少元素？" class="headerlink" title="table 的初始化时什么时候？初始化的 length 是多少？临界点是多少？实际上能够存储多少元素？"></a>table 的初始化时什么时候？初始化的 length 是多少？临界点是多少？实际上能够存储多少元素？</h3><p>HashMap 的初始化一共分为以下 4 种：</p>
+<ul>
+<li><p>第一种 : 指定 <code>初始化大小</code> initialCapacity 和 <code>加载因子</code> loadFactor ，实例化一个空的对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;Illegal initial capacity: &quot;</span> +</span><br><span class="line">                                       initialCapacity);</span><br><span class="line">  <span class="keyword">if</span> (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">    initialCapacity = MAXIMUM_CAPACITY;</span><br><span class="line">  <span class="keyword">if</span> (loadFactor &lt;= <span class="number">0</span> || Float.isNaN(loadFactor))</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;Illegal load factor: &quot;</span> +</span><br><span class="line">                                       loadFactor);</span><br><span class="line">  <span class="keyword">this</span>.loadFactor = loadFactor;</span><br><span class="line">  <span class="keyword">this</span>.threshold = tableSizeFor(initialCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>第二种 :  通过指定的初始化大小 和 默认的加载因子( 0.75) 实例化一个空的 HashMap 对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">常见的处理就是这种 :  Map&lt;String,String&gt; map = new HashMap(16);这个也是阿里巴巴开发手册推荐的实例化方法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>第三种 : 使用默认的 <code>初始化大小</code> : 16 和 默认的 <code>加载因子</code>: 0.75</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.loadFactor = DEFAULT_LOAD_FACTOR; <span class="comment">// all other fields defaulted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>第四种 : 通过指定的 Map 对象，来实例化</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(Map&lt;? extends K, ? extends V&gt; m)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.loadFactor = DEFAULT_LOAD_FACTOR;</span><br><span class="line">  putMapEntries(m, <span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这四种方法，方法4 和方法 1应用的很少，主要的都是2，3两种方式，构造方式2，直接调用的第一种的1 (底层方式完全一致)。主要以案例2来进行描述</p>
+</li>
+</ul>
+<p>我们平时基本都是按照如下代码来使用 HashMap 的 : </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line">map.put(<span class="string">&quot;name&quot;</span>:<span class="string">&quot;zhangsan&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;age&quot;</span>:<span class="number">15</span>);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>在这个时候， table 并未初始化，那么 new 的时候，没有被初始化，那只可能是在 put 的时候被初始化了，看下源代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> putVal(hash(key), key, value, <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent,</span></span></span><br><span class="line"><span class="function"><span class="params">                   <span class="keyword">boolean</span> evict)</span> </span>&#123;</span><br><span class="line">  Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="keyword">int</span> n, i;</span><br><span class="line">  <span class="keyword">if</span> ((tab = table) == <span class="keyword">null</span> || (n = tab.length) == <span class="number">0</span>)</span><br><span class="line">		<span class="comment">// 这里首先的进入了 resize 方法。</span></span><br><span class="line">    n = (tab = resize()).length;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> Node&lt;K,V&gt;[] resize() &#123;</span><br><span class="line">  Node&lt;K,V&gt;[] oldTab = table; <span class="comment">// 第一次赋值，为 null</span></span><br><span class="line">  <span class="keyword">int</span> oldCap = (oldTab == <span class="keyword">null</span>) ? <span class="number">0</span> : oldTab.length; <span class="comment">// oldTab = 0</span></span><br><span class="line">  <span class="keyword">int</span> oldThr = threshold; <span class="comment">// threshold = 0, oldTab = 0</span></span><br><span class="line">  <span class="keyword">int</span> newCap, newThr = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (oldCap &gt; <span class="number">0</span>) &#123; <span class="comment">// 不满足</span></span><br><span class="line">    <span class="keyword">if</span> (oldCap &gt;= MAXIMUM_CAPACITY) &#123;</span><br><span class="line">      threshold = Integer.MAX_VALUE;</span><br><span class="line">      <span class="keyword">return</span> oldTab;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ((newCap = oldCap &lt;&lt; <span class="number">1</span>) &lt; MAXIMUM_CAPACITY &amp;&amp;</span><br><span class="line">             oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</span><br><span class="line">      newThr = oldThr &lt;&lt; <span class="number">1</span>; <span class="comment">// double threshold</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (oldThr &gt; <span class="number">0</span>) <span class="comment">// 不满足 initial capacity was placed in threshold</span></span><br><span class="line">    newCap = oldThr;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 满足条件了</span></span><br><span class="line">    <span class="comment">// zero initial threshold signifies using defaults </span></span><br><span class="line">    newCap = DEFAULT_INITIAL_CAPACITY;  <span class="comment">// 初始化大小为默认的 DEFAULT_INITIAL_CAPACITY = 1 &gt;&gt; 4 = 16</span></span><br><span class="line">    newThr = (<span class="keyword">int</span>)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY); <span class="comment">// 临界点为 : 16 * 0.75 = 12;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (newThr == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">float</span> ft = (<span class="keyword">float</span>)newCap * loadFactor;</span><br><span class="line">    newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (<span class="keyword">float</span>)MAXIMUM_CAPACITY ?</span><br><span class="line">              (<span class="keyword">int</span>)ft : Integer.MAX_VALUE);</span><br><span class="line">  &#125;</span><br><span class="line">  threshold = newThr;	<span class="comment">// 边界值为 12，即超过 12 ，就要执行 resize方法进行扩容</span></span><br><span class="line">  <span class="meta">@SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span></span><br><span class="line">  Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])<span class="keyword">new</span> Node[newCap]; <span class="comment">// 初始化为 16</span></span><br><span class="line">  table = newTab;	<span class="comment">// 此时，table 初始化完成，长度为 16</span></span><br><span class="line">  <span class="keyword">if</span> (oldTab != <span class="keyword">null</span>) &#123; <span class="comment">// 条件不满足，后续扩容的时候，走这个 if 分支，将数组元素复制到新的数组中</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; oldCap; ++j) &#123;</span><br><span class="line">      Node&lt;K,V&gt; e;</span><br><span class="line">      <span class="keyword">if</span> ((e = oldTab[j]) != <span class="keyword">null</span>) &#123;</span><br><span class="line">        oldTab[j] = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (e.next == <span class="keyword">null</span>)</span><br><span class="line">          newTab[e.hash &amp; (newCap - <span class="number">1</span>)] = e;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (e <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">          ((TreeNode&lt;K,V&gt;)e).split(<span class="keyword">this</span>, newTab, j, oldCap);</span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">// preserve order</span></span><br><span class="line">          Node&lt;K,V&gt; loHead = <span class="keyword">null</span>, loTail = <span class="keyword">null</span>;</span><br><span class="line">          Node&lt;K,V&gt; hiHead = <span class="keyword">null</span>, hiTail = <span class="keyword">null</span>;</span><br><span class="line">          Node&lt;K,V&gt; next;</span><br><span class="line">          <span class="keyword">do</span> &#123;</span><br><span class="line">            next = e.next;</span><br><span class="line">            <span class="keyword">if</span> ((e.hash &amp; oldCap) == <span class="number">0</span>) &#123;</span><br><span class="line">              <span class="keyword">if</span> (loTail == <span class="keyword">null</span>)</span><br><span class="line">                loHead = e;</span><br><span class="line">              <span class="keyword">else</span></span><br><span class="line">                loTail.next = e;</span><br><span class="line">              loTail = e;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">              <span class="keyword">if</span> (hiTail == <span class="keyword">null</span>)</span><br><span class="line">                hiHead = e;</span><br><span class="line">              <span class="keyword">else</span></span><br><span class="line">                hiTail.next = e;</span><br><span class="line">              hiTail = e;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125; <span class="keyword">while</span> ((e = next) != <span class="keyword">null</span>);</span><br><span class="line">          <span class="keyword">if</span> (loTail != <span class="keyword">null</span>) &#123;</span><br><span class="line">            loTail.next = <span class="keyword">null</span>;</span><br><span class="line">            newTab[j] = loHead;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (hiTail != <span class="keyword">null</span>) &#123;</span><br><span class="line">            hiTail.next = <span class="keyword">null</span>;</span><br><span class="line">            newTab[j + oldCap] = hiHead;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 返回一个新的数组</span></span><br><span class="line">  <span class="keyword">return</span> newTab;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>从上面的代码可以看到，HashMap初始化的时候，并不会初始化 table 数组，只有当 第一次 put 方法触发的时候，才会对 table 数组进行初始化(这也就是常见的懒加载、懒初始化的思想)。</p>
+<p>默认情况下：即不手动指定</p>
+<ul>
+<li>数组的长度为 16，table.length = 16;</li>
+<li>临界值 : threshold = 12; </li>
+<li>默认能够存放 12 个元素，当到达 13 个元素的时候，触发扩容</li>
+</ul>
+</li>
+<li><h4 id="什么时候会触发-HashMap-的扩容？扩容过后大小、临界值各是多少？"><a href="#什么时候会触发-HashMap-的扩容？扩容过后大小、临界值各是多少？" class="headerlink" title="什么时候会触发 HashMap 的扩容？扩容过后大小、临界值各是多少？"></a>什么时候会触发 HashMap 的扩容？扩容过后大小、临界值各是多少？</h4><p>从问题能够理解，当一个集合大小不够的时候，我们是可以动态扩容的，HashMap大小不够，只能是扩容 table ，那么只有 put 方法能够触发这个事件，所以，我们先查看下 put() 的源码 : </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> putVal(hash(key), key, value, <span class="keyword">false</span>, <span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent,</span></span></span><br><span class="line"><span class="function"><span class="params">                   <span class="keyword">boolean</span> evict)</span> </span>&#123;</span><br><span class="line">  Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="keyword">int</span> n, i;</span><br><span class="line">  <span class="keyword">if</span> ((tab = table) == <span class="keyword">null</span> || (n = tab.length) == <span class="number">0</span>)</span><br><span class="line">    n = (tab = resize()).length;</span><br><span class="line">  <span class="keyword">if</span> ((p = tab[i = (n - <span class="number">1</span>) &amp; hash]) == <span class="keyword">null</span>)</span><br><span class="line">    tab[i] = newNode(hash, key, value, <span class="keyword">null</span>);</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    Node&lt;K,V&gt; e; K k;</span><br><span class="line">    <span class="keyword">if</span> (p.hash == hash &amp;&amp;</span><br><span class="line">        ((k = p.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">      e = p;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (p <span class="keyword">instanceof</span> TreeNode)</span><br><span class="line">      e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(<span class="keyword">this</span>, tab, hash, key, value);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> binCount = <span class="number">0</span>; ; ++binCount) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((e = p.next) == <span class="keyword">null</span>) &#123;</span><br><span class="line">          p.next = newNode(hash, key, value, <span class="keyword">null</span>);</span><br><span class="line">          <span class="keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD - <span class="number">1</span>) <span class="comment">// -1 for 1st</span></span><br><span class="line">            treeifyBin(tab, hash);</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (e.hash == hash &amp;&amp;</span><br><span class="line">            ((k = e.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        p = e;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123; <span class="comment">// existing mapping for key</span></span><br><span class="line">      V oldValue = e.value;</span><br><span class="line">      <span class="keyword">if</span> (!onlyIfAbsent || oldValue == <span class="keyword">null</span>)</span><br><span class="line">        e.value = value;</span><br><span class="line">      afterNodeAccess(e);</span><br><span class="line">      <span class="keyword">return</span> oldValue;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ++modCount;</span><br><span class="line">  <span class="keyword">if</span> (++size &gt; threshold)</span><br><span class="line">    <span class="comment">// 当前 table 的大小 大于 临界值的时候，调用 resize 方法进行扩容</span></span><br><span class="line">    resize();</span><br><span class="line">  afterNodeInsertion(evict);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码可以知道，当 table 的大小 ==大于== 临界值的时候，进行扩容，接下来看扩容代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">final</span> Node&lt;K,V&gt;[] resize() &#123;</span><br><span class="line">  Node&lt;K,V&gt;[] oldTab = table; <span class="comment">// 获取当前的 table,当前 table 不为空</span></span><br><span class="line">  <span class="keyword">int</span> oldCap = (oldTab == <span class="keyword">null</span>) ? <span class="number">0</span> : oldTab.length; <span class="comment">// oldCap = 16，第一次初始化的时候为16</span></span><br><span class="line">  <span class="keyword">int</span> oldThr = threshold;	<span class="comment">// oldThr = 12,oldCap = 16;</span></span><br><span class="line">  <span class="keyword">int</span> newCap, newThr = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// 满足条件进入当前 if 判断</span></span><br><span class="line">  <span class="keyword">if</span> (oldCap &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (oldCap &gt;= MAXIMUM_CAPACITY) &#123;</span><br><span class="line">      threshold = Integer.MAX_VALUE;</span><br><span class="line">      <span class="keyword">return</span> oldTab;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ((newCap = oldCap &lt;&lt; <span class="number">1</span>) &lt; MAXIMUM_CAPACITY &amp;&amp;</span><br><span class="line">             oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</span><br><span class="line">      <span class="comment">// 满足条件，oldCap 左移一位，16 &lt;&lt; 1 = 32;</span></span><br><span class="line">      <span class="comment">// 同时让当前的 边界大小 &lt;&lt; 1 = 24;</span></span><br><span class="line">      newThr = oldThr &lt;&lt; <span class="number">1</span>; <span class="comment">// double threshold</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (oldThr &gt; <span class="number">0</span>) <span class="comment">// initial capacity was placed in threshold</span></span><br><span class="line">    newCap = oldThr;</span><br><span class="line">  <span class="keyword">else</span> &#123;               <span class="comment">// zero initial threshold signifies using defaults</span></span><br><span class="line">    newCap = DEFAULT_INITIAL_CAPACITY;</span><br><span class="line">    newThr = (<span class="keyword">int</span>)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (newThr == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">float</span> ft = (<span class="keyword">float</span>)newCap * loadFactor;</span><br><span class="line">    newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (<span class="keyword">float</span>)MAXIMUM_CAPACITY ?</span><br><span class="line">              (<span class="keyword">int</span>)ft : Integer.MAX_VALUE);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 当前临界值为 24</span></span><br><span class="line">  threshold = newThr;</span><br><span class="line">  <span class="comment">// 构建新的 table ，大小为 32.</span></span><br><span class="line">  <span class="meta">@SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span></span><br><span class="line">  Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])<span class="keyword">new</span> Node[newCap];</span><br><span class="line">  table = newTab;</span><br><span class="line">  <span class="keyword">if</span> (oldTab != <span class="keyword">null</span>) &#123; <span class="comment">// 进入扩容判断</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; oldCap; ++j) &#123; <span class="comment">// 遍历老容器</span></span><br><span class="line">      Node&lt;K,V&gt; e;</span><br><span class="line">      <span class="keyword">if</span> ((e = oldTab[j]) != <span class="keyword">null</span>) &#123; <span class="comment">// 如果老容器的该位置的值为空，就直接跳出这次循环</span></span><br><span class="line">        oldTab[j] = <span class="keyword">null</span>; <span class="comment">// 干掉老容器的每个值</span></span><br><span class="line">        <span class="keyword">if</span> (e.next == <span class="keyword">null</span>) <span class="comment">// 如果当前这个 e 后面没有元素了，把它进行重新 hash 过后，放在了新的表格里面</span></span><br><span class="line">          newTab[e.hash &amp; (newCap - <span class="number">1</span>)] = e;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (e <span class="keyword">instanceof</span> TreeNode) <span class="comment">// 如果是红黑树的话，进入红黑树的判断。</span></span><br><span class="line">          ((TreeNode&lt;K,V&gt;)e).split(<span class="keyword">this</span>, newTab, j, oldCap);</span><br><span class="line">        <span class="keyword">else</span> &#123; <span class="comment">// preserve order : 保留顺序</span></span><br><span class="line">          Node&lt;K,V&gt; loHead = <span class="keyword">null</span>, loTail = <span class="keyword">null</span>;</span><br><span class="line">          Node&lt;K,V&gt; hiHead = <span class="keyword">null</span>, hiTail = <span class="keyword">null</span>;</span><br><span class="line">          Node&lt;K,V&gt; next;</span><br><span class="line">          <span class="keyword">do</span> &#123;</span><br><span class="line">            next = e.next;</span><br><span class="line">            <span class="keyword">if</span> ((e.hash &amp; oldCap) == <span class="number">0</span>) &#123;</span><br><span class="line">              <span class="keyword">if</span> (loTail == <span class="keyword">null</span>)</span><br><span class="line">                loHead = e;</span><br><span class="line">              <span class="keyword">else</span></span><br><span class="line">                loTail.next = e;</span><br><span class="line">              loTail = e;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">              <span class="keyword">if</span> (hiTail == <span class="keyword">null</span>)</span><br><span class="line">                hiHead = e;</span><br><span class="line">              <span class="keyword">else</span></span><br><span class="line">                hiTail.next = e;</span><br><span class="line">              hiTail = e;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125; <span class="keyword">while</span> ((e = next) != <span class="keyword">null</span>);</span><br><span class="line">          <span class="keyword">if</span> (loTail != <span class="keyword">null</span>) &#123;</span><br><span class="line">            loTail.next = <span class="keyword">null</span>;</span><br><span class="line">            newTab[j] = loHead;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (hiTail != <span class="keyword">null</span>) &#123;</span><br><span class="line">            hiTail.next = <span class="keyword">null</span>;</span><br><span class="line">            newTab[j + oldCap] = hiHead;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newTab;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当 table 当前的 size &gt; threshold 的时候，进行扩容，即大于边界值。</p>
+<p>扩容过后的 table 的大小为之前的 * 2</p>
+<p>扩容的边界为 旧的边界 * 2</p>
+</li>
+<li><h4 id="table-的-length-为什么要是-2-的-n-次幂？"><a href="#table-的-length-为什么要是-2-的-n-次幂？" class="headerlink" title="table 的 length 为什么要是 2 的 n 次幂？"></a>table 的 length 为什么要是 2 的 n 次幂？</h4><p>==不管你传值与否，不管你传入的长度多少，在你使用 HashMap 的时候，他的长度都是 2 的 n 次方，且最大长度为 2 的 30 次方==。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * The maximum capacity, used if a higher value is implicitly specified</span></span><br><span class="line"><span class="comment">  * by either of the constructors with arguments.</span></span><br><span class="line"><span class="comment">  * MUST be a power of two &lt;= 1&lt;&lt;30.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br></pre></td></tr></table></figure>
+<p>这个值，都用在以下几个地方：</p>
+<ul>
+<li>resize() 函数，用来进行扩容</li>
+<li>tableSizeFor() ，用来扩容</li>
+<li>构造函数中</li>
+<li>putEntries()，存放一组 HashMap 元素时，不是存放单个。</li>
+</ul>
+<blockquote>
+<p>注意，在源码中，采用了<code>延迟初始化操作</code>，也就是 table 只有在用到的时候才会进行初始化，如果你一直不使用，那么 table 的长度，一直都为 0.</p>
+</blockquote>
+<p>可以看看 hash 代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> h;</span><br><span class="line">  <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了能够得到更高效的减少碰撞，本来使用的是 % 进行运算，但是在计算机中，取余的效率，不如位运算，所以使用了 hash &amp; (length -1)，当 length 的长度为 2 的 n 次方的时候，hash % length == hash &amp; (length -1)。</p>
+</li>
+<li><h4 id="求索引的时候为什么是-h-amp-length-1-而不是-h-amp-length-更不是-h-length？"><a href="#求索引的时候为什么是-h-amp-length-1-而不是-h-amp-length-更不是-h-length？" class="headerlink" title="求索引的时候为什么是 h &amp; (length - 1),而不是 h &amp; length,更不是 h % length？"></a>求索引的时候为什么是 h &amp; (length - 1),而不是 h &amp; length,更不是 h % length？</h4><p>因为计算机中，位运算的效率，远高于 取余 的操作。</p>
+<p>采用 h &amp; (length -1) 而不是采用 h &amp; length 的原因是因为，采用前面这个的原因，主要原因是，h&amp; (length -1)的碰撞效率，低于 h &amp; length;</p>
+</li>
+<li><h4 id="为什么加载因子的默认值是-0-75？并且不推荐我们修改？"><a href="#为什么加载因子的默认值是-0-75？并且不推荐我们修改？" class="headerlink" title="为什么加载因子的默认值是 0.75？并且不推荐我们修改？"></a>为什么加载因子的默认值是 0.75？并且不推荐我们修改？</h4><p>0.75 是一个经验取出来的值，暂时没有去深究为什么需要采用 0.75。</p>
+</li>
+<li><h4 id="HashMap-为什么是线程不安全的？为什么扩容的时候会出现死锁？"><a href="#HashMap-为什么是线程不安全的？为什么扩容的时候会出现死锁？" class="headerlink" title="HashMap 为什么是线程不安全的？为什么扩容的时候会出现死锁？"></a>HashMap 为什么是线程不安全的？为什么扩容的时候会出现死锁？</h4></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Hashmap</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HotSpot虚拟机对象探秘</title>
     <url>/2021/02/05/JVM%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-HotSpot%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AF%B9%E8%B1%A1%E6%8E%A2%E7%A7%98/</url>
     <content><![CDATA[<h1 id="JVM学习笔记-HotSpot虚拟机对象探秘"><a href="#JVM学习笔记-HotSpot虚拟机对象探秘" class="headerlink" title="JVM学习笔记-HotSpot虚拟机对象探秘"></a>JVM学习笔记-HotSpot虚拟机对象探秘</h1><blockquote>
@@ -283,6 +412,51 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux 5种IO模型</title>
+    <url>/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="Linux-5种IO模型"><a href="#Linux-5种IO模型" class="headerlink" title="Linux 5种IO模型"></a>Linux 5种IO模型</h1><h2 id="阻塞式IO模型"><a href="#阻塞式IO模型" class="headerlink" title="阻塞式IO模型"></a>阻塞式IO模型</h2><p>最传统的一种IO模型，即在读写的过程中会发生阻塞现象。</p>
+<p>当用户线程发出IO请求过后，内核回去查看数据是否就绪，如果没有就绪，就等待数据就绪，而用户线程会阻塞，用户线程交出CPU。当数据就绪过后，内核会把</p>
+<p>数据拷贝到用户线程中，并返回结果给用户线程，用户线程才解除 <code>broken</code> 状态。</p>
+<p>典型的阻塞IO模型的例子如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">data = socket.read();</span><br></pre></td></tr></table></figure>
+<p>如果数据没有就绪，就会一直阻塞在read方法。</p>
+<a id="more"></a>
+
+<h2 id="非阻塞式IO模型"><a href="#非阻塞式IO模型" class="headerlink" title="非阻塞式IO模型"></a>非阻塞式IO模型</h2><p>当用户线程发起一个 read 操作过后，并不需要等待，而是马上就得到了一个结果。如果结果是一个 error 时，它就知道数据还没有准备好，于是它可以再次发送 read 操作。一旦内核中数据准备好了，并且又再一次接收到了用户线程的请求，那么它马上就会将数据拷贝到用户线程，然后返回。</p>
+<p>所以事实上，在非阻塞IO模型中，用户线程需要不断地询问内核数据是否已经就位，也就是非阻塞IO不会交出 CPU，而会一直占用CPU。</p>
+<p>典型的非阻塞IO模型一般如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">	data = socket.read();</span><br><span class="line">	<span class="keyword">if</span>(data != error)&#123;</span><br><span class="line">		<span class="comment">//TODO 在这里处理你的数据</span></span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 但是对于非阻塞IO就有一个非常严重的问题，在 while 循环中需要不断地去询问内核数据是否已经就绪，这样会导致CPU占用非常，因此一般很少使用while循环这种方式来读取数据。</p>
+<h2 id="IO复用模型"><a href="#IO复用模型" class="headerlink" title="IO复用模型"></a>IO复用模型</h2><p>多路复用IO模型就是目前使用的比较多的模型。Java NIO 实际上就是多路复用IO。</p>
+<p>在多路复用IO模型中，会有一个线程不断去轮询多个 socket 的状态，只有当 socket 真正有读写事件的时候，才会真正调用实际的 IO 读写操作。因为在多路复用 </p>
+<p>IO 模型中，只需要使用一个线程就可以管理多个 socket，系统不需要建立新的进程或者线程，也不必维护这些线程和进程，并且只有在真正有 socket 读写事件</p>
+<p>时，才会使用 IO 资源，所以它大大减少了资源占用。</p>
+<p>在 Java NIO 中，，是通过 selector.select() 去查询每一个通道是否有到达事件，如果没有事件，则一直阻塞在哪里，因此这种方式会导致用户线程的阻塞。</p>
+<p>也有人说可，可以采用 多线程 + 阻塞IO 到达类似的效果，但是由于在 多线程+阻塞IO 中，每个 socket 对应一个线程，这样会造成很大的资源占用，并且尤其对于长连接来说，线程的资源一直不会释放，如果后续有很多连接的话，就会造成性能上的瓶颈。</p>
+<p>而多路复用模式，通过一个线程就可以管理多个 socket，只有当 socket 真正有读写事件发生才会占用资源来进行实际的读写操作。因此多路复用IO比较适合连接数比较多的情况。</p>
+<p>另外多路复用IO为何比非阻塞IO模型的效率高是因为在非阻塞IO中，不断地轮询 socket 状态是通过用户线程去做的，而在多路复用IO中，轮询每个 socket 状态是在内核中进行的，这个效率要比用户线程高得多。</p>
+<p>不过要注意的是，多路复用IO模型是通过轮询的方式来检测是否事件到达，并且对到达的事件逐一进行相应。因此对于多路复用IO模型来说，一旦事件响应体很大，那么就会导致后续的事件迟迟得不到处理，并且会影响新的事件轮询。</p>
+<h2 id="信号驱动IO模型"><a href="#信号驱动IO模型" class="headerlink" title="信号驱动IO模型"></a>信号驱动IO模型</h2><p>在信号驱动IO模型中，当用户线程发起一个IO请求操作，会给对应的socket注册一个信号函数，然后用户线程会继续执行，当内核数据就绪时会发送一个信号给用</p>
+<p>户线程，用户线程接收到信号过后，便在信号函数中调用IO读写操作来进行实际的IO操作。</p>
+<h2 id="异步IO模型"><a href="#异步IO模型" class="headerlink" title="异步IO模型"></a>异步IO模型</h2><p>异步IO模型是比较理想的IO模型，在异步IO模型中，当用户线程发起 read 操作之后，立刻就可以开始去做其他的事。而另一方面，从内核的角度，当它受到一个 </p>
+<p>asynchronous read 之后，它会立刻返回，说明 read 请求已经成功发起了，因此不会对用户线程产生任何 block。然后，内核会等待数据准备完成，然后将数据</p>
+<p>拷贝到用户线程，当一切都完成之后，内核会给用户线程发送一个信号，告诉它 read 操作完成了。也就是说用户线程完全不需要知道实际的整个IO操作是如何进</p>
+<p>行，只需要先发起一个请求，当接收内核返回的成功信号时表示IO操作已经完成，可以直接去使用数据了。</p>
+<p>也就是说在异步IO模型中，IO操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成的，然后发送一个信号告知用户线程操作已经完成。用户线程</p>
+<p>不需要再次调用IO函数进行具体的读写。这点是和信号驱动模型有所不同的，在信号驱动模型中，当用户线程接收到信号，表示用户数据已经就绪，然后需要用户</p>
+<p>线程调用IO函数进行实际的读写操作；而在异步IO模型中，收到信号表示IO操作已经完成，不需要再在用户线程中调用IO函数进行实际的读写操作。</p>
+<p>注意，异步IO是需要操作系统的底层支持，在 Java 7 中，提供了 Asynchronous IO。</p>
+<p>前面四种IO模型实际上都属于同步IO，只有最后一种是真正的异步IO，因为无论是多路复用IO还是信号驱动模型，IO操作的第2个阶段都会引起用户线程阻塞，也</p>
+<p>就是内核进行数据拷贝的过程都会让用户线程阻塞。</p>
+]]></content>
+      <categories>
+        <category>I/O</category>
+      </categories>
+      <tags>
+        <tag>I/O</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TCP/IP的理解</title>
     <url>/2021/01/14/TCP%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%90%86%E8%A7%A3/</url>
     <content><![CDATA[<h1 id="对于TCP-IP的理解"><a href="#对于TCP-IP的理解" class="headerlink" title="对于TCP/IP的理解"></a>对于TCP/IP的理解</h1><p>&emsp;在很多人面试的时候，都遇见过招聘要求上要求这一项</p>
@@ -342,51 +516,6 @@
       </categories>
       <tags>
         <tag>TCP/IP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux 5种IO模型</title>
-    <url>/2021/06/01/Linux%205%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<h1 id="Linux-5种IO模型"><a href="#Linux-5种IO模型" class="headerlink" title="Linux 5种IO模型"></a>Linux 5种IO模型</h1><h2 id="阻塞式IO模型"><a href="#阻塞式IO模型" class="headerlink" title="阻塞式IO模型"></a>阻塞式IO模型</h2><p>最传统的一种IO模型，即在读写的过程中会发生阻塞现象。</p>
-<p>当用户线程发出IO请求过后，内核回去查看数据是否就绪，如果没有就绪，就等待数据就绪，而用户线程会阻塞，用户线程交出CPU。当数据就绪过后，内核会把</p>
-<p>数据拷贝到用户线程中，并返回结果给用户线程，用户线程才解除 <code>broken</code> 状态。</p>
-<p>典型的阻塞IO模型的例子如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">data = socket.read();</span><br></pre></td></tr></table></figure>
-<p>如果数据没有就绪，就会一直阻塞在read方法。</p>
-<a id="more"></a>
-
-<h2 id="非阻塞式IO模型"><a href="#非阻塞式IO模型" class="headerlink" title="非阻塞式IO模型"></a>非阻塞式IO模型</h2><p>当用户线程发起一个 read 操作过后，并不需要等待，而是马上就得到了一个结果。如果结果是一个 error 时，它就知道数据还没有准备好，于是它可以再次发送 read 操作。一旦内核中数据准备好了，并且又再一次接收到了用户线程的请求，那么它马上就会将数据拷贝到用户线程，然后返回。</p>
-<p>所以事实上，在非阻塞IO模型中，用户线程需要不断地询问内核数据是否已经就位，也就是非阻塞IO不会交出 CPU，而会一直占用CPU。</p>
-<p>典型的非阻塞IO模型一般如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">	data = socket.read();</span><br><span class="line">	<span class="keyword">if</span>(data != error)&#123;</span><br><span class="line">		<span class="comment">//TODO 在这里处理你的数据</span></span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 但是对于非阻塞IO就有一个非常严重的问题，在 while 循环中需要不断地去询问内核数据是否已经就绪，这样会导致CPU占用非常，因此一般很少使用while循环这种方式来读取数据。</p>
-<h2 id="IO复用模型"><a href="#IO复用模型" class="headerlink" title="IO复用模型"></a>IO复用模型</h2><p>多路复用IO模型就是目前使用的比较多的模型。Java NIO 实际上就是多路复用IO。</p>
-<p>在多路复用IO模型中，会有一个线程不断去轮询多个 socket 的状态，只有当 socket 真正有读写事件的时候，才会真正调用实际的 IO 读写操作。因为在多路复用 </p>
-<p>IO 模型中，只需要使用一个线程就可以管理多个 socket，系统不需要建立新的进程或者线程，也不必维护这些线程和进程，并且只有在真正有 socket 读写事件</p>
-<p>时，才会使用 IO 资源，所以它大大减少了资源占用。</p>
-<p>在 Java NIO 中，，是通过 selector.select() 去查询每一个通道是否有到达事件，如果没有事件，则一直阻塞在哪里，因此这种方式会导致用户线程的阻塞。</p>
-<p>也有人说可，可以采用 多线程 + 阻塞IO 到达类似的效果，但是由于在 多线程+阻塞IO 中，每个 socket 对应一个线程，这样会造成很大的资源占用，并且尤其对于长连接来说，线程的资源一直不会释放，如果后续有很多连接的话，就会造成性能上的瓶颈。</p>
-<p>而多路复用模式，通过一个线程就可以管理多个 socket，只有当 socket 真正有读写事件发生才会占用资源来进行实际的读写操作。因此多路复用IO比较适合连接数比较多的情况。</p>
-<p>另外多路复用IO为何比非阻塞IO模型的效率高是因为在非阻塞IO中，不断地轮询 socket 状态是通过用户线程去做的，而在多路复用IO中，轮询每个 socket 状态是在内核中进行的，这个效率要比用户线程高得多。</p>
-<p>不过要注意的是，多路复用IO模型是通过轮询的方式来检测是否事件到达，并且对到达的事件逐一进行相应。因此对于多路复用IO模型来说，一旦事件响应体很大，那么就会导致后续的事件迟迟得不到处理，并且会影响新的事件轮询。</p>
-<h2 id="信号驱动IO模型"><a href="#信号驱动IO模型" class="headerlink" title="信号驱动IO模型"></a>信号驱动IO模型</h2><p>在信号驱动IO模型中，当用户线程发起一个IO请求操作，会给对应的socket注册一个信号函数，然后用户线程会继续执行，当内核数据就绪时会发送一个信号给用</p>
-<p>户线程，用户线程接收到信号过后，便在信号函数中调用IO读写操作来进行实际的IO操作。</p>
-<h2 id="异步IO模型"><a href="#异步IO模型" class="headerlink" title="异步IO模型"></a>异步IO模型</h2><p>异步IO模型是比较理想的IO模型，在异步IO模型中，当用户线程发起 read 操作之后，立刻就可以开始去做其他的事。而另一方面，从内核的角度，当它受到一个 </p>
-<p>asynchronous read 之后，它会立刻返回，说明 read 请求已经成功发起了，因此不会对用户线程产生任何 block。然后，内核会等待数据准备完成，然后将数据</p>
-<p>拷贝到用户线程，当一切都完成之后，内核会给用户线程发送一个信号，告诉它 read 操作完成了。也就是说用户线程完全不需要知道实际的整个IO操作是如何进</p>
-<p>行，只需要先发起一个请求，当接收内核返回的成功信号时表示IO操作已经完成，可以直接去使用数据了。</p>
-<p>也就是说在异步IO模型中，IO操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成的，然后发送一个信号告知用户线程操作已经完成。用户线程</p>
-<p>不需要再次调用IO函数进行具体的读写。这点是和信号驱动模型有所不同的，在信号驱动模型中，当用户线程接收到信号，表示用户数据已经就绪，然后需要用户</p>
-<p>线程调用IO函数进行实际的读写操作；而在异步IO模型中，收到信号表示IO操作已经完成，不需要再在用户线程中调用IO函数进行实际的读写操作。</p>
-<p>注意，异步IO是需要操作系统的底层支持，在 Java 7 中，提供了 Asynchronous IO。</p>
-<p>前面四种IO模型实际上都属于同步IO，只有最后一种是真正的异步IO，因为无论是多路复用IO还是信号驱动模型，IO操作的第2个阶段都会引起用户线程阻塞，也</p>
-<p>就是内核进行数据拷贝的过程都会让用户线程阻塞。</p>
-]]></content>
-      <categories>
-        <category>I/O</category>
-      </categories>
-      <tags>
-        <tag>I/O</tag>
       </tags>
   </entry>
   <entry>
@@ -509,6 +638,75 @@
       </tags>
   </entry>
   <entry>
+    <title>hashCode和equals的区别</title>
+    <url>/2021/07/13/hashCode%E5%92%8Cequals%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="Java-中-hashCode-和-equals-的作用，区别，联系？"><a href="#Java-中-hashCode-和-equals-的作用，区别，联系？" class="headerlink" title="Java 中 hashCode() 和 equals() 的作用，区别，联系？"></a>Java 中 hashCode() 和 equals() 的作用，区别，联系？</h1><p>记录一下在 Java 中，hashCode 和equals的区别：</p>
+<h2 id="1-作用："><a href="#1-作用：" class="headerlink" title="1. 作用："></a>1. 作用：</h2><p>在 java 中都是用来对比两个对象是否相等以及是否一致。</p>
+<h2 id="2-区别："><a href="#2-区别：" class="headerlink" title="2. 区别："></a>2. 区别：</h2><p>equals 默认调用的是 Object 类中的方法，主要判断的是对象的内存地址是否一致，也就是是否为同一个对象的地址。</p>
+<p>重写的 equals 里一般比较得全面比较复杂，效率比较低；</p>
+<p>但是利用了 hashCode 进行对比，只需要生成一个 hash 值比较就可以了，效率很高。但是 hashCode 并非完全可靠，存在 hash 冲突的问题 (此处类似于 java 集合中 Hashmap 的hash)；</p>
+<p>注意点：</p>
+<ul>
+<li>equals() 中相等的两个对象，那么他们的 hashCode() 也是一定相等的，也就是用 equals() 对比是肯定可靠的。</li>
+<li>如果两个对象的 hashCode一样，但是他们的 equals 不一定相等，也就是 hashCode 并非绝对可靠的。</li>
+</ul>
+<h2 id="3-关系："><a href="#3-关系：" class="headerlink" title="3. 关系："></a>3. 关系：</h2><blockquote>
+<p> 重写 equals() 方法的时候，必须重写 hashCode() 方法</p>
+</blockquote>
+<ul>
+<li>为了性能的考虑，首先使用 hashCode() 来判断是否相等。如果这两个不相等，则对象一定不同，如果相等，再使用 equals() 来对比。</li>
+<li>为了保证是同一个对象，保证在 equals 相同的情况下 hashCode 值必定相同，如果重写了 equals 而未重写 hashCode，就可能出现两个无关对象的 equals 相同（equals 是通过对象的特征进行重写的），但是 hashCode不相同的情况。</li>
+<li>hashCode 和 equals 都是基本类 Object 里的方法，和 equals 一样， Object 里 hashCode 只是返回当前对象的地址，如果是这样，相同一个类 new 两个对象，由于他们在内存的地址不同，则他们的 hashCode 不同，所以这显然不是我们想要的。所以我们必须重写类的 hashCode 方法，即，同一个类，在 hashCode 里面返回唯一的一个 hash 值。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>hashcode、 java基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kafka基本理解</title>
+    <url>/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[<h1 id="Kafka的基本属于理解"><a href="#Kafka的基本属于理解" class="headerlink" title="Kafka的基本属于理解"></a>Kafka的基本属于理解</h1><p>&emsp;最近在看kafka，对于kafka的使用，基本能够在官方的中文文档中得到一些基本的概念，但是对于kafka的一些基本术语的理解不够深刻，在百度上找寻了几篇文章，现在在这里留下自己关于kafka的理解。</p>
+<p>kafka的基本术语有以下几个：</p>
+<ul>
+<li>broker</li>
+<li>topic</li>
+<li>stream</li>
+<li>partition</li>
+<li>offset</li>
+<li>producer</li>
+<li>consumer</li>
+<li>consumer group</li>
+</ul>
+<p>稍后一个一个介绍上述术语，现在先来看一下kafka的工作流程：<br><br>&emsp;消息由producer进行产生，消息按照topic进行归类，并push(发送)到broker中，然后broker中保存了一个或者多个topic的消息，consumer通过订阅者模式，订阅一组topic消息，通过持续的pull进行消息的拉取，然后进行后续消息的处理。</p>
+<a id="more"></a>
+
+<ul>
+<li><p>broker<br>&nbsp;一个kafka集群中包含了一个或者多个服务器，这些服务器称为broker，保存producer发送的消息。</p>
+</li>
+<li><p>topic<br>&nbsp;每条发送到broker的消息都有一个类别，这个类别称作为topic。</p>
+</li>
+<li><p>partition<br>&nbsp;一个topic的消息实际上是由多个队列进行存储的，一个队列在kafka上成为分区，即partition。</p>
+</li>
+<li><p>producer<br>&nbsp;负责发送指定的topic消息到broker，通俗的意思就是生产者。</p>
+</li>
+<li><p>consumer<br>&nbsp;消息读取的客户端，通过订阅一组topic的消息从broker拉取消息，也就是消费者。</p>
+</li>
+<li><p>consumer group<br>&nbsp;消费者组，一个消费者组是由一个或者多个consumer组成的，对于同一个topic，不同的消费者组都能将消费到全量的消息，而同一个消费者组中的consumer将竞争每个消息(在多个consumer消费同一个topic时，topic的任何一个分区将同时只能被一个consumer消费)。</p>
+</li>
+<li><p>offset<br>&nbsp;偏移量，kafka为每条消息在分区的消息保存一个偏移量offset，者也是消费者在分区的位置。比如一个偏移量是5的消费者，表示已经消费了从0-4偏移量的消息，下一个要消费的消息的偏移量是5。</p>
+</li>
+</ul>
+<p>后续会继续更新关于kafka的使用，以及使用中遇到的问题~~~~~~~~~~~~</p>
+]]></content>
+      <categories>
+        <category>消息中间件</category>
+      </categories>
+      <tags>
+        <tag>kafka</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>代理模式</title>
     <url>/2021/03/13/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><blockquote>
@@ -584,49 +782,6 @@
       </categories>
       <tags>
         <tag>设计模式-代理模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>kafka基本理解</title>
-    <url>/2021/01/14/kafka%E6%9C%AF%E8%AF%AD%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="Kafka的基本属于理解"><a href="#Kafka的基本属于理解" class="headerlink" title="Kafka的基本属于理解"></a>Kafka的基本属于理解</h1><p>&emsp;最近在看kafka，对于kafka的使用，基本能够在官方的中文文档中得到一些基本的概念，但是对于kafka的一些基本术语的理解不够深刻，在百度上找寻了几篇文章，现在在这里留下自己关于kafka的理解。</p>
-<p>kafka的基本术语有以下几个：</p>
-<ul>
-<li>broker</li>
-<li>topic</li>
-<li>stream</li>
-<li>partition</li>
-<li>offset</li>
-<li>producer</li>
-<li>consumer</li>
-<li>consumer group</li>
-</ul>
-<p>稍后一个一个介绍上述术语，现在先来看一下kafka的工作流程：<br><br>&emsp;消息由producer进行产生，消息按照topic进行归类，并push(发送)到broker中，然后broker中保存了一个或者多个topic的消息，consumer通过订阅者模式，订阅一组topic消息，通过持续的pull进行消息的拉取，然后进行后续消息的处理。</p>
-<a id="more"></a>
-
-<ul>
-<li><p>broker<br>&nbsp;一个kafka集群中包含了一个或者多个服务器，这些服务器称为broker，保存producer发送的消息。</p>
-</li>
-<li><p>topic<br>&nbsp;每条发送到broker的消息都有一个类别，这个类别称作为topic。</p>
-</li>
-<li><p>partition<br>&nbsp;一个topic的消息实际上是由多个队列进行存储的，一个队列在kafka上成为分区，即partition。</p>
-</li>
-<li><p>producer<br>&nbsp;负责发送指定的topic消息到broker，通俗的意思就是生产者。</p>
-</li>
-<li><p>consumer<br>&nbsp;消息读取的客户端，通过订阅一组topic的消息从broker拉取消息，也就是消费者。</p>
-</li>
-<li><p>consumer group<br>&nbsp;消费者组，一个消费者组是由一个或者多个consumer组成的，对于同一个topic，不同的消费者组都能将消费到全量的消息，而同一个消费者组中的consumer将竞争每个消息(在多个consumer消费同一个topic时，topic的任何一个分区将同时只能被一个consumer消费)。</p>
-</li>
-<li><p>offset<br>&nbsp;偏移量，kafka为每条消息在分区的消息保存一个偏移量offset，者也是消费者在分区的位置。比如一个偏移量是5的消费者，表示已经消费了从0-4偏移量的消息，下一个要消费的消息的偏移量是5。</p>
-</li>
-</ul>
-<p>后续会继续更新关于kafka的使用，以及使用中遇到的问题~~~~~~~~~~~~</p>
-]]></content>
-      <categories>
-        <category>消息中间件</category>
-      </categories>
-      <tags>
-        <tag>kafka</tag>
       </tags>
   </entry>
   <entry>

@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"zipperli.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":"yes"},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="个人hexo博客，记录每一天的小东西~~~">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://zipperli.github.io/categories/index.html">
+  <meta name="description" content="ELK 日志收集平台很早之前就听过 ELK 日志收集，但是一直都没有具体的业务场景，也没有多余的时间去接触这个，这两天空了，学习下。 关于 ELK，自己之前的认知，就是一个可以收集各个服务器的日志信息，并进行统一的分析处理的平台。 学习的时候发现，有一篇文章关于 ELK 平台的认知讲的很好，就摘抄一小段： 以下内容来自于以下网站：  https:&#x2F;&#x2F;blog.51cto.com&#x2F;baidu&#x2F;167">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ELK日志收集">
+<meta property="og:url" content="http://zipperli.github.io/2021/06/20/ELK%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86/index.html">
 <meta property="og:site_name" content="Sopp&#39;s 记录">
-<meta property="og:description" content="个人hexo博客，记录每一天的小东西~~~">
+<meta property="og:description" content="ELK 日志收集平台很早之前就听过 ELK 日志收集，但是一直都没有具体的业务场景，也没有多余的时间去接触这个，这两天空了，学习下。 关于 ELK，自己之前的认知，就是一个可以收集各个服务器的日志信息，并进行统一的分析处理的平台。 学习的时候发现，有一篇文章关于 ELK 平台的认知讲的很好，就摘抄一小段： 以下内容来自于以下网站：  https:&#x2F;&#x2F;blog.51cto.com&#x2F;baidu&#x2F;167">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-01-17T14:32:04.000Z">
-<meta property="article:modified_time" content="2021-01-17T14:56:36.095Z">
+<meta property="article:published_time" content="2021-06-20T03:19:13.000Z">
+<meta property="article:modified_time" content="2021-06-20T03:59:13.158Z">
 <meta property="article:author" content="Sopp">
+<meta property="article:tag" content="ELK日志">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://zipperli.github.io/categories/">
+<link rel="canonical" href="http://zipperli.github.io/2021/06/20/ELK%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86/">
 
 
 <script id="page-configurations">
@@ -40,13 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>categories | Sopp's 记录
-</title>
+  <title>ELK日志收集 | Sopp's 记录</title>
   
 
 
@@ -200,55 +200,145 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="zh-CN">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://zipperli.github.io/2021/06/20/ELK%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="Sopp">
+      <meta itemprop="description" content="个人hexo博客，记录每一天的小东西~~~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sopp's 记录">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ELK日志收集
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">categories
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
 
-<div class="post-meta">
+              <time title="创建时间：2021-06-20 11:19:13 / 修改时间：11:59:13" itemprop="dateCreated datePublished" datetime="2021-06-20T11:19:13+08:00">2021-06-20</time>
+            </span>
+
+          
+            <span id="/2021/06/20/ELK%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86/" class="post-meta-item leancloud_visitors" data-flag-title="ELK日志收集" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/20/ELK%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/20/ELK%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
   
 
-</div>
+        </div>
+      </header>
 
-</header>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-      
-      
-      <div class="post-body">
-          <div class="category-all-page">
-            <div class="category-all-title">
-              目前共计 10 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/I-O/">I/O</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker%E5%AE%B9%E5%99%A8/">docker容器</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/">消息中间件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C/">网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/">网络请求</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
-        
-      </div>
-      
-      
-      
+        <h2 id="ELK-日志收集平台"><a href="#ELK-日志收集平台" class="headerlink" title="ELK 日志收集平台"></a>ELK 日志收集平台</h2><p>很早之前就听过 ELK 日志收集，但是一直都没有具体的业务场景，也没有多余的时间去接触这个，这两天空了，学习下。</p>
+<p>关于 ELK，自己之前的认知，就是一个可以收集各个服务器的日志信息，并进行统一的分析处理的平台。</p>
+<p>学习的时候发现，有一篇文章关于 ELK 平台的认知讲的很好，就摘抄一小段：</p>
+<p>以下内容来自于以下网站：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/baidu/1676798">https://blog.51cto.com/baidu/1676798</a></p>
+</blockquote>
+<p>日志主要包括系统日志、应用程序日志和安全日志。系统运维和开发人员可以通过日志了解服务器软硬件信息、检查配置过程中的错误及错误发生的原因。经常分析日志可以了解服务器的负荷，性能安全性，从而及时采取措施纠正错误。</p>
+<p>通常，日志被分散的储存不同的设备上。如果你管理数十上百台服务器，你还在使用依次登录每台机器的传统方法查阅日志。这样是不是感觉很繁琐和效率低下。当务之急我们使用集中化的日志管理，例如：开源的 syslog ，将所有服务器上的日志收集汇总。</p>
+<p>集中化管理日志后，日志的统计和检索又成为一件比较麻烦的事情，一般我们使用 grep、awk 和 wc 等 Linux 命令能实现检索和统计，但是对于要求更高的查询、排序和统计等要求和庞大的机器数量依然使用这样的方法难免有点力不从心。</p>
+<p>开源实时日志分析 ELK 平台能够完美的解决我们上述的问题，ELK 由 ==ElasticSearch==、==Logstash== 和 ==Kiabana== 三个开源工具组成。官方网站：<a target="_blank" rel="noopener" href="https://www.elastic.co/products%E3%80%82%E7%8E%B0%E5%9C%A8%E5%B8%B8%E7%94%A8%E7%9A%84">https://www.elastic.co/products。现在常用的</a> ELK 平台由以下部分组成：</p>
+<ul>
+<li><p>Elasticsearch 是个开源分布式搜索引擎，它的特点有：分布式，零配置，自动发现，索引自动分片，索引副本机制，restful 风格接口，多数据源，自动搜索负载等。</p>
+</li>
+<li><p>Logstash 是一个完全开源的工具，他可以对你的日志进行收集、分析，并将其存储供以后使用（如，搜索）。(由于 Logstash 性能不够达标，所以采用 elastic 官方发布了新的收集工具 ： beats-轻量级采集组件，在服务器上使用它进行日志采集)。</p>
+</li>
+<li><p>kibana 也是一个开源和免费的工具，Kibana 可以为  Logstash 和 ElasticSearch 提供的日志分析友好的 Web 界面，可以帮助您汇总、分析和搜索重要数据日志。</p>
+</li>
+<li><p>beats : 轻量级采集组件的统称，官方及社区的活跃成员，共发布了几百种不同的 beats。常见的 beats 有如下几种：</p>
+<ul>
+<li>filebeat: 进行<code>文件和目录</code>采集，主要用于收集日志数据。</li>
+<li>metricbeat: 进行<code>指标</code>采集，指标可以是系统的，也可以是众多中间件产品的，主要用于监控<code>系统和软件</code>的性能。</li>
+<li>packetbeat: 通过网络抓包、协议分析，对一些请求响应式的<code>系统通信</code>进行监控和数据收集，可以收集到很多常规方式无法收集到的信息。</li>
+<li>Winlogbeat: 专门针对 windows 的 <code>event log</code> 进行的数据采集。</li>
+<li>Heartbeat: <code>系统间连通性</code>检测，比如 icmp, tcp, http 等系统的连通性监控。</li>
+</ul>
+</li>
+<li><p>kafka : 常见的消息中间件，减轻服务器消息收集过后的压力。</p>
+</li>
+</ul>
+<p>ELK 整体运行的组件如下图所示：</p>
+<p>![ELK 日志](./ELK日志收集/ELK 日志.png)</p>
+<p>具体的运行逻辑：</p>
+<p>Beats 组件从应用服务器上收集到对应的日志信息，发送到 Kafka 中，然后通过 Logstash，进行统一的收集处理，然后存储在 ElasticSearch 中，最后通过可视化工具 Kibana 进行查看。</p>
+<h4 id="安装、运行、操作逻辑如下："><a href="#安装、运行、操作逻辑如下：" class="headerlink" title="安装、运行、操作逻辑如下："></a>安装、运行、操作逻辑如下：</h4>
     </div>
-    
 
     
     
     
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ELK%E6%97%A5%E5%BF%97/" rel="tag"># ELK日志</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/20/Java%E9%9B%86%E5%90%88/" rel="prev" title="Java集合">
+      <i class="fa fa-chevron-left"></i> Java集合
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/13/hashCode%E5%92%8Cequals%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="next" title="hashCode和equals的区别">
+      hashCode和equals的区别 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -295,6 +385,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ELK-%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.</span> <span class="nav-text">ELK 日志收集平台</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E3%80%81%E8%BF%90%E8%A1%8C%E3%80%81%E6%93%8D%E4%BD%9C%E9%80%BB%E8%BE%91%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">1.0.1.</span> <span class="nav-text">安装、运行、操作逻辑如下：</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
